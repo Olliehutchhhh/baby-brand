@@ -169,8 +169,8 @@
   .main-image-wrap{
     position:relative;
     aspect-ratio: 1 / 1;            /* matches the real product photo's own ratio — a 4:5 box let a square photo float in the middle with dead space below it */
-    width:100%;                    /* always fills the column, like the reference — this was shrinking width before, which was the bug */
-    max-height:min(78vh, 760px);   /* only steps in on short viewports; when it does, the box goes a touch less tall than square rather than narrower */
+    width:100%;
+    max-width:min(78vh, 760px);    /* caps the box by WIDTH, not height — capping height alone let the box stay full-width and go rectangular, which is what was letterboxing the square photo with side gaps */
     overflow:hidden;
     margin:0;
     flex:1;
