@@ -135,10 +135,10 @@
   /* ===== Product grid ===== */
   .product{
     display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap:60px;
+    grid-template-columns: 1.3fr 1fr;   /* gives the gallery more width so the framed image reads bigger, like the reference */
+    gap:50px;
     padding:24px 40px 80px;
-    max-width:1400px;
+    max-width:1500px;
     margin:0 auto;
     align-items:start;
   }
@@ -169,7 +169,7 @@
     position:relative;
     aspect-ratio: 1 / 1;            /* matches the real product photo's own ratio — a 4:5 box let a square photo float in the middle with dead space below it */
     width:100%;                    /* always fills the column, like the reference — this was shrinking width before, which was the bug */
-    max-height:min(64vh, 620px);   /* only steps in on short viewports; when it does, the box goes a touch less tall than square rather than narrower */
+    max-height:min(78vh, 760px);   /* only steps in on short viewports; when it does, the box goes a touch less tall than square rather than narrower */
     overflow:hidden;
     margin:0;
     flex:1;
