@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Men's Bracelets — Collection</title>
+<style>
+  :root{
+    --ink:#111111;
+    --paper:#ffffff;
+    --line:#e4e4e4;
+    --muted:#6b6b6b;
+    --band:#eaf2f5;
+    --badge-green:#1f5c3d;
+    --focus:#111111;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit;}
+  :focus-visible{outline:2px solid var(--focus); outline-offset:2px;}
+
+  /* Promo bar */
+  .promo-bar{
+    background:var(--band);
+    overflow:hidden;
+    white-space:nowrap;
+    border-bottom:1px solid var(--line);
+  }
+  .promo-track{
+    display:inline-flex;
+    animation: scroll 22s linear infinite;
+  }
+  .promo-track span{
+    padding:10px 48px;
+    font-size:12px;
+    letter-spacing:0.06em;
+    font-weight:600;
+    color:var(--ink);
+  }
+  @keyframes scroll{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .promo-track{ animation: none; }
+  }
+
+  /* Header */
+  header.site{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 40px;
+    border-bottom:1px solid var(--line);
+    gap:24px;
+  }
+  .nav-left{display:flex; gap:32px; align-items:center;}
+  .nav-left a{ font-size:13px; font-weight:700; letter-spacing:0.08em; }
+  .wordmark{
+    font-size:28px;
+    font-weight:800;
+    letter-spacing:0.12em;
+    text-align:center;
+    flex:1;
+  }
+  .nav-right{display:flex; align-items:center; gap:20px;}
+  .lang-region{ display:flex; gap:10px; align-items:center; font-size:13px; font-weight:600; }
+  .search-box{
+    display:flex; align-items:center; gap:8px;
+    border:1px solid var(--line);
+    padding:8px 14px;
+    font-size:13px;
+    color:var(--muted);
+    min-width:170px;
+  }
+  .icon-btn{ width:20px; height:20px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+  .icon-btn svg{width:20px; height:20px;}
+
+  /* Category pills */
+  .pill-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    padding:26px 40px 10px;
+  }
+  .pill{
+    border:1px solid var(--ink);
+    border-radius:999px;
+    padding:14px 26px;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:0.04em;
+    background:#fff;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .pill.active{ background:var(--ink); color:#fff; }
+
+  /* Toolbar */
+  .toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px 40px;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .view-toggle{ display:flex; gap:14px; align-items:center; }
+  .view-toggle svg{ width:20px; height:20px; cursor:pointer; }
+  .toolbar-right{ display:flex; gap:28px; align-items:center; }
+  .toolbar-right .label{
+    display:flex; align-items:center; gap:8px;
+    font-size:13px; font-weight:700; letter-spacing:0.05em;
+    cursor:pointer;
+  }
+
+  /* Grid */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:0;
+    border-top:1px solid var(--line);
+  }
+  @media (max-width: 1000px){
+    .grid{ grid-template-columns:repeat(2, 1fr); }
+  }
+  @media (max-width: 560px){
+    .grid{ grid-template-columns:1fr; }
+  }
+
+  .card{
+    display:block;
+    border-right:1px solid var(--line);
+    position:relative;
+  }
+  .card:last-child{ border-right:none; }
+
+  .card-image-wrap{
+    position:relative;
+    aspect-ratio: 4 / 5;
+    overflow:hidden;
+  }
+  .card-image{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-size:13px;
+    letter-spacing:0.04em;
+    color:#9a9a9a;
+    padding:20px;
+    transition:opacity 0.25s ease;
+  }
+  .card-image.front{
+    background:repeating-linear-gradient(45deg, #f7f7f7, #f7f7f7 14px, #efefef 14px, #efefef 28px);
+    border:1px dashed #c9c9c9;
+    opacity:1;
+    z-index:2;
+  }
+  .card-image.back{
+    background:repeating-linear-gradient(45deg, #eaf1f5, #eaf1f5 14px, #dbe9f0 14px, #dbe9f0 28px);
+    border:1px dashed #9db8c7;
+    opacity:0;
+    z-index:1;
+  }
+  .card:hover .card-image.front{ opacity:0; }
+  .card:hover .card-image.back{ opacity:1; }
+
+  .badge-top{
+    position:absolute;
+    top:14px; left:14px;
+    background:#fff;
+    padding:8px 14px;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:0.04em;
+    z-index:3;
+  }
+  .badge-bottom{
+    position:absolute;
+    left:14px; right:14px; bottom:14px;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 14px;
+    z-index:3;
+  }
+  .badge-icon{
+    width:34px; height:34px;
+    border-radius:50%;
+    background:var(--badge-green);
+    color:#fff;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+  }
+  .badge-text .title{ font-size:12px; font-weight:800; letter-spacing:0.03em; }
+  .badge-text .sub{ font-size:11px; color:var(--muted); }
+
+  .card-info{
+    padding:16px 14px 22px;
+  }
+  .card-info .name{ font-size:13px; font-weight:700; margin-bottom:6px; }
+  .card-info .price{ font-size:13px; color:var(--muted); }
+
+  .hint{
+    padding:8px 40px 40px;
+    font-size:12px;
+    color:var(--muted);
+  }
+</style>
+</head>
+<body>
+
+  <div class="promo-bar">
+    <div class="promo-track">
+      <span>% OFF + £2.99 NEXT DAY DELIVERY*</span>
+      <span>BUY ONE GET ONE FREE JEWELLERY*</span>
+      <span>APP EXCLUSIVE: EXTRA 10% OFF*</span>
+      <span>FREE TOTE BAG WITH £100+ SPEND*</span>
+      <span>% OFF + £2.99 NEXT DAY DELIVERY*</span>
+      <span>BUY ONE GET ONE FREE JEWELLERY*</span>
+      <span>APP EXCLUSIVE: EXTRA 10% OFF*</span>
+      <span>FREE TOTE BAG WITH £100+ SPEND*</span>
+    </div>
+  </div>
+
+  <header class="site">
+    <div class="nav-left">
+      <a href="#">MENS</a>
+      <a href="#">WOMENS</a>
+    </div>
+    <div class="wordmark">YOURBRAND</div>
+    <div class="nav-right">
+      <div class="lang-region"><span>EN ▾</span><span>GB (£) ▾</span></div>
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="1.5"/></svg>
+        Search...
+      </div>
+      <div class="icon-btn" aria-label="Account">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6" stroke="currentColor" stroke-width="1.5"/></svg>
+      </div>
+      <div class="icon-btn" aria-label="Bag">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M6 8h12l-1 12H7L6 8Z" stroke="currentColor" stroke-width="1.5"/><path d="M9 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.5"/></svg>
+      </div>
+    </div>
+  </header>
+
+  <div class="pill-row">
+    <button class="pill active">MEN'S TENNIS BRACELETS</button>
+    <button class="pill">MEN'S ICED BRACELETS</button>
+    <button class="pill">MEN'S ROPE BRACELETS</button>
+    <button class="pill">MEN'S PLAIN CUBAN BRACELETS</button>
+    <button class="pill">MEN'S ICED CUBAN BRACELETS</button>
+  </div>
+
+  <div class="toolbar">
+    <div class="view-toggle">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" fill="currentColor" opacity="0.35"/><rect x="13" y="3" width="8" height="8" fill="currentColor" opacity="0.35"/><rect x="3" y="13" width="8" height="8" fill="currentColor" opacity="0.35"/><rect x="13" y="13" width="8" height="8" fill="currentColor" opacity="0.35"/></svg>
+      <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="5" height="5" fill="currentColor"/><rect x="9.5" y="2" width="5" height="5" fill="currentColor"/><rect x="17" y="2" width="5" height="5" fill="currentColor"/><rect x="2" y="9.5" width="5" height="5" fill="currentColor"/><rect x="9.5" y="9.5" width="5" height="5" fill="currentColor"/><rect x="17" y="9.5" width="5" height="5" fill="currentColor"/><rect x="2" y="17" width="5" height="5" fill="currentColor"/><rect x="9.5" y="17" width="5" height="5" fill="currentColor"/><rect x="17" y="17" width="5" height="5" fill="currentColor"/></svg>
+    </div>
+    <div class="toolbar-right">
+      <div class="label">FILTER
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><line x1="4" y1="6" x2="20" y2="6" stroke="currentColor" stroke-width="1.5"/><line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="1.5"/><line x1="4" y1="18" x2="20" y2="18" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="6" r="1.6" fill="#fff" stroke="currentColor" stroke-width="1.3"/><circle cx="15" cy="12" r="1.6" fill="#fff" stroke="currentColor" stroke-width="1.3"/><circle cx="9" cy="18" r="1.6" fill="#fff" stroke="currentColor" stroke-width="1.3"/></svg>
+      </div>
+      <div class="label">SORT BY
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.8"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <a class="card" href="https://claude.ai/artifact/RSirQ5nwCSmWjPwtuq2Gds" data-product="Tennis Bracelet – 5mm – White">
+      <div class="card-image-wrap">
+        <div class="badge-top">BUY 1 GET 1 FREE</div>
+        <div class="card-image front">Image 1<br>(main shot)</div>
+        <div class="card-image back">Image 2<br>(hover shot)</div>
+        <div class="badge-bottom">
+          <div class="badge-icon">⚡</div>
+          <div class="badge-text">
+            <div class="title">IN DEMAND</div>
+            <div class="sub">Sold 32 times in the last 5 days</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-info">
+        <div class="name">Tennis Bracelet – 5mm – White</div>
+        <div class="price">£69.99</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://claude.ai/artifact/RSirQ5nwCSmWjPwtuq2Gds" data-product="Cuban Bracelet – Iced – White">
+      <div class="card-image-wrap">
+        <div class="badge-top">BUY 1 GET 1 FREE</div>
+        <div class="card-image front">Image 1<br>(main shot)</div>
+        <div class="card-image back">Image 2<br>(hover shot)</div>
+        <div class="badge-bottom">
+          <div class="badge-icon">💎</div>
+          <div class="badge-text">
+            <div class="title">TOP CHOICE</div>
+            <div class="sub">Added to bag 85 times in the last 5 days</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-info">
+        <div class="name">Cuban Bracelet – Iced – White</div>
+        <div class="price">£89.99</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://claude.ai/artifact/RSirQ5nwCSmWjPwtuq2Gds" data-product="Tennis Bracelet – 3mm – White">
+      <div class="card-image-wrap">
+        <div class="badge-top">BUY 1 GET 1 FREE</div>
+        <div class="card-image front">Image 1<br>(main shot)</div>
+        <div class="card-image back">Image 2<br>(hover shot)</div>
+        <div class="badge-bottom">
+          <div class="badge-icon">💎</div>
+          <div class="badge-text">
+            <div class="title">TOP CHOICE</div>
+            <div class="sub">Added to bag 45 times in the last 5 days</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-info">
+        <div class="name">Tennis Bracelet – 3mm – White</div>
+        <div class="price">£59.99</div>
+      </div>
+    </a>
+
+    <a class="card" href="https://claude.ai/artifact/RSirQ5nwCSmWjPwtuq2Gds" data-product="Curb Chain Bracelet – White">
+      <div class="card-image-wrap">
+        <div class="badge-top">BUY 1 GET 1 FREE</div>
+        <div class="card-image front">Image 1<br>(main shot)</div>
+        <div class="card-image back">Image 2<br>(hover shot)</div>
+        <div class="badge-bottom">
+          <div class="badge-icon">💎</div>
+          <div class="badge-text">
+            <div class="title">TOP CHOICE</div>
+            <div class="sub">Added to bag 46 times in the last 5 days</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-info">
+        <div class="name">Curb Chain Bracelet – White</div>
+        <div class="price">£64.99</div>
+      </div>
+    </a>
+
+  </div>
+
+  <p class="hint">Each card links through to the product page. Image slots are placeholders — swap the "front" div for your main shot and the "back" div for the hover/alternate shot.</p>
+
+</body>
+</html>
