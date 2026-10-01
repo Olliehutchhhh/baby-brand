@@ -136,7 +136,7 @@
   /* ===== Product grid ===== */
   .product{
     display:grid;
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);   /* minmax(0,…) stops a wide no-wrap row in the info column from hogging space and starving the gallery column — plain fr was measuring 414px/956px instead of the intended ratio */
+    grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);   /* minmax(0,…) stops a wide no-wrap row in the info column from hogging space and starving the gallery column — plain fr was measuring 414px/956px instead of the intended ratio. Widened further (1.5fr→1.8fr) to let the sticky image grow and close the empty gap below it on scroll */
     gap:50px;
     padding:24px 40px 80px;
     max-width:1500px;
@@ -171,7 +171,7 @@
     position:relative;
     aspect-ratio: 1 / 1;            /* matches the real product photo's own ratio — a 4:5 box let a square photo float in the middle with dead space below it */
     width:100%;
-    max-width:min(78vh, 760px);    /* caps the box by WIDTH, not height — capping height alone let the box stay full-width and go rectangular, which is what was letterboxing the square photo with side gaps */
+    max-width:min(88vh, 900px);    /* caps the box by WIDTH, not height — capping height alone let the box stay full-width and go rectangular, which is what was letterboxing the square photo with side gaps. Raised (78vh/760px→88vh/900px) so the image fills more of the sticky column and leaves less empty gap below it when scrolled */
     overflow:hidden;
     margin:0;
     flex:1;
