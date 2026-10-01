@@ -224,6 +224,7 @@
     flex-direction:column;   /* vertical rail to the left of the main image, Pipette-style */
     gap:8px;
     margin-top:0;
+    max-height:calc(64px * 4 + 8px * 3);  /* shows exactly 4 thumbs (64px each + 3 gaps) — the rest scroll into view instead of all spilling out to match the tall sticky image */
     overflow-y:auto;
     padding-right:2px;
     flex-shrink:0;
