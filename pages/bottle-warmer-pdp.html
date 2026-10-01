@@ -135,7 +135,7 @@
   /* ===== Product grid ===== */
   .product{
     display:grid;
-    grid-template-columns: 1.3fr 1fr;   /* gives the gallery more width so the framed image reads bigger, like the reference */
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);   /* minmax(0,…) stops a wide no-wrap row in the info column from hogging space and starving the gallery column — plain fr was measuring 414px/956px instead of the intended ratio */
     gap:50px;
     padding:24px 40px 80px;
     max-width:1500px;
