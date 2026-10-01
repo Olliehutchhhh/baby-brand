@@ -25,7 +25,8 @@
     --pill-pink:#FFD6EE;     /* pastel baby pink — discount box fill */
   }
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0; overflow-x:hidden; max-width:100%;}
+  html{overflow-x:hidden;}                      /* only ONE of html/body gets overflow-x:hidden — setting it on both made each independently scrollable (a CSS quirk: hidden on one axis forces auto on the other), which broke position:sticky on the gallery since it then stuck to the wrong scroll container */
+  html,body{margin:0;padding:0; max-width:100%;}
   body{
     font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
     color:var(--ink);
@@ -881,6 +882,15 @@
       <div class="desc-heading">Description</div>
       <p class="desc-text">Like a sigh of relief for sleepy middle-of-the-night feeds — this portable warmer heats milk and water in seconds, runs on a long-life battery, and fits in a diaper bag, car cup holder, or carry-on. Pull it out, press one button, and feeding is ready wherever you are.</p>
 
+      <div class="video-title">What our customers are saying</div>
+      <div class="video-row">
+        <div class="video-card"><span class="bag">🛍</span><span class="play">▶</span></div>
+        <div class="video-card"><span class="bag">🛍</span><span class="play">▶</span></div>
+        <div class="video-card"><span class="bag">🛍</span><span class="play">▶</span></div>
+        <div class="video-card"><span class="bag">🛍</span><span class="play">▶</span></div>
+        <div class="video-card"><span class="bag">🛍</span><span class="play">▶</span></div>
+      </div>
+
       <div class="pay-line" style="margin-bottom:10px;">
         Interest-free payment with
         <span class="pay-badge klarna">Klarna.</span>
@@ -989,15 +999,6 @@
 
       <div class="disclaimer">
         Klarna's Pay in 3 / Pay in 30 days are unregulated credit agreements. Borrowing more than you can afford or paying late may negatively impact your financial status and ability to obtain credit. 18+. UK residents only. Subject to status. Ts&amp;Cs and late fees apply.
-      </div>
-
-      <div class="video-title">See it in action</div>
-      <div class="video-row">
-        <div class="video-card"><span class="bag">🛍</span><span class="play">▶</span></div>
-        <div class="video-card"><span class="bag">🛍</span><span class="play">▶</span></div>
-        <div class="video-card"><span class="bag">🛍</span><span class="play">▶</span></div>
-        <div class="video-card"><span class="bag">🛍</span><span class="play">▶</span></div>
-        <div class="video-card"><span class="bag">🛍</span><span class="play">▶</span></div>
       </div>
 
     </div>
