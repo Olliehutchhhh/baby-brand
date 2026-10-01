@@ -163,6 +163,7 @@
     overflow:hidden;               /* safety net: content is sized to fit, this stops any spill-over from escaping the sticky box */
     display:flex;
     flex-direction:row;            /* thumbnails as a vertical rail to the left of the framed image, Pipette-style */
+    align-items:flex-start;        /* stops the image box stretching to match the taller thumbnail column's height — it was squashing the square photo into a tall, mostly-empty rectangle */
     gap:12px;
   }
   .main-image-wrap{
