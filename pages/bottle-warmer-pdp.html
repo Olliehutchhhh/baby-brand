@@ -835,6 +835,16 @@
         <div class="pill"><span class="check">✓</span> Warms Milk and Water</div>
       </div>
 
+      <hr class="section-divider">
+
+      <div class="select-label">Bundle And Save:</div>
+      <div class="style-options">
+        <div class="style-card" id="bundleCard" data-style="Warmer & Cooler Set">
+          <div class="swatch-img">Set</div>
+          <div class="label">Warmer &amp; Cooler Set</div>
+        </div>
+      </div>
+
       <div class="rating">
         <span class="stars">★★★★★</span>
         <a href="#" class="review-count">(788)</a>
@@ -889,18 +899,6 @@
       <div class="meta-row">
         <div>SKU: <strong>MW005-GE10BA-A</strong></div>
         <div>Availability: <strong>In stock</strong></div>
-      </div>
-
-      <div class="select-label">Style: <span id="styleLabel">Bottle Warmer</span></div>
-      <div class="style-options">
-        <div class="style-card" data-style="Warmer & Cooler Set">
-          <div class="swatch-img">Set</div>
-          <div class="label">Warmer &amp; Cooler Set</div>
-        </div>
-        <div class="style-card selected" data-style="Bottle Warmer">
-          <div class="swatch-img">Warmer</div>
-          <div class="label">Bottle Warmer</div>
-        </div>
       </div>
 
       <div class="select-label">Color: <span id="colorLabel">Green</span></div>
@@ -1025,13 +1023,9 @@
   </div>
 
 <script>
-  // ---- Style selector ----
-  document.querySelectorAll('.style-card').forEach(function(card){
-    card.addEventListener('click', function(){
-      document.querySelectorAll('.style-card').forEach(function(c){ c.classList.remove('selected'); });
-      card.classList.add('selected');
-      document.getElementById('styleLabel').textContent = card.dataset.style;
-    });
+  // ---- Bundle upsell (single toggle, not a multi-choice selector) ----
+  document.getElementById('bundleCard').addEventListener('click', function(){
+    this.classList.toggle('selected');
   });
 
   // ---- Color selector (syncs main + sticky) ----
