@@ -517,6 +517,100 @@
   }
   .style-card .label{ font-size:12px; font-weight:600; }
 
+  /* ---- Option cards: warmer only (left) vs Bundle And Save (right) ---- */
+  .option-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:22px;
+    align-items:stretch;
+  }
+  .opt-card{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:30px 16px 16px;
+    cursor:pointer;
+    background:var(--paper);
+    transition:border-color .15s, box-shadow .15s, background .15s;
+  }
+  .opt-card:hover{ border-color:var(--accent-dark); }
+  .opt-card.selected{
+    border:2px solid var(--accent-dark);
+    padding:29px 15px 15px;        /* offsets the thicker border so nothing shifts */
+    background:#fbfbff;
+    box-shadow:0 4px 14px rgba(26,31,61,0.08);
+  }
+  .opt-ribbon{
+    position:absolute;
+    top:-1px; right:-1px;
+    background:var(--accent-dark);
+    color:#fff;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:0.06em;
+    padding:6px 12px;
+    border-radius:0 14px 0 10px;
+  }
+  .opt-head{ display:flex; align-items:center; gap:9px; margin-bottom:10px; }
+  .opt-radio{
+    flex:0 0 18px;
+    width:18px; height:18px;
+    border-radius:50%;
+    border:2px solid var(--accent-dark);
+    position:relative;
+  }
+  .opt-card.selected .opt-radio::after{
+    content:"";
+    position:absolute; inset:3px;
+    border-radius:50%;
+    background:var(--accent-dark);
+  }
+  .opt-title{ font-size:15px; font-weight:800; color:var(--accent-dark); line-height:1.2; }
+  .opt-price{
+    font-family:var(--serif);
+    font-size:26px;
+    color:var(--accent-dark);
+    line-height:1.1;
+    display:flex; align-items:center; flex-wrap:wrap; gap:6px 8px;
+  }
+  .opt-save{
+    font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:0.05em;
+    background:var(--pastel-pink);
+    color:var(--accent-dark);
+    border-radius:999px;
+    padding:4px 9px;
+  }
+  .opt-sub{ font-size:12px; color:var(--muted); margin:4px 0 12px; }
+  .opt-list{ display:flex; flex-direction:column; gap:7px; font-size:12.5px; color:var(--ink); margin-bottom:14px; }
+  .opt-list li{ display:flex; gap:8px; line-height:1.35; }
+  .opt-list li::before{ content:"✓"; font-weight:800; color:var(--accent-dark); }
+  .opt-hint{ margin-top:auto; font-size:12px; font-weight:700; color:var(--accent); }
+  .gift-strip{
+    margin-top:auto;
+    background:var(--pastel-pink-soft);
+    border-radius:10px;
+    padding:10px;
+  }
+  .gift-thumbs{ display:flex; gap:8px; margin-bottom:8px; }
+  .gift-item{ flex:0 1 72px; min-width:0; text-align:center; }
+  .gift-img{
+    aspect-ratio:1/1;
+    border-radius:8px;
+    background:linear-gradient(135deg, var(--pastel-pink), var(--pastel-blue-soft));
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px;
+  }
+  .gift-was{ font-size:10.5px; color:var(--muted); text-decoration:line-through; margin-top:4px; }
+  .gift-label{ display:flex; flex-direction:column; gap:1px; font-size:12px; color:var(--accent-dark); }
+  .gift-label span{ font-size:11px; color:var(--muted); }
+  @media (max-width:480px){ .option-grid{ grid-template-columns:1fr; } }
+
   .color-options{
     display:flex;
     flex-wrap:wrap;
@@ -839,11 +933,48 @@
 
       <hr class="section-divider">
 
-      <div class="select-label">Bundle And Save:</div>
-      <div class="style-options">
-        <div class="style-card" id="bundleCard" data-style="Warmer & Cooler Set">
-          <div class="swatch-img">Set</div>
-          <div class="label">Warmer &amp; Cooler Set</div>
+      <div class="select-label">Select Option:</div>
+      <div class="option-grid" role="radiogroup" aria-label="Choose your set">
+
+        <!-- LEFT: warmer on its own -->
+        <div class="opt-card selected" id="optSingle" role="radio" aria-checked="true" tabindex="0" data-opt="single">
+          <div class="opt-head">
+            <span class="opt-radio"></span>
+            <span class="opt-title">Portable Warmer</span>
+          </div>
+          <div class="opt-price">£89.99</div>
+          <div class="opt-sub">Just the warmer</div>
+          <ul class="opt-list">
+            <li>Portable Milk &amp; Water Warmer</li>
+            <li>2 Year Warranty</li>
+            <li>30 Days Guarantee</li>
+          </ul>
+          <div class="opt-hint">Add the cooler &amp; save 21% →</div>
+        </div>
+
+        <!-- RIGHT: Bundle And Save, with free gifts -->
+        <div class="opt-card" id="optBundle" role="radio" aria-checked="false" tabindex="0" data-opt="bundle">
+          <span class="opt-ribbon">BEST VALUE</span>
+          <div class="opt-head">
+            <span class="opt-radio"></span>
+            <span class="opt-title">Bundle And Save</span>
+          </div>
+          <div class="opt-price">£134.99 <span class="opt-save">SAVE 21%</span></div>
+          <div class="opt-sub">Warmer &amp; Cooler Set</div>
+          <ul class="opt-list">
+            <li>Portable Warmer + Portable Cooler</li>
+            <li>Free Gifts included</li>
+            <li>2 Year Warranty</li>
+            <li>30 Days Guarantee</li>
+          </ul>
+          <div class="gift-strip">
+            <div class="gift-thumbs">
+              <div class="gift-item"><div class="gift-img">👜</div><div class="gift-was">£14</div></div>
+              <div class="gift-item"><div class="gift-img">🧽</div><div class="gift-was">£8</div></div>
+              <div class="gift-item"><div class="gift-img">🔌</div><div class="gift-was">£10</div></div>
+            </div>
+            <div class="gift-label"><strong>Free Gifts</strong><span>£32 value · 3 items</span></div>
+          </div>
         </div>
       </div>
 
@@ -853,9 +984,9 @@
       </div>
 
       <div class="price-row">
-        <div class="price-old">£104.99</div>
-        <div class="price">£89.99</div>
-        <div class="off-pill">14% OFF</div>
+        <div class="price-old" id="priceOld">£104.99</div>
+        <div class="price" id="priceNow">£89.99</div>
+        <div class="off-pill" id="priceOff">14% OFF</div>
       </div>
 
       <div class="buy-row">
@@ -1009,8 +1140,8 @@
   <div class="sticky-bar" id="stickyBar">
     <div class="sticky-thumb" style="background-image:url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCADwAPADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD22lApcUtZEABTgOKQU8CkMSnBacBS4oAbilxTttKFzQMbigCpAnNLtoAYBRtqQCl20ARbaUJUu2jbQBGVppTvU2ygrQBXK0hWpytN2UAQkUhGan8umlMUAQlaTbUpX2pNtAiMik281IVzxQVxQBEQaTFSlaaVNFwGUYzT9o700g0ANpDT9tJimIQUopopw60gHLT1po4p60DHAU4UgFPAoGAFOC0CnUgExTgKXFLimAmM0oWnge1OC0AR7Ril2VKABzTWliT70sa/VgKAG7famlaRtQsk+9eWy/WVR/WkGpWDdL60P/bZf8aLALs9qQripUeKbmORJP8AcYN/KlK80DICvtTSuan28800igRBspCnNTYpCKAIduKQrUxHNNI5oAixSEVIVpNtAEW2gjFSYpuKAIyvNJtqXFNIoEVQcU8VCDTwaBEoqRTUSmpBSGSrzzUg6VGvAp6mmMcDThTQacDSAcozT8etNFPFMBQM05mEaFz0UZNIpqO/bZZyHBPTgd+RQgbsriIouOZT+HYVWv7C2ZDhVJ+lNjuGA4ik/HA/rVfUbmZbaVljIIUkEsOK1MLprU4TXb+1hu5beCOW6liOJFgi3+X9T0H061zlzq9sx2lAASQCyY57ggjg+1bdqsqaDYFEy0yebI56u7fMSfxJriPGztF9oMYyRHuHbaVZMEf99MPoakxtqTXd2Y23wO0TdQyNtI/KvQ/hV4y1HUZ30jVZ2uflLW8znLDHVSe/HT6V41a38k8QDqS3c5Feh/DB8a9ZYjfPmYzxjkH3oNKV0z2xhTStS0wioOoiK0hFSEU0rQBHikxT8UYzQIZjNNxzUmMUmKLAMK8UwrzUlJigBm3imkVJSEUAZYNPHSoFapA1BJKpqZDUA9akQ0gLCtTgaiU1IDTGSCnCmA05TzSGSinioxUgNADxioNROLN/qv8AMVMKg1Fh9m2c5dgAAMng5poU/hZVjNRakM2Uv+4asQxBuqzfglPuIU8oq0c7AjGNo5/WtDBRdjyPSNWh1vw7ZPBLteAGCZCfmikQ7WVh2OR+RFcd4wvYpri+hR8mG3+cf3C7oFB9ztY49BXXeLPAltY6hdarZ2Esslz/AK3y5mgb6naSD9a4WTw3eXBWFbOOztUcyLHE+8ux43ux5Zsceg7UjLS5l6YDtb616d8Mh/xObL/rqP5GuMGjNaJtCSE+uB/jXQeCdeg0bW7L7WjJEsy7nPRR0zQXB+8fQXammgMGUMCCCMgjoRR0qDrGn6U0jjNPNNPpQAzHrSYpxpM0gGmm08802mA00hFOI5pCKQhuaQ804000AYStipQelVwalVqDNMnU1Kh4qBTUqt0oKJwakU1ApzUoNAyYNmnKaiBp4NICYGng1CDT1bNO4yZTmqJlE9y7Z+VTtX8Kts2yNm/ugmsm1fEa+uKqJlVeyNqFgFptzINhqrFNxjNMuJvlNaBzaGFrDZziuO1AId2VH5V1eqSfK1chqLcmkc09zCvSMEViXCZlGBzWrevgmskNunH1pBE9x+Gmryal4eW3nYtNZny8nqU/h/qPwrrD0rzn4Xv5V3LGOkkGT9QR/ia9EY1LO2OwZpvegtSZqSgptKTSUAJmkNHekJouIDSHmjNJQAhoxQaTNIDm1apVNVlapVagyLKGpg1VUaplPNMosqcVIDUCtxUitmkMmXmpVqAGnhsUDJgacDUYNOBoAW6kItJv+ubfyrKgf5B9K0bw4sp/+ubfyrJhb5RVxMK26L0b0lw/ymokamzN8tWStjG1Nshq5LUjjNdTqTcGuT1I8nNBlI568bOay4z+/A960LxsZNZsRzcD60hxPV/h0duoxe8Lj9BXo5NebfD7jUYP+ub/AMq9HzUz3O2Gwd6QmkJpCagYE0ZppNJupgOJpM03NIWpAKTSZpCaTNAC5ozmkpM0AcqDUyGqympFagxLaNmpUaqsbe9TKcmgaLSn0qVTVZGqRWplFgNUgNQBs1IrUDJg2KeDUIOKcDzSAL1v9BuP+ubfyrHib5RWpfNiwuP+ubfyrEhf5RVxMKu6L6PmklOVqJHpZH+U1ZK2MjUjwa5TUW+9XTak3ymuU1Fs59aREjnr01nwf8fK/Wrt63WqFvzcL9aQRPV/h/xfwH/pm/8AKvRS3FedeAeL+D/rm/8AKvQSaU9zsjsO3cU0nJpM0magoUmjNNzQTQAuaTNJmkzQAuaQmkJpCaBDs8UUwnIpM9qAucmGqRG5qurDNSqaZkWVbvUyN2qorHNTI+aQFtXNSq1VVbmpVamUmWVapA3FV1apVagZMGzUmagB4p4agYl8f9BuP+ubfyrAhf5QK279v9BuP+uZ/lXPQvlRTic9bdF+N6fI3y1XjbNSSH5KtEox9SbrXK6lxmum1E9a5bUmzuoJkc9eMeeKpWxP2lfrVq7bOaqWhzcL9aSHE9a8B/8AH9B6eW/8q78mvP8AwJxewH/pm/8AKu+JpT3OuOwE0b6YWppPNQMkzzSbqZuozQA7d7Um6m5pM0CHZpuaTNGaAFzRmm5pCaAOPR81KrYquDUitVGSLKtUqE5qspPapVNKwFpWqdGqqpxUymkMsI1SBqgU1Ip5plFhWqQGoFNSA0DGah/x4XH/AFzb+Vc5C2AK6LUD/wAS+4/65t/KuYiPyiqRhV3RoRNUsh4NVoGzU0jfLVIlGRqPQmuT1M4zXU6k3BNcpqX8VBMjnbxs81WtD/pK/Wp7s8mq1n/x8r9aEOJ654FP+nQ/9c3/AJV3jGuD8Cj/AEyH/rm/8q7tvrUz3OpbDSaTNFJUDFzQTSZpDQFxc0maSinYLhmkzxQaSgLi0maDSE4oFc4tGqVT3qFetTLzTMiZTUycmoV6VMg5oAmQ5qZKiQVMg5pWGSKDUq8UxR7VKq96CkPWpF601VqRF9aBkWoj/iXXP/XM/wAq5WI8V1eoj/iXXP8A1zauSj7VSMK26LkJqd2+SqsB5qdj8pqkKJk6icg1yupt1rqNR6GuU1M8mhkyOdujycVBY83S/WpLtsE4qOw/4+V+tJFRPXfAozeRf9c3/lXdEVw3gUf6ZF/1zf8AlXdYpT3OlbDKQnPSlIwKQioEJSUuKSqGFIaWkNABmm0uKKBBTSeeaWmnk0gOMWplyKjUVKg9aoxJUFWIxxUMa1YjFIZMg4qdFBqNAcCp0HFBSJFWpQvtTUFTKKCgVeamVaRVqZFyaBlTVE/4lt1x/wAsmrio1AAwWH0Nd1qo/wCJXd/9cm/lXCxH5RTRhV3RagBB4dvxwamkVtuRI35D/CoYadO774RHypLbjjOPlOP1qkKJlaiHwT5h/wC+RXJamG5/eH8hXoHiiSSGOSCGCMWyuqrKIASRx/HjJ796w554YrzTdOZLP7HcpCbp3iRnXefn/eEZT8xihg46nnN0G3f6w4+gqOxUm5X53xnsas3qRKPvHe3IHbFVrHi5X60kET174fwqL+JvmZ/Kf5mYk9PevQCK4T4fDdeR/wDXJ/6V37DFKW50LYhxSVIVzTSKmwyLFGKk20hWgRGRSEVIVpMUAMxmkIp+KMUwI8Um3vUmKaRQI45VIqVEyakWLmpUi9qZmIi4qdFoSKrCR0ACCp41pESp41pFIci1Mi4pEWpFFBSHotSouKagqVaBlbVV/wCJXd/9cm/lXARHgV6Hqg/4ld2P+mLfyrzyL7opowrbotRVoa1MLu+t5IJC0aLiQ8jPB9fes1DhSRST6jHHBJiJMRqW3knJIGTn2qkEXoTRLcW+nA3s4Nr5EiiMzBsOVYL8mc9SO3HWsCSCB7vTtSP2UWdqsIu1aRAzFT8/7snc/wCAOat6pPax2gkMPmSycjJwEXjn3PNcnvhuXuHnQ7IVLYXgvwCB7deaGDZDq0pOhqtlcWMdlsTzoHZPtDTfxEAjftzjocYrnbD/AI+V+tOurgTPuEaR5yNq5xxTbAZuV+tIEeyfDvm8X/ri39K9AYD8a4H4dDF59IW/mK71iKUtzdbDcUhoL4phcUhC0EcU3fRvoAMGkxxmgtQXFAXAqO1IRRvFJvApBcNtIRxRvFHmCgLnPLGBUypSqmTUqR4qyLCImKmVKVUxUigUFWBVqZFxQq1IBSAVUqVUpExinigY4CnqpzTc4p4egY26hNxaTwjgyRso+pFeYC4WGR4ZcpJGSrK3BBHavUjMFBJ7VxXivTLbWpvN3NBMBgSRgZP19aDKrG+plRXkPQuMU2dLWQHMxMZ6x7vlP4f0rGn8LamhPk6nC47eZEQf0NUpfDniD+Geyf8A7aMv9KdzNXNPVpY50wJAMdMVy1w6WwZYm65znknPXNWZ/DHiZ84Wzb/t4P8A8TWdP4N8Uy5xFZ/X7R/9ai4WbMm4aMMWJGen0FJYSr9pXGOtWX+HvieQ/MbRf+2hanQfDrXUcGW6AHcRKB+pNF0Uker+ALqKEy3Mkqqix+WPckgn+X611za5af8APUflXn/h7QrlbNIpEbKDAxgVr/2JMvSJ6T1NbnRtrlr/AM9P0ph1u3PR/wBK586ZOo/1TUn2G4H/ACyb8qVhG+dZhPdvyoGrxnoT+VYAtJx/A/5U4W1wP4W/KnYRuf2sn+1QdVQnvWKIZv7rflThFL6NRYDY/tNT2NJ/aQ9KyRFJ6Gl8t+4NFhGt/aQz3pDqK9eayvLf3oZGx3osBqqKkQZNMXFSqKZaJAOaetMFSAUmMkUYp600U4UwHj2p4NNWnUAOHSlzim0FsUAMnbEZrnrvlia3LhvlNYlwMsaREiiyg1Cw61ZdcVCy80EEDCm5NTFc1GyUWAjyaTqaeUpUQFuaVgNfSQFX3rWA4rK08YFaikkUGiEKj0ppQelPNIaYyIxg0hjxUuKCKYiAxAUnlipsUm3n2oAhMQHYUnlgVOVpCtAiExj0pDGPSpsUmBTAQAVItMFSL0oKRIop6jJpi1ItKwx608c0wc08GkwHL7U7PNMBpQaAH5NNY4FGeaaxzQBDP901lzr81ac54xVCYUyJFF1NQMtW3GahdaCCuV4pmParBWmFaAISuelKifN0qTZUqp7UAXLNa0FqnbLgCri8daDRC4oxTuKBSHcbikxin0hGaYhtJinUlADcUYp2KMUAMK5FMIxUvamkZpgf/9k=');background-size:cover;background-position:center;"></div>
     <div class="sticky-info">
-      <div class="name">Superfast Portable Bottle Warmer for Travel</div>
-      <div class="price">£89.99 GBP</div>
+      <div class="name" id="stickyName">Superfast Portable Bottle Warmer for Travel</div>
+      <div class="price" id="stickyPrice">£89.99 GBP</div>
     </div>
     <select class="sticky-select" id="stickyColorSelect">
       <option>Green</option>
@@ -1025,9 +1156,33 @@
   </div>
 
 <script>
-  // ---- Bundle upsell (single toggle, not a multi-choice selector) ----
-  document.getElementById('bundleCard').addEventListener('click', function(){
-    this.classList.toggle('selected');
+  // ---- Option cards: warmer only vs Bundle And Save (price + sticky bar follow the choice) ----
+  var OPTIONS = {
+    single: { name:'Superfast Portable Bottle Warmer for Travel', old:'£104.99', now:'£89.99',  off:'14% OFF' },
+    bundle: { name:'Portable Warmer & Cooler Set + Free Gifts',   old:'£169.98', now:'£134.99', off:'21% OFF' }
+  };
+  var optCards = document.querySelectorAll('.opt-card');
+  function selectOption(key){
+    optCards.forEach(function(c){
+      var on = c.dataset.opt === key;
+      c.classList.toggle('selected', on);
+      c.setAttribute('aria-checked', on ? 'true' : 'false');
+    });
+    var o = OPTIONS[key];
+    document.getElementById('priceOld').textContent = o.old;
+    document.getElementById('priceNow').textContent = o.now;
+    document.getElementById('priceOff').textContent = o.off;
+    document.getElementById('stickyName').textContent = o.name;
+    document.getElementById('stickyPrice').textContent = o.now + ' GBP';
+  }
+  optCards.forEach(function(c){
+    c.addEventListener('click', function(){ selectOption(c.dataset.opt); });
+    c.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); selectOption(c.dataset.opt); }
+    });
+  });
+  document.querySelector('.opt-hint').addEventListener('click', function(e){
+    e.stopPropagation(); selectOption('bundle');
   });
 
   // ---- Color selector (syncs main + sticky) ----
