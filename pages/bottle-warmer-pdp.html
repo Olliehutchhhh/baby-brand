@@ -144,7 +144,7 @@
     align-items:start;
   }
   @media (max-width: 900px){
-    .product{ grid-template-columns:1fr; gap:24px; padding:20px; }
+    .product{ grid-template-columns:minmax(0,1fr); gap:24px; padding:20px; }
     .gallery{
       position:static;         /* no sticky once image & info stack — avoids the image pinning over content */
       max-height:none;
@@ -153,6 +153,10 @@
       width:100%;
       max-height:none;         /* full-width image, ratio-controlled height, on stacked layouts */
     }
+    .gallery{ flex-direction:column; align-items:stretch; overflow:visible; }
+    .gallery .main-image-wrap{ flex:none; order:0; }
+    .gallery .thumb-strip{ order:1; }
+    .gallery .thumb-strip{ flex-direction:row; width:auto; max-height:none; overflow-x:auto; overflow-y:hidden; padding:0 0 4px; }   /* thumbs become a swipeable row under the image on stacked layouts */
   }
 
   /* ---- Sticky gallery ---- */
@@ -271,8 +275,8 @@
 
   /* ---- Benefit pills, underneath the title/subtitle ---- */
   .benefit-pills{
-    display:flex;
-    flex-wrap:wrap;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));   /* always 2 x 2, at every screen width */
     gap:10px;
     margin-bottom:18px;
   }
@@ -287,7 +291,9 @@
     font-weight:700;
     color:var(--accent-dark);
     background:var(--pastel-blue-soft);
+    min-width:0;
   }
+  @media (max-width:420px){ .benefit-pills .pill{ padding:9px 12px; font-size:12px; gap:6px; } }
   .benefit-pills .pill .check{ font-weight:800; }
   .rating{
     display:flex; align-items:center; gap:6px;
