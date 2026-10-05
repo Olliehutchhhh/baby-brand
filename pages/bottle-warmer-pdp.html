@@ -604,7 +604,7 @@
     padding:10px;
   }
   .gift-thumbs{ display:flex; gap:8px; margin-bottom:8px; }
-  .gift-item{ flex:0 1 72px; min-width:0; text-align:center; }
+  .gift-item{ flex:0 1 84px; min-width:0; text-align:center; }
   .gift-img{
     aspect-ratio:1/1;
     border-radius:8px;
@@ -612,6 +612,8 @@
     display:flex; align-items:center; justify-content:center;
     font-size:20px;
   }
+  .gift-name{ font-size:10.5px; font-weight:700; color:var(--accent-dark); line-height:1.2; margin-top:5px; }
+  .gift-free{ font-size:11px; font-weight:800; color:var(--accent); letter-spacing:.04em; }
   .gift-was{ font-size:10.5px; color:var(--muted); text-decoration:line-through; margin-top:4px; }
   .gift-label{ display:flex; flex-direction:column; gap:1px; font-size:12px; color:var(--accent-dark); }
   .gift-label span{ font-size:11px; color:var(--muted); }
@@ -920,7 +922,7 @@
       <div class="thumb-strip" id="thumbsBundle" style="display:none">
         <div class="thumb active" data-label="Bundle shot" title="Bundle shot — add photo">+</div>
         <div class="thumb" data-label="Warmer + Cooler" title="Warmer + Cooler — add photo">+</div>
-        <div class="thumb" data-label="Free gifts" title="Free gifts — add photo">+</div>
+        <div class="thumb" data-label="Free E-Book" title="Free E-Book — add photo">+</div>
         <div class="thumb" data-label="Lifestyle" title="Lifestyle — add photo">+</div>
         <div class="thumb" data-label="On the go" title="On the go — add photo">+</div>
         <div class="thumb" data-label="Cooler in use" title="Cooler in use — add photo">+</div>
@@ -979,17 +981,17 @@
           <div class="opt-sub">Warmer &amp; Cooler Set</div>
           <ul class="opt-list">
             <li>Portable Warmer + Portable Cooler</li>
-            <li>Free Gifts included</li>
+            <li>Free E-Book included</li>
             <li>2 Year Warranty</li>
             <li>30 Days Guarantee</li>
           </ul>
           <div class="gift-strip">
             <div class="gift-thumbs">
-              <div class="gift-item"><div class="gift-img">👜</div><div class="gift-was">£14</div></div>
-              <div class="gift-item"><div class="gift-img">🧽</div><div class="gift-was">£8</div></div>
-              <div class="gift-item"><div class="gift-img">🔌</div><div class="gift-was">£10</div></div>
+              <div class="gift-item"><div class="gift-img">🍼</div><div class="gift-name">Warmer</div></div>
+              <div class="gift-item"><div class="gift-img">❄️</div><div class="gift-name">Breast Milk Cooler</div></div>
+              <div class="gift-item"><div class="gift-img">📖</div><div class="gift-name">E-Book</div><div class="gift-was">£10</div><div class="gift-free">FREE</div></div>
             </div>
-            <div class="gift-label"><strong>Free Gifts</strong><span>£32 value · 3 items</span></div>
+            <div class="gift-label"><strong>Your bundle</strong><span>Warmer + Cooler + free E-Book (£10 value)</span></div>
           </div>
         </div>
       </div>
@@ -1175,12 +1177,12 @@
   // ---- Option cards: warmer only vs Bundle And Save (price + sticky bar follow the choice) ----
   var OPTIONS = {
     single: { name:'Superfast Portable Bottle Warmer for Travel', old:'£104.99', now:'£89.99',  off:'14% OFF' },
-    bundle: { name:'Portable Warmer & Cooler Set + Free Gifts',   old:'£169.98', now:'£134.99', off:'21% OFF',
+    bundle: { name:'Portable Warmer & Cooler Set + Free E-Book',   old:'£169.98', now:'£134.99', off:'21% OFF',
       title:'Portable Bottle Warmer & Cooler Set',
       crumb:'Bundles',
-      sub:'Warm it, chill it, take it anywhere — the complete on-the-go feeding set, with 3 free gifts.',
-      pills:['Heats Fast','24 Hour Cooling','Free Gifts Included','Save 21%'],
-      desc:'Everything you need for feeding on the move in one set. Warm milk or water in seconds with the portable warmer, then keep bottles fresh and cool with the matching portable cooler — both small enough for the diaper bag, car cup holder or carry-on. Bundle and save 21%, and get a carry pouch, cleaning brush and charging cable free.' }
+      sub:'Warm it, chill it, take it anywhere — the complete on-the-go feeding set, with a free E-Book.',
+      pills:['Heats Fast','24 Hour Cooling','Free E-Book Included','Save 21%'],
+      desc:'Everything you need for feeding on the move in one set. Warm milk or water in seconds with the portable warmer, then keep bottles fresh and cool with the matching portable cooler — both small enough for the diaper bag, car cup holder or carry-on. Bundle and save 21%, and get a free E-Book worth £10.' }
   };
   // snapshot of the warmer-only page content so toggling back restores it exactly
   var $ = function(id){ return document.getElementById(id); };
