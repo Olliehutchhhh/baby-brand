@@ -747,6 +747,13 @@
     cursor:pointer;
   }
 
+  .pair-single{ display:flex; align-items:center; gap:16px; border:1px solid var(--line); border-radius:14px; padding:14px; margin-bottom:26px; }
+  .pair-single .pair-img{ flex:0 0 110px; width:110px; margin:0; border:none; border-radius:10px; font-size:40px; background:linear-gradient(135deg, var(--pastel-pink), var(--pastel-blue-soft)); }
+  .pair-single .name{ font-size:15px; font-weight:800; min-height:0; margin-bottom:4px; color:var(--accent-dark); }
+  .pair-single .p{ font-size:15px; margin:2px 0; }
+  .pair-single .p .was{ color:var(--muted); font-weight:500; text-decoration:line-through; margin-right:6px; }
+  .pair-note{ font-size:12px; font-weight:700; color:var(--accent); margin-bottom:10px; }
+
   .share-row{ display:flex; gap:14px; margin-bottom:20px; }
   .share-row svg{ width:18px; height:18px; }
 
@@ -1024,35 +1031,16 @@
         </div>
       </div>
 
-      <div class="pair-title">Pair well with:</div>
-      <div class="pair-grid">
-        <div class="pair-card">
-          <div class="pair-img">Image</div>
-          <div class="name">99% Water Baby Wipes – Higher Level…</div>
-          <div class="stars-sm">★★★★★ <span class="rc">(66)</span></div>
-          <div class="p">From £35.99 GBP</div>
-          <button class="quick">Quick Shop</button>
-        </div>
-        <div class="pair-card">
-          <div class="pair-img">Image</div>
-          <div class="name">Oral Care Series: Finger Brush Suit</div>
-          <div class="stars-sm">★★★★★ <span class="rc">(98)</span></div>
-          <div class="p">£9.99 GBP</div>
-          <button class="quick">Quick Shop</button>
-        </div>
-        <div class="pair-card">
-          <div class="pair-img">Image</div>
-          <div class="name">Oral Care Series: Finger Wipes</div>
-          <div class="stars-sm">★★★★★ <span class="rc">(52)</span></div>
-          <div class="p">£9.99 GBP</div>
-          <button class="quick">Quick Shop</button>
-        </div>
-        <div class="pair-card">
-          <div class="pair-img">Image</div>
-          <div class="name">Oral Care Series: Tongue Cleaner</div>
-          <div class="stars-sm">★★★★★ <span class="rc">(138)</span></div>
-          <div class="p">£9.99 GBP</div>
-          <button class="quick">Quick Shop</button>
+      <div id="pairSection">
+        <div class="pair-title">Pair well with:</div>
+        <div class="pair-card pair-single">
+          <div class="pair-img pair-cooler" aria-hidden="true">❄️</div>
+          <div class="pair-info">
+            <div class="name">Breast Milk Cooler</div>
+            <div class="p"><span class="was">£79.99</span> £45.00 GBP</div>
+            <div class="pair-note">Bundle discount</div>
+            <button class="quick" id="addCoolerBtn">Add to bundle</button>
+          </div>
         </div>
       </div>
 
@@ -1156,6 +1144,9 @@
       if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); chooseOption(c.dataset.opt); }
     });
   });
+  document.getElementById('addCoolerBtn').addEventListener('click', function(){ chooseOption('bundle'); });
+  // the bundle page already includes the cooler, so the "pair well with" prompt only shows on the warmer page
+  document.getElementById('pairSection').style.display = (PAGE === 'bundle') ? 'none' : '';
   document.querySelector('.opt-hint').addEventListener('click', function(e){
     e.stopPropagation(); chooseOption('bundle');
   });
