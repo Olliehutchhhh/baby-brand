@@ -156,7 +156,8 @@
     .gallery{ flex-direction:column; align-items:stretch; overflow:visible; }
     .gallery .main-image-wrap{ flex:none; order:0; }
     .gallery .thumb-strip{ order:1; }
-    .gallery .thumb-strip{ flex-direction:row; width:auto; max-height:none; overflow-x:auto; overflow-y:hidden; padding:0 0 4px; }   /* thumbs become a swipeable row under the image on stacked layouts */
+    .gallery .thumb-strip{ flex-direction:row; width:auto; max-height:none; overflow-x:auto; overflow-y:hidden; padding:0 0 4px; scrollbar-width:thin; }
+    .gallery .thumb-strip::-webkit-scrollbar{ display:block; height:6px; }   /* thumbs become a swipeable row under the image on stacked layouts */
   }
 
   /* ---- Sticky gallery ---- */
@@ -230,10 +231,13 @@
     margin-top:0;
     max-height:calc(64px * 4 + 8px * 3);  /* shows exactly 4 thumbs (64px each + 3 gaps) — the rest scroll into view instead of all spilling out to match the tall sticky image */
     overflow-y:auto;
-    padding-right:2px;
+    overflow-x:hidden;               /* no horizontal slider: the vertical scrollbar was eating into the 64px width and forcing one */
+    scrollbar-width:none;            /* hide the bar itself (Firefox) — the rail still scrolls with wheel / swipe / keys */
+    padding-right:0;
     flex-shrink:0;
     width:64px;
   }
+  .thumb-strip::-webkit-scrollbar{ display:none; }
   .thumb-strip .thumb{
     flex:0 0 auto;
     width:64px; height:64px;
