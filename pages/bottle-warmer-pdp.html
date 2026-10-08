@@ -931,7 +931,6 @@
           <div class="opt-sub">Just the warmer</div>
           <ul class="opt-list">
             <li>Portable Milk &amp; Water Warmer</li>
-            <li>2 Year Warranty</li>
             <li>30 Days Guarantee</li>
           </ul>
           <div class="opt-hint">Add the cooler &amp; save 21% →</div>
@@ -950,7 +949,6 @@
             <li>Portable Warmer + Portable Cooler</li>
             <li>Free E-Book included</li>
             <li>Free Shipping</li>
-            <li>2 Year Warranty</li>
             <li>30 Days Guarantee</li>
           </ul>
           <div class="gift-strip">
@@ -1009,21 +1007,6 @@
         <button class="code-copy" id="copyCodeBtn">Copy Code</button>
       </div>
 
-      <div class="meta-row">
-        <div>SKU: <strong>MW005-GE10BA-A</strong></div>
-        <div>Availability: <strong>In stock</strong></div>
-      </div>
-
-      <div class="select-label">Color: <span id="colorLabel">Green</span></div>
-      <div class="color-options">
-        <div class="color-card green selected" data-color="Green">
-          <div class="dot"></div> Green
-        </div>
-        <div class="color-card pink" data-color="Pink">
-          <div class="dot"></div> Pink
-        </div>
-      </div>
-
       <div class="utility-row">
         <span>♡ Add to Wishlist</span>
         <span>⇄ Compare</span>
@@ -1033,15 +1016,11 @@
       <div class="accordion">
         <div class="accordion-item open">
           <div class="accordion-head">Fast Shipping — <span class="learn-more" style="font-weight:400;">FREE OVER £100</span><span class="plus">+</span></div>
-          <div class="accordion-body">Order today for delivery in as little as <strong>Monday, 5th October</strong>.</div>
+          <div class="accordion-body">Order today for delivery by <strong id="deliveryDate">within 7 days</strong>.</div>
         </div>
         <div class="accordion-item">
           <div class="accordion-head">30 Days Guarantee <span class="plus">+</span></div>
           <div class="accordion-body">We stand behind our products. If you don't love it, exchanges and returns are available in 30 days. <a href="#" class="learn-more">Learn more</a></div>
-        </div>
-        <div class="accordion-item">
-          <div class="accordion-head">2 Year Warranty <span class="plus">+</span></div>
-          <div class="accordion-body">2 year* warranty guarantee policy. <a href="#" class="learn-more">Learn more</a></div>
         </div>
       </div>
 
@@ -1181,14 +1160,6 @@
     e.stopPropagation(); chooseOption('bundle');
   });
 
-  // ---- Color selector (syncs main + sticky) ----
-  document.querySelectorAll('.color-card').forEach(function(card){
-    card.addEventListener('click', function(){
-      document.querySelectorAll('.color-card').forEach(function(c){ c.classList.remove('selected'); });
-      card.classList.add('selected');
-      document.getElementById('colorLabel').textContent = card.dataset.color;
-    });
-  });
   // sticky bar's option dropdown mirrors the option cards
   var stickyOptSelect = document.getElementById('stickyOptSelect');
   stickyOptSelect.addEventListener('change', function(){ chooseOption(stickyOptSelect.value); });
@@ -1237,6 +1208,16 @@
   }
   document.querySelector('.gallery-arrow.prev').addEventListener('click', function(){ stepGallery(-1); });
   document.querySelector('.gallery-arrow.next').addEventListener('click', function(){ stepGallery(1); });
+
+  // ---- Delivery date: always one week from whenever the customer is viewing the page ----
+  (function(){
+    var d = new Date(); d.setDate(d.getDate() + 7);
+    var day = d.getDate();
+    var suffix = (day % 100 >= 11 && day % 100 <= 13) ? 'th' : ({1:'st',2:'nd',3:'rd'}[day % 10] || 'th');
+    var weekday = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][d.getDay()];
+    var month = ['January','February','March','April','May','June','July','August','September','October','November','December'][d.getMonth()];
+    document.getElementById('deliveryDate').textContent = weekday + ', ' + day + suffix + ' ' + month;
+  })();
 
   // ---- Thumbnail strip swaps the main image ----
   // Bundle photos aren't shot yet, so the bundle gallery shows a labelled placeholder until real images (data-full) are added
