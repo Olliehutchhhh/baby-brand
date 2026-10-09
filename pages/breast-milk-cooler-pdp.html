@@ -857,6 +857,14 @@
     .sticky-bar .btn-cart{ flex:1; }
     .sticky-bar .sticky-qty{ margin-left:auto; }
   }
+
+  /* ---- Stacked layout (must come AFTER the sticky/base rules so it wins) ---- */
+  @media (max-width: 900px){
+    .gallery{ position:static; top:auto; max-height:none; overflow:visible; flex-direction:column; align-items:stretch; }
+    .main-image-wrap{ width:100%; max-width:none; max-height:none; }
+    .gallery .main-image-wrap{ flex:none; order:0; }
+    .gallery .thumb-strip{ order:1; flex-direction:row; width:100%; gap:8px; }
+  }
 </style>
 </head>
 <body>

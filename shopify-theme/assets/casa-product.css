@@ -705,3 +705,11 @@
 .casa-pdp .video-card.ph .bag{ position:absolute; top:10px; right:10px; width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center; font-size:12px; }
 /* Dawn hides empty divs/links (div:empty{display:none}) - our image boxes are intentionally empty */
 .casa-pdp .gift-img, .casa-pdp .sticky-thumb, .casa-pdp a.pair-img{ display:block; }
+
+/* Stacked layout – placed last so it overrides the sticky base rules */
+@media (max-width: 900px){
+  .casa-pdp .gallery{ position:static; top:auto; max-height:none; overflow:visible; flex-direction:column; align-items:stretch; }
+  .casa-pdp .main-image-wrap{ width:100%; max-width:none; max-height:none; }
+  .casa-pdp .gallery .main-image-wrap{ flex:none; order:0; }
+  .casa-pdp .gallery .thumb-strip{ order:1; flex-direction:row; width:100%; gap:8px; }
+}
