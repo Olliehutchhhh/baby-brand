@@ -14,6 +14,38 @@ s = src
 assert s.count("var PAGE = 'single';") == 1
 s = s.replace("var PAGE = 'single';", "var PAGE = 'bundle';")
 s = s.replace("<title>Superfast Portable Bottle Warmer for Travel</title>", "<title>Portable Bottle Warmer &amp; Cooler Set</title>")
+# bundle: its own review placeholders (not the warmer's photos) + a "Just the cooler" link card
+_ph = ''.join('        <div class="video-card ph"><span class="bag">🛍</span><span class="play">▶</span></div>\n' for _ in range(5))
+_a = s.index('<div class="video-row" id="reviewRow">'); _b = s.index('      <div class="discount-box">', _a)
+s = s[:_a] + '<div class="video-row" id="reviewRow">\n' + _ph + '      </div>\n\n' + s[_b:]
+_css = ('  .video-card.ph{ cursor:default; border-radius:0; background:repeating-linear-gradient(45deg, #FFE9F6, #FFE9F6 10px, #FFD6EE 10px, #FFD6EE 20px); border:1px dashed #F6B9DF; display:flex; align-items:center; justify-content:center; }\n'
+  '  .video-card.ph .play{ width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center; font-size:14px; }\n'
+  '  .video-card.ph .bag{ position:absolute; top:10px; right:10px; width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center; font-size:12px; }\n'
+  '  /* ===== Review lightbox ===== */')
+assert s.count('  /* ===== Review lightbox ===== */') == 1
+s = s.replace('  /* ===== Review lightbox ===== */', _css)
+_cooler_card = ('''        <!-- MIDDLE: the cooler on its own (links to its page) -->
+        <div class="opt-card" id="optCooler" role="radio" aria-checked="false" tabindex="0" data-opt="cooler">
+          <div class="opt-head">
+            <span class="opt-radio"></span>
+            <span class="opt-title">Portable Cooler</span>
+          </div>
+          <div class="opt-price">£79.99</div>
+          <div class="opt-sub">Just the cooler</div>
+          <ul class="opt-list">
+            <li>Portable Breast Milk Cooler (650ml)</li>
+            <li>2 Cooling Cylinders Included</li>
+            <li>30 Days Guarantee</li>
+          </ul>
+        </div>
+
+''')
+_m = '        <!-- RIGHT: Bundle And Save, with free gifts -->'
+assert s.count(_m) == 1
+s = s.replace(_m, _cooler_card + _m)
+_u = "var PAGE_URLS = { single:'bottle-warmer-pdp.html', bundle:'bottle-warmer-bundle-pdp.html' };"
+assert s.count(_u) == 1
+s = s.replace(_u, "var PAGE_URLS = { single:'bottle-warmer-pdp.html', cooler:'breast-milk-cooler-pdp.html', bundle:'bottle-warmer-bundle-pdp.html' };")
 (d / "bottle-warmer-bundle-pdp.html").write_text(s)
 print("built bottle-warmer-bundle-pdp.html")
 
