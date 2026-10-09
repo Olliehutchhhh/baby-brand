@@ -110,12 +110,12 @@
     <!-- SCROLLING INFO -->
     <div class="info">
       <h1 id="pdpTitle">{{ product.title }}</h1>
-      {%- if s.subtitle != blank -%}<div class="subtitle" id="pdpSub">{{ s.subtitle | replace: '{percent}', pct_token }}</div>{%- endif -%}
+      {%- if s.subtitle != blank -%}<div class="subtitle" id="pdpSub">{{ s.subtitle | replace: '[percent]', pct_token }}</div>{%- endif -%}
 
       {%- if pills.size > 0 -%}
         <div class="benefit-pills" id="pdpPills">
           {%- for pill in pills -%}
-            <div class="pill" {{ pill.shopify_attributes }}><span class="check">&#10003;</span> {{ pill.settings.text | replace: '{percent}', pct_token }}</div>
+            <div class="pill" {{ pill.shopify_attributes }}><span class="check">&#10003;</span> {{ pill.settings.text | replace: '[percent]', pct_token }}</div>
           {%- endfor -%}
         </div>
       {%- endif -%}
@@ -144,7 +144,7 @@
             {%- assign lines = s.single_list | newline_to_br | split: '<br />' -%}
             {%- for line in lines -%}{%- assign t = line | strip -%}{%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}{%- endfor -%}
           </ul>
-          {%- unless is_bundle -%}{%- if bundle_p != blank and s.single_hint != blank and save_pct > 0 -%}<div class="opt-hint">{{ s.single_hint | replace: '{percent}', pct_token }}</div>{%- endif -%}{%- endunless -%}
+          {%- unless is_bundle -%}{%- if bundle_p != blank and s.single_hint != blank and save_pct > 0 -%}<div class="opt-hint">{{ s.single_hint | replace: '[percent]', pct_token }}</div>{%- endif -%}{%- endunless -%}
         </{{ left_tag }}>
 
         {%- comment -%} ===== MIDDLE (bundle page only): link to the cooler on its own ===== {%- endcomment -%}
@@ -176,11 +176,11 @@
             </div>
             <div class="opt-price">
               {%- if is_bundle -%}{{ variant.price | money }}{%- else -%}{{ bundle_p.selected_or_first_available_variant.price | money }}{%- endif -%}
-              {%- if s.bundle_badge != blank %} <span class="opt-save">{{ s.bundle_badge | replace: '{percent}', pct_token }}</span>{% elsif save_pct > 0 %} <span class="opt-save">SAVE {{ save_pct }}%</span>{% endif -%}
+              {%- if s.bundle_badge != blank %} <span class="opt-save">{{ s.bundle_badge | replace: '[percent]', pct_token }}</span>{% elsif save_pct > 0 %} <span class="opt-save">SAVE {{ save_pct }}%</span>{% endif -%}
             </div>
             <div class="opt-sub">{{ s.bundle_sub }}</div>
             <ul class="opt-list">
-              {%- assign lines = s.bundle_list | replace: '{percent}', pct_token | newline_to_br | split: '<br />' -%}
+              {%- assign lines = s.bundle_list | replace: '[percent]', pct_token | newline_to_br | split: '<br />' -%}
               {%- for line in lines -%}{%- assign t = line | strip -%}{%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}{%- endfor -%}
             </ul>
             <div class="gift-strip">
@@ -241,7 +241,7 @@
       <hr class="section-divider">
 
       <div class="desc-heading">Description</div>
-      <div class="desc-text" id="pdpDesc">{{ pdp_desc | replace: '{percent}', pct_token }}</div>
+      <div class="desc-text" id="pdpDesc">{{ pdp_desc | replace: '[percent]', pct_token }}</div>
 
       <div class="video-title">{{ s.reviews_title }}</div>
       <div class="video-row" id="reviewRow">
@@ -370,7 +370,7 @@
     { "type": "text", "id": "single_title", "label": "Title", "default": "Portable Warmer" },
     { "type": "text", "id": "single_sub", "label": "Sub-heading", "default": "Just the warmer" },
     { "type": "textarea", "id": "single_list", "label": "Tick list (one per line)" },
-    { "type": "text", "id": "single_hint", "label": "Hint link text (use {percent} for the automatic saving)", "default": "Add the cooler & save {percent}% →" },
+    { "type": "text", "id": "single_hint", "label": "Hint link text (use [percent] for the automatic saving)", "default": "Add the cooler & save [percent]% →" },
 
     { "type": "header", "content": "Cooler link card (bundle page only)" },
     { "type": "text", "id": "cooler_title", "label": "Title", "default": "Portable Cooler" },
