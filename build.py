@@ -95,9 +95,9 @@ c = rep(c, '  /* ===== Review lightbox ===== */',
 # pair well with -> the warmer
 pair = ('<div class="pair-title">Pair well with:</div>\n'
   '        <div class="pair-card pair-single">\n'
-  f'          <div class="pair-img" role="img" aria-label="Portable Bottle Warmer" style="background:#fff url(\'{w_thumb}\') center/cover no-repeat;"></div>\n'
+  f'          <a class="pair-img" href="bottle-warmer-pdp.html" aria-label="View the Portable Bottle Warmer" style="display:block;background:#fff url(\'{w_thumb}\') center/cover no-repeat;"></a>\n'
   '          <div class="pair-info">\n'
-  '            <div class="name">Portable Bottle Warmer</div>\n'
+  '            <div class="name"><a href="bottle-warmer-pdp.html">Portable Bottle Warmer</a></div>\n'
   '            <div class="p"><span class="was">£89.99</span> £55.00 GBP</div>\n'
   '            <div class="pair-note">Bundle discount</div>\n'
   '            <button class="quick" id="addCoolerBtn">Add to bundle</button>\n'
