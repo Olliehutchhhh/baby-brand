@@ -56,9 +56,13 @@
         "subtitle": "Warm it, chill it, take it anywhere — the complete on-the-go feeding set, with a free E-Book.",
         "description": "Everything you need for feeding on the move in one set. Warm milk or water in seconds with the portable warmer, then keep bottles fresh and cool with the matching portable cooler — both small enough for the diaper bag, car cup holder or carry-on. Bundle and save 21%, and get a free E-Book worth £10.",
         "single_title": "Portable Warmer",
+        "pair_product": "portable-breast-milk-cooler",
+        "cooler_title": "Portable Cooler",
+        "cooler_sub": "Just the cooler",
+        "cooler_list": "Portable Breast Milk Cooler (650ml)\n2 Cooling Cylinders Included\n30 Days Guarantee",
         "single_sub": "Just the warmer",
         "single_list": "Portable Milk & Water Warmer\n30 Days Guarantee",
-        "use_sample_reviews": true
+        "use_sample_reviews": false
       }
     }
   },

@@ -84,7 +84,7 @@
 
       <hr class="section-divider">
 
-      {%- if bundle_p != blank or single_p != blank -%}
+      {%- if bundle_p != blank or single_p != blank or is_bundle -%}
       <div class="select-label">Select Option:</div>
       <div class="option-grid" aria-label="Choose your set">
 
@@ -108,6 +108,23 @@
           </ul>
           {%- unless is_bundle -%}{%- if bundle_p != blank and s.single_hint != blank -%}<div class="opt-hint">{{ s.single_hint }}</div>{%- endif -%}{%- endunless -%}
         </{{ left_tag }}>
+
+        {%- comment -%} ===== MIDDLE (bundle page only): link to the cooler on its own ===== {%- endcomment -%}
+        {%- if is_bundle and s.pair_product != blank -%}
+          {%- assign cooler_p = s.pair_product -%}
+          <a class="opt-card" href="{{ cooler_p.url }}" style="text-decoration:none;color:inherit;">
+            <div class="opt-head">
+              <span class="opt-radio"></span>
+              <span class="opt-title">{{ s.cooler_title }}</span>
+            </div>
+            <div class="opt-price">{{ cooler_p.selected_or_first_available_variant.price | money }}</div>
+            <div class="opt-sub">{{ s.cooler_sub }}</div>
+            <ul class="opt-list">
+              {%- assign cooler_lines = s.cooler_list | newline_to_br | split: '<br />' -%}
+              {%- for line in cooler_lines -%}{%- assign t = line | strip -%}{%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}{%- endfor -%}
+            </ul>
+          </a>
+        {%- endif -%}
 
         {%- comment -%} ===== RIGHT: Bundle And Save ===== {%- endcomment -%}
         {%- if is_bundle or bundle_p != blank -%}
@@ -317,6 +334,11 @@
     { "type": "textarea", "id": "single_list", "label": "Tick list (one per line)" },
     { "type": "text", "id": "single_hint", "label": "Hint link text (single-product pages only)", "default": "Add the cooler & save 21% →" },
 
+    { "type": "header", "content": "Cooler link card (bundle page only)" },
+    { "type": "text", "id": "cooler_title", "label": "Title", "default": "Portable Cooler" },
+    { "type": "text", "id": "cooler_sub", "label": "Sub-heading", "default": "Just the cooler" },
+    { "type": "textarea", "id": "cooler_list", "label": "Tick list (one per line)" },
+
     { "type": "header", "content": "Bundle And Save card" },
     { "type": "text", "id": "bundle_title", "label": "Title", "default": "Bundle And Save" },
     { "type": "text", "id": "bundle_ribbon", "label": "Ribbon", "default": "BEST VALUE" },
@@ -347,7 +369,7 @@
     { "type": "textarea", "id": "guarantee_body", "label": "Guarantee text", "default": "We stand behind our products. If you don't love it, exchanges and returns are available in 30 days." },
 
     { "type": "header", "content": "Pair well with" },
-    { "type": "product", "id": "pair_product", "label": "Product to pair (single-product pages only)" },
+    { "type": "product", "id": "pair_product", "label": "Product to pair (single-product pages: 'Pair well with' card. Bundle page: the 'Just the cooler' link card)" },
     { "type": "image_picker", "id": "pair_image", "label": "Image (optional, defaults to the product's first image)" },
     { "type": "text", "id": "pair_now", "label": "Bundle price text", "default": "£45.00 GBP" },
     { "type": "text", "id": "pair_note", "label": "Note", "default": "Bundle discount" }
