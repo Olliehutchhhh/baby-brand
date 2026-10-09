@@ -48,3 +48,7 @@ Test an order with **Settings → Payments → Bogus gateway/test mode** (or a 1
 - **Discount box** ("20% with code…") is hidden until you type a code in the editor. It only displays the code – create the actual code under Discounts.
 - **Checkout** uses Shopify's own checkout, so the checkout page doesn't have the Casa de Mamá design unless you customise it (Settings → Checkout → Customize, available on all plans for logo and colours).
 - The theme was checked with Shopify's own "Theme Check" tool and rendered locally, but not on a live store, so look through each page once after uploading.
+
+## Auto-linking (no pickers needed)
+The theme finds the other products itself using each product's **Theme template** (`casa-warmer`, `casa-cooler`, `casa-bundle`).
+Just make sure all three products are Active and each has its template assigned. The "Override" pickers in the theme editor can stay empty.

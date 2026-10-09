@@ -1,15 +1,37 @@
+{% comment %} Auto-link: the other Casa products are found by the theme template each is assigned (casa-warmer / casa-cooler / casa-bundle), so no pickers need setting. Pickers in the section are optional overrides. Pair: bundle page -> cooler; warmer page -> cooler; cooler page -> warmer. {% endcomment %}
 {{ 'casa-product.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
   assign s = section.settings
   assign variant = product.selected_or_first_available_variant
   assign form_id = 'casa-product-form-' | append: section.id
-  assign bundle_p = s.bundle_product
-  assign single_p = s.single_product
   assign is_bundle = false
   if s.mode == 'bundle'
     assign is_bundle = true
   endif
+
+  assign warmer_found = blank
+  assign cooler_found = blank
+  assign bundle_found = blank
+  for p in collections['all'].products
+    case p.template_suffix
+      when 'casa-warmer'
+        assign warmer_found = p
+      when 'casa-cooler'
+        assign cooler_found = p
+      when 'casa-bundle'
+        assign bundle_found = p
+    endcase
+  endfor
+
+  assign bundle_p = s.bundle_product | default: bundle_found
+  assign single_p = s.single_product | default: warmer_found
+
+  assign auto_pair = cooler_found
+  if is_bundle == false and product.id == cooler_found.id
+    assign auto_pair = warmer_found
+  endif
+  assign pair_p_final = s.pair_product | default: auto_pair
   assign off_pct = 0
   if variant.compare_at_price > variant.price
     assign off_pct = variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round
@@ -110,8 +132,8 @@
         </{{ left_tag }}>
 
         {%- comment -%} ===== MIDDLE (bundle page only): link to the cooler on its own ===== {%- endcomment -%}
-        {%- if is_bundle and s.pair_product != blank -%}
-          {%- assign cooler_p = s.pair_product -%}
+        {%- if is_bundle and pair_p_final != blank -%}
+          {%- assign cooler_p = pair_p_final -%}
           <a class="opt-card" href="{{ cooler_p.url }}" style="text-decoration:none;color:inherit;">
             <div class="opt-head">
               <span class="opt-radio"></span>
@@ -246,8 +268,8 @@
         </div>
       </div>
 
-      {%- if s.pair_product != blank and is_bundle == false -%}
-        {%- assign pair_p = s.pair_product -%}
+      {%- if pair_p_final != blank and is_bundle == false -%}
+        {%- assign pair_p = pair_p_final -%}
         {%- if s.pair_image != blank -%}
           {%- assign pair_img = s.pair_image | image_url: width: 300 -%}
         {%- else -%}
@@ -319,8 +341,8 @@
     { "type": "header", "content": "Page type" },
     { "type": "select", "id": "mode", "label": "This page is for", "default": "single",
       "options": [ { "value": "single", "label": "A single product (warmer or cooler)" }, { "value": "bundle", "label": "The bundle product" } ] },
-    { "type": "product", "id": "bundle_product", "label": "Bundle product (single-product pages link their Bundle card to this)" },
-    { "type": "product", "id": "single_product", "label": "Single product (bundle page links its left card to this)" },
+    { "type": "product", "id": "bundle_product", "label": "Override: Bundle product (leave empty — found automatically)" },
+    { "type": "product", "id": "single_product", "label": "Override: Single product (leave empty — found automatically)" },
 
     { "type": "header", "content": "Top of page" },
     { "type": "text", "id": "subtitle", "label": "Subtitle" },
@@ -369,7 +391,7 @@
     { "type": "textarea", "id": "guarantee_body", "label": "Guarantee text", "default": "We stand behind our products. If you don't love it, exchanges and returns are available in 30 days." },
 
     { "type": "header", "content": "Pair well with" },
-    { "type": "product", "id": "pair_product", "label": "Product to pair (single-product pages: 'Pair well with' card. Bundle page: the 'Just the cooler' link card)" },
+    { "type": "product", "id": "pair_product", "label": "Override: product to pair (leave empty — found automatically)" },
     { "type": "image_picker", "id": "pair_image", "label": "Image (optional, defaults to the product's first image)" },
     { "type": "text", "id": "pair_now", "label": "Bundle price text", "default": "£45.00 GBP" },
     { "type": "text", "id": "pair_note", "label": "Note", "default": "Bundle discount" }
