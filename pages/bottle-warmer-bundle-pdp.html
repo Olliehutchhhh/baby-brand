@@ -132,9 +132,8 @@
     .gallery{ flex-direction:column; align-items:stretch; overflow:visible; }
     .gallery .main-image-wrap{ flex:none; order:0; }
     .gallery .thumb-strip{ order:1; }
-    .gallery .thumb-strip{ flex-direction:row; width:auto; max-height:none; overflow-x:auto; overflow-y:hidden; padding:0 0 4px; scrollbar-width:thin; }
-    .gallery .thumb-strip .thumb{ width:76px; height:76px; }
-    .gallery .thumb-strip::-webkit-scrollbar{ display:block; height:6px; }   /* thumbs become a swipeable row under the image on stacked layouts */
+    .gallery .thumb-strip{ flex-direction:row; width:100%; gap:8px; }
+    .gallery .thumb-strip .thumb{ flex:1 1 0; min-width:0; width:auto; height:auto; aspect-ratio:1/1; }   /* all thumbnails share the row width, no scrolling */
   }
 
   /* ---- Sticky gallery ---- */
@@ -207,19 +206,10 @@
     flex-direction:column;   /* vertical rail to the left of the main image, Pipette-style */
     gap:8px;
     margin-top:0;
-    max-height:calc(88px * 4 + 8px * 4 + 44px);   /* 4 full thumbs + half of the 5th peeking out, so it's obvious the rail scrolls */  /* shows exactly 4 thumbs (64px each + 3 gaps) — the rest scroll into view instead of all spilling out to match the tall sticky image */
-    overflow-y:auto;
-    overflow-x:hidden;               /* no horizontal slider: the vertical scrollbar was eating into the 64px width and forcing one */
-    scrollbar-width:thin;            /* slim visible bar = scroll affordance */
-    scrollbar-color:#b9bcd9 transparent;
-    padding-right:0;
     flex-shrink:0;
-    width:88px;
-    padding-right:12px; box-sizing:content-box;   /* room for the slim scrollbar so it never squeezes the thumbs */
+    width:88px;              /* every image is shown in full: no scrolling rail */
   }
-  .thumb-strip::-webkit-scrollbar{ width:6px; }
-  .thumb-strip::-webkit-scrollbar-thumb{ background:#b9bcd9; border-radius:6px; }
-  .thumb-strip::-webkit-scrollbar-track{ background:transparent; }
+  #thumbsSingle .thumb:not([data-full]){ display:none; }   /* empty placeholder slots stay hidden until a real photo is added */
   .thumb-strip .thumb{
     flex:0 0 auto;
     width:88px; height:88px;
@@ -899,9 +889,6 @@
         <div class="thumb" data-label="Free E-Book" title="Free E-Book — add photo">+</div>
         <div class="thumb" data-label="Lifestyle" title="Lifestyle — add photo">+</div>
         <div class="thumb" data-label="On the go" title="On the go — add photo">+</div>
-        <div class="thumb" data-label="Cooler in use" title="Cooler in use — add photo">+</div>
-        <div class="thumb" data-label="Packaging" title="Packaging — add photo">+</div>
-        <div class="thumb" data-label="What's included" title="What's included — add photo">+</div>
       </div>
       <div class="main-image-wrap" id="mainImage">
         <button class="gallery-arrow prev" aria-label="Previous">‹</button>
