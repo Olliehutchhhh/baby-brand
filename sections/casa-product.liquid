@@ -32,10 +32,26 @@
     assign auto_pair = warmer_found
   endif
   assign pair_p_final = s.pair_product | default: auto_pair
-  assign off_pct = 0
-  if variant.compare_at_price > variant.price
-    assign off_pct = variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round
+  assign w_price = warmer_found.selected_or_first_available_variant.price | default: 0
+  assign c_price = cooler_found.selected_or_first_available_variant.price | default: 0
+  assign sum_price = w_price | plus: c_price
+  assign bundle_price = bundle_p.selected_or_first_available_variant.price | default: 0
+  if is_bundle
+    assign bundle_price = variant.price
   endif
+  assign save_pct = 0
+  if sum_price > bundle_price and bundle_price > 0
+    assign save_pct = sum_price | minus: bundle_price | times: 100.0 | divided_by: sum_price | round
+  endif
+  assign old_price = variant.compare_at_price
+  if is_bundle and sum_price > variant.price
+    assign old_price = sum_price
+  endif
+  assign off_pct = 0
+  if old_price > variant.price
+    assign off_pct = old_price | minus: variant.price | times: 100.0 | divided_by: old_price | round
+  endif
+  assign pct_token = save_pct | append: ''
   assign pills = section.blocks | where: 'type', 'pill'
   assign review_blocks = section.blocks | where: 'type', 'review'
   assign pdp_desc = s.description
@@ -94,12 +110,12 @@
     <!-- SCROLLING INFO -->
     <div class="info">
       <h1 id="pdpTitle">{{ product.title }}</h1>
-      {%- if s.subtitle != blank -%}<div class="subtitle" id="pdpSub">{{ s.subtitle }}</div>{%- endif -%}
+      {%- if s.subtitle != blank -%}<div class="subtitle" id="pdpSub">{{ s.subtitle | replace: '{percent}', pct_token }}</div>{%- endif -%}
 
       {%- if pills.size > 0 -%}
         <div class="benefit-pills" id="pdpPills">
           {%- for pill in pills -%}
-            <div class="pill" {{ pill.shopify_attributes }}><span class="check">&#10003;</span> {{ pill.settings.text }}</div>
+            <div class="pill" {{ pill.shopify_attributes }}><span class="check">&#10003;</span> {{ pill.settings.text | replace: '{percent}', pct_token }}</div>
           {%- endfor -%}
         </div>
       {%- endif -%}
@@ -128,7 +144,7 @@
             {%- assign lines = s.single_list | newline_to_br | split: '<br />' -%}
             {%- for line in lines -%}{%- assign t = line | strip -%}{%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}{%- endfor -%}
           </ul>
-          {%- unless is_bundle -%}{%- if bundle_p != blank and s.single_hint != blank -%}<div class="opt-hint">{{ s.single_hint }}</div>{%- endif -%}{%- endunless -%}
+          {%- unless is_bundle -%}{%- if bundle_p != blank and s.single_hint != blank and save_pct > 0 -%}<div class="opt-hint">{{ s.single_hint | replace: '{percent}', pct_token }}</div>{%- endif -%}{%- endunless -%}
         </{{ left_tag }}>
 
         {%- comment -%} ===== MIDDLE (bundle page only): link to the cooler on its own ===== {%- endcomment -%}
@@ -160,11 +176,11 @@
             </div>
             <div class="opt-price">
               {%- if is_bundle -%}{{ variant.price | money }}{%- else -%}{{ bundle_p.selected_or_first_available_variant.price | money }}{%- endif -%}
-              {%- if s.bundle_badge != blank %} <span class="opt-save">{{ s.bundle_badge }}</span>{% endif -%}
+              {%- if s.bundle_badge != blank %} <span class="opt-save">{{ s.bundle_badge | replace: '{percent}', pct_token }}</span>{% elsif save_pct > 0 %} <span class="opt-save">SAVE {{ save_pct }}%</span>{% endif -%}
             </div>
             <div class="opt-sub">{{ s.bundle_sub }}</div>
             <ul class="opt-list">
-              {%- assign lines = s.bundle_list | newline_to_br | split: '<br />' -%}
+              {%- assign lines = s.bundle_list | replace: '{percent}', pct_token | newline_to_br | split: '<br />' -%}
               {%- for line in lines -%}{%- assign t = line | strip -%}{%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}{%- endfor -%}
             </ul>
             <div class="gift-strip">
@@ -190,7 +206,7 @@
       {%- endif -%}
 
       <div class="price-row">
-        {%- if variant.compare_at_price > variant.price -%}<div class="price-old" id="casaPriceOld">{{ variant.compare_at_price | money }}</div>{%- endif -%}
+        {%- if old_price > variant.price -%}<div class="price-old" id="casaPriceOld">{{ old_price | money }}</div>{%- endif -%}
         <div class="price" id="casaPriceNow">{{ variant.price | money }}</div>
         {%- if off_pct > 0 -%}<div class="off-pill">{{ off_pct }}% OFF</div>{%- endif -%}
       </div>
@@ -225,7 +241,7 @@
       <hr class="section-divider">
 
       <div class="desc-heading">Description</div>
-      <div class="desc-text" id="pdpDesc">{{ pdp_desc }}</div>
+      <div class="desc-text" id="pdpDesc">{{ pdp_desc | replace: '{percent}', pct_token }}</div>
 
       <div class="video-title">{{ s.reviews_title }}</div>
       <div class="video-row" id="reviewRow">
@@ -354,7 +370,7 @@
     { "type": "text", "id": "single_title", "label": "Title", "default": "Portable Warmer" },
     { "type": "text", "id": "single_sub", "label": "Sub-heading", "default": "Just the warmer" },
     { "type": "textarea", "id": "single_list", "label": "Tick list (one per line)" },
-    { "type": "text", "id": "single_hint", "label": "Hint link text (single-product pages only)", "default": "Add the cooler & save 21% →" },
+    { "type": "text", "id": "single_hint", "label": "Hint link text (use {percent} for the automatic saving)", "default": "Add the cooler & save {percent}% →" },
 
     { "type": "header", "content": "Cooler link card (bundle page only)" },
     { "type": "text", "id": "cooler_title", "label": "Title", "default": "Portable Cooler" },
@@ -364,7 +380,7 @@
     { "type": "header", "content": "Bundle And Save card" },
     { "type": "text", "id": "bundle_title", "label": "Title", "default": "Bundle And Save" },
     { "type": "text", "id": "bundle_ribbon", "label": "Ribbon", "default": "BEST VALUE" },
-    { "type": "text", "id": "bundle_badge", "label": "Save badge", "default": "SAVE 21%" },
+    { "type": "text", "id": "bundle_badge", "label": "Save badge (leave EMPTY for automatic: warmer + cooler vs bundle price)" },
     { "type": "text", "id": "bundle_sub", "label": "Sub-heading", "default": "Warmer & Cooler Set" },
     { "type": "textarea", "id": "bundle_list", "label": "Tick list (one per line)" },
     { "type": "text", "id": "gift_title", "label": "Strip heading", "default": "Your bundle" },
