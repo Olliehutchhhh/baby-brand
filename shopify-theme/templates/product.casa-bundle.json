@@ -24,7 +24,7 @@
         "pill-4": {
           "type": "pill",
           "settings": {
-            "text": "Save 21%"
+            "text": "Save {percent}%"
           }
         }
       },
@@ -38,8 +38,7 @@
         "perk_text": "Free Shipping on orders £100+",
         "bundle_title": "Bundle And Save",
         "bundle_ribbon": "BEST VALUE",
-        "bundle_badge": "SAVE 21%",
-        "bundle_sub": "Warmer & Cooler Set",
+                "bundle_sub": "Warmer & Cooler Set",
         "bundle_list": "Portable Warmer + Portable Cooler\nYour complete solution for warming and cooling milk on the go.\nFree Shipping\n30 Days Guarantee",
         "gift_title": "Your bundle",
         "gift_name_1": "Warmer",
@@ -53,7 +52,7 @@
         "guarantee_body": "We stand behind our products. If you don't love it, exchanges and returns are available in 30 days.",
         "mode": "bundle",
         "subtitle": "Warm it, chill it, take it anywhere — the complete on-the-go feeding set, with a free E-Book.",
-        "description": "Everything you need for feeding on the move in one set. Warm milk or water in seconds with the portable warmer, then keep bottles fresh and cool with the matching portable cooler — both small enough for the diaper bag, car cup holder or carry-on. Bundle and save 21%, and get a free E-Book worth £10.",
+        "description": "Everything you need for feeding on the move in one set. Warm milk or water in seconds with the portable warmer, then keep bottles fresh and cool with the matching portable cooler — both small enough for the diaper bag, car cup holder or carry-on. Bundle and save {percent}%, and get a free E-Book worth £10.",
         "single_title": "Portable Warmer",
         "cooler_title": "Portable Cooler",
         "cooler_sub": "Just the cooler",

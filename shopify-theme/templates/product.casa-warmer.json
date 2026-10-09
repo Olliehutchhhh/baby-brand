@@ -38,8 +38,7 @@
         "perk_text": "Free Shipping on orders £100+",
         "bundle_title": "Bundle And Save",
         "bundle_ribbon": "BEST VALUE",
-        "bundle_badge": "SAVE 21%",
-        "bundle_sub": "Warmer & Cooler Set",
+                "bundle_sub": "Warmer & Cooler Set",
         "bundle_list": "Portable Warmer + Portable Cooler\nYour complete solution for warming and cooling milk on the go.\nFree Shipping\n30 Days Guarantee",
         "gift_title": "Your bundle",
         "gift_name_1": "Warmer",
@@ -57,7 +56,7 @@
         "single_title": "Portable Warmer",
         "single_sub": "Just the warmer",
         "single_list": "Portable Milk & Water Warmer\n30 Days Guarantee",
-        "single_hint": "Add the cooler & save 21% →",
+        "single_hint": "Add the cooler & save {percent}% →",
         "use_sample_reviews": true,
         "pair_now": "£45.00 GBP",
         "pair_note": "Bundle discount"
