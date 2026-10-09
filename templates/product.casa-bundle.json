@@ -1,0 +1,68 @@
+{
+  "sections": {
+    "main": {
+      "type": "casa-product",
+      "blocks": {
+        "pill-1": {
+          "type": "pill",
+          "settings": {
+            "text": "Heats Fast"
+          }
+        },
+        "pill-2": {
+          "type": "pill",
+          "settings": {
+            "text": "24 Hour Cooling"
+          }
+        },
+        "pill-3": {
+          "type": "pill",
+          "settings": {
+            "text": "Free E-Book Included"
+          }
+        },
+        "pill-4": {
+          "type": "pill",
+          "settings": {
+            "text": "Save 21%"
+          }
+        }
+      },
+      "block_order": [
+        "pill-1",
+        "pill-2",
+        "pill-3",
+        "pill-4"
+      ],
+      "settings": {
+        "perk_text": "Free Shipping on orders £100+",
+        "bundle_title": "Bundle And Save",
+        "bundle_ribbon": "BEST VALUE",
+        "bundle_badge": "SAVE 21%",
+        "bundle_sub": "Warmer & Cooler Set",
+        "bundle_list": "Portable Warmer + Portable Cooler\nYour complete solution for warming and cooling milk on the go.\nFree Shipping\n30 Days Guarantee",
+        "gift_title": "Your bundle",
+        "gift_name_1": "Warmer",
+        "gift_name_2": "Breast Milk Cooler",
+        "gift_name_3": "E-Book",
+        "gift_3_was": "£10",
+        "reviews_title": "What Other Parents Are Saying",
+        "shipping_label": "FREE OVER £100",
+        "delivery_days": 7,
+        "guarantee_title": "30 Days Guarantee",
+        "guarantee_body": "We stand behind our products. If you don't love it, exchanges and returns are available in 30 days.",
+        "mode": "bundle",
+        "single_product": "portable-bottle-warmer",
+        "subtitle": "Warm it, chill it, take it anywhere — the complete on-the-go feeding set, with a free E-Book.",
+        "description": "Everything you need for feeding on the move in one set. Warm milk or water in seconds with the portable warmer, then keep bottles fresh and cool with the matching portable cooler — both small enough for the diaper bag, car cup holder or carry-on. Bundle and save 21%, and get a free E-Book worth £10.",
+        "single_title": "Portable Warmer",
+        "single_sub": "Just the warmer",
+        "single_list": "Portable Milk & Water Warmer\n30 Days Guarantee",
+        "use_sample_reviews": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

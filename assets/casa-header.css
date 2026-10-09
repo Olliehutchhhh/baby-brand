@@ -1,0 +1,33 @@
+.casa-header header.site{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    padding:18px 40px;
+    border-bottom:1px solid var(--line);
+    gap:12px;
+}
+.casa-header header.site a{ text-decoration:none; color:var(--ink);
+}
+.casa-header .home-logo{ justify-self:start; display:flex; line-height:0;
+}
+.casa-header .home-logo img{ width:64px; height:64px; border-radius:50%; display:block; transition:transform .2s;
+}
+.casa-header .home-logo:hover img{ transform:scale(1.05);
+}
+.casa-header .wordmark{ justify-self:center; display:flex; flex-direction:column; align-items:center; text-align:center; font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+}
+.casa-header .wm-name{ font-size:30px; font-weight:500; letter-spacing:.01em; color:#5f7a5f; line-height:1.1;
+}
+.casa-header .wm-tag{ font-size:13px; font-style:italic; color:#777; margin-top:3px;
+}
+.casa-header .site-links{ white-space:nowrap; justify-self:end; display:flex; gap:28px; font-size:14px; font-weight:600;
+}
+.casa-header .site-links a:hover{ text-decoration:underline; text-underline-offset:4px;
+}
+@media (max-width:700px){
+  .casa-header header.site{padding:14px 20px;}
+  .casa-header .site-links{gap:14px; white-space:nowrap; font-size:13px;}
+  .casa-header .wm-name{font-size:21px;}
+  .casa-header .wm-tag{display:none;}
+  .casa-header .home-logo img{width:46px; height:46px;}
+}

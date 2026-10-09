@@ -1,0 +1,39 @@
+{{ 'casa-header.css' | asset_url | stylesheet_tag }}
+{%- assign s = section.settings -%}
+<div class="casa-header">
+  <header class="site">
+    <a href="{{ routes.root_url }}" class="home-logo" aria-label="{{ s.wordmark | escape }} – back to home page">
+      {%- if s.logo != blank -%}
+        <img src="{{ s.logo | image_url: width: 240 }}" alt="{{ s.wordmark | escape }}" width="64" height="64">
+      {%- else -%}
+        <img src="{{ 'casa-logo.jpg' | asset_url }}" alt="{{ s.wordmark | escape }}" width="64" height="64">
+      {%- endif -%}
+    </a>
+    <a href="{{ routes.root_url }}" class="wordmark" aria-label="{{ s.wordmark | escape }} home">
+      <span class="wm-name">{{ s.wordmark }}</span>
+      {%- if s.tagline != blank -%}<span class="wm-tag">{{ s.tagline }}</span>{%- endif -%}
+    </a>
+    <nav class="site-links" aria-label="Main">
+      {%- assign menu_links = linklists[s.menu].links -%}
+      {%- if menu_links.size > 0 -%}
+        {%- for link in menu_links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.all_products_url }}">Shop</a>
+        <a href="{{ routes.root_url }}pages/about-us">About Us</a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="cart-link">Cart ({{ cart.item_count }})</a>
+    </nav>
+  </header>
+</div>
+
+{% schema %}
+{
+  "name": "Casa header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo (round image; a default is included)" },
+    { "type": "text", "id": "wordmark", "label": "Name next to the logo", "default": "casa de mamá" },
+    { "type": "text", "id": "tagline", "label": "Tagline (hidden on phones)", "default": "Making life with little ones easier." },
+    { "type": "link_list", "id": "menu", "label": "Menu links", "default": "main-menu" }
+  ]
+}
+{% endschema %}

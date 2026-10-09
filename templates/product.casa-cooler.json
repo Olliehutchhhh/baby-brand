@@ -1,0 +1,97 @@
+{
+  "sections": {
+    "main": {
+      "type": "casa-product",
+      "blocks": {
+        "pill-1": {
+          "type": "pill",
+          "settings": {
+            "text": "24 Hour Cooling"
+          }
+        },
+        "pill-2": {
+          "type": "pill",
+          "settings": {
+            "text": "Large 650ml Capacity"
+          }
+        },
+        "pill-3": {
+          "type": "pill",
+          "settings": {
+            "text": "Leak-Proof Lid"
+          }
+        },
+        "pill-4": {
+          "type": "pill",
+          "settings": {
+            "text": "360° Iceless Cooling"
+          }
+        },
+        "review-1": {
+          "type": "review",
+          "settings": {}
+        },
+        "review-2": {
+          "type": "review",
+          "settings": {}
+        },
+        "review-3": {
+          "type": "review",
+          "settings": {}
+        },
+        "review-4": {
+          "type": "review",
+          "settings": {}
+        },
+        "review-5": {
+          "type": "review",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "pill-1",
+        "pill-2",
+        "pill-3",
+        "pill-4",
+        "review-1",
+        "review-2",
+        "review-3",
+        "review-4",
+        "review-5"
+      ],
+      "settings": {
+        "perk_text": "Free Shipping on orders £100+",
+        "bundle_title": "Bundle And Save",
+        "bundle_ribbon": "BEST VALUE",
+        "bundle_badge": "SAVE 21%",
+        "bundle_sub": "Warmer & Cooler Set",
+        "bundle_list": "Portable Warmer + Portable Cooler\nYour complete solution for warming and cooling milk on the go.\nFree Shipping\n30 Days Guarantee",
+        "gift_title": "Your bundle",
+        "gift_name_1": "Warmer",
+        "gift_name_2": "Breast Milk Cooler",
+        "gift_name_3": "E-Book",
+        "gift_3_was": "£10",
+        "reviews_title": "What Other Parents Are Saying",
+        "shipping_label": "FREE OVER £100",
+        "delivery_days": 7,
+        "guarantee_title": "30 Days Guarantee",
+        "guarantee_body": "We stand behind our products. If you don't love it, exchanges and returns are available in 30 days.",
+        "mode": "single",
+        "bundle_product": "portable-warmer-cooler-bundle",
+        "subtitle": "Fresh milk, wherever life takes you.",
+        "description": "The Casa de Mamá Portable Breast Milk Cooler is designed to safely store cold breast milk while you’re out of the house. With a large 650ml capacity that fits two 300ml bottles, a leak-proof lid and even, iceless 360° cooling, it keeps milk cold for up to 24 hours — perfect for days out, holidays and travelling. Two cooling cylinders are included: use them together to keep milk cold all day.",
+        "single_title": "Portable Cooler",
+        "single_sub": "Just the cooler",
+        "single_list": "Portable Breast Milk Cooler (650ml)\n2 Cooling Cylinders Included\n30 Days Guarantee",
+        "single_hint": "Add the warmer & save 21% →",
+        "use_sample_reviews": false,
+        "pair_product": "portable-bottle-warmer",
+        "pair_now": "£55.00 GBP",
+        "pair_note": "Bundle discount"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
