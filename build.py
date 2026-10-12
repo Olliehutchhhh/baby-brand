@@ -121,7 +121,7 @@ c = rep(c, '<!-- LEFT: warmer on its own -->', '<!-- LEFT: cooler on its own -->
 c = rep(c, '<span class="opt-title">Portable Warmer</span>', '<span class="opt-title">Portable Cooler</span>')
 c = rep(c, '<div class="opt-price">£89.99</div>\n          <div class="opt-sub">Just the warmer</div>', '<div class="opt-price">£79.99</div>\n          <div class="opt-sub">Just the cooler</div>')
 c = rep(c, '<li>Portable Milk &amp; Water Warmer</li>\n            <li>30 Days Guarantee</li>', '<li>Portable Breast Milk Cooler (650ml)</li>\n            <li>2 Cooling Cylinders Included</li>\n            <li>30 Days Guarantee</li>')
-c = rep(c, 'Add the cooler &amp; save 21% →', 'Add the warmer &amp; save 21% →')
+c = rep(c, 'Add the cooler &amp; save 21% ↓', 'Add the warmer &amp; save 21% ↓')
 # prices
 c = rep(c, '<div class="price-old" id="priceOld">£104.99</div>', '<div class="price-old" id="priceOld">£94.99</div>')
 c = rep(c, '<div class="price" id="priceNow">£89.99</div>', '<div class="price" id="priceNow">£79.99</div>')
