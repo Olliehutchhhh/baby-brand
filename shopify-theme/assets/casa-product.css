@@ -713,3 +713,13 @@
   .casa-pdp .gallery .main-image-wrap{ flex:none; order:0; }
   .casa-pdp .gallery .thumb-strip{ order:1; flex-direction:row; width:100%; gap:8px; }
 }
+
+/* Bundle page only: bundle card first; solo items shrink to name + "Just the…" */
+.casa-pdp .option-grid.is-bundle-page .opt-bundle{ order:-1; }
+.casa-pdp .opt-solo{ padding:14px 16px; }
+.casa-pdp .opt-solo .opt-price,
+.casa-pdp .opt-solo .opt-list,
+.casa-pdp .opt-solo .opt-hint{ display:none; }
+.casa-pdp .opt-solo .opt-sub{ margin:4px 0 0 28px; }
+.casa-pdp .opt-solo .opt-head{ margin-bottom:0; }
+.casa-pdp .opt-solo .opt-sub{ margin:2px 0 0 28px; }

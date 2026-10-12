@@ -779,6 +779,12 @@
   .video-card.ph{ cursor:default; border-radius:0; background:repeating-linear-gradient(45deg, #FFE9F6, #FFE9F6 10px, #FFD6EE 10px, #FFD6EE 20px); border:1px dashed #F6B9DF; display:flex; align-items:center; justify-content:center; }
   .video-card.ph .play{ width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center; font-size:14px; }
   .video-card.ph .bag{ position:absolute; top:10px; right:10px; width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center; font-size:12px; }
+  .bundle-page #optBundle{ order:-1; }
+  .bundle-page #optSingle, .bundle-page #optCooler{ padding:14px 16px; }
+  .bundle-page #optSingle .opt-price, .bundle-page #optSingle .opt-list, .bundle-page #optSingle .opt-hint,
+  .bundle-page #optCooler .opt-price, .bundle-page #optCooler .opt-list{ display:none; }
+  .bundle-page #optSingle .opt-head, .bundle-page #optCooler .opt-head{ margin-bottom:0; }
+  .bundle-page #optSingle .opt-sub, .bundle-page #optCooler .opt-sub{ margin:2px 0 0 28px; }
   /* ===== Review lightbox ===== */
   .lb{
     position:fixed; inset:0; z-index:1000;
@@ -934,7 +940,7 @@
       <hr class="section-divider">
 
       <div class="select-label">Select Option:</div>
-      <div class="option-grid" role="radiogroup" aria-label="Choose your set">
+      <div class="option-grid bundle-page" role="radiogroup" aria-label="Choose your set">
 
         <!-- LEFT: warmer on its own -->
         <div class="opt-card selected" id="optSingle" role="radio" aria-checked="true" tabindex="0" data-opt="single">

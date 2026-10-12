@@ -43,6 +43,18 @@ _cooler_card = ('''        <!-- MIDDLE: the cooler on its own (links to its page
 _m = '        <!-- RIGHT: Bundle And Save, with free gifts -->'
 assert s.count(_m) == 1
 s = s.replace(_m, _cooler_card + _m)
+# bundle page only: bundle card first, solo items compact (name + "Just the...")
+assert s.count('<div class="option-grid" role="radiogroup"') == 1
+s = s.replace('<div class="option-grid" role="radiogroup"', '<div class="option-grid bundle-page" role="radiogroup"')
+_bcss = ('  .bundle-page #optBundle{ order:-1; }\n'
+  '  .bundle-page #optSingle, .bundle-page #optCooler{ padding:14px 16px; }\n'
+  '  .bundle-page #optSingle .opt-price, .bundle-page #optSingle .opt-list, .bundle-page #optSingle .opt-hint,\n'
+  '  .bundle-page #optCooler .opt-price, .bundle-page #optCooler .opt-list{ display:none; }\n'
+  '  .bundle-page #optSingle .opt-head, .bundle-page #optCooler .opt-head{ margin-bottom:0; }\n'
+  '  .bundle-page #optSingle .opt-sub, .bundle-page #optCooler .opt-sub{ margin:2px 0 0 28px; }\n'
+  '  /* ===== Review lightbox ===== */')
+assert s.count('  /* ===== Review lightbox ===== */') == 1
+s = s.replace('  /* ===== Review lightbox ===== */', _bcss)
 _u = "var PAGE_URLS = { single:'bottle-warmer-pdp.html', bundle:'bottle-warmer-bundle-pdp.html' };"
 assert s.count(_u) == 1
 s = s.replace(_u, "var PAGE_URLS = { single:'bottle-warmer-pdp.html', cooler:'breast-milk-cooler-pdp.html', bundle:'bottle-warmer-bundle-pdp.html' };")
