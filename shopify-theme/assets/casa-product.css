@@ -717,9 +717,9 @@
 /* Bundle page only: bundle card first; solo items shrink to name + "Just the…" */
 .casa-pdp .option-grid.is-bundle-page .opt-bundle{ order:-1; }
 .casa-pdp .opt-solo{ padding:14px 16px; }
-.casa-pdp .opt-solo .opt-price,
 .casa-pdp .opt-solo .opt-list,
 .casa-pdp .opt-solo .opt-hint{ display:none; }
+.casa-pdp .opt-solo .opt-price{ font-size:20px; margin:4px 0 0 28px; line-height:1.2; }
 .casa-pdp .opt-solo .opt-sub{ margin:4px 0 0 28px; }
 .casa-pdp .opt-solo .opt-head{ margin-bottom:0; }
 .casa-pdp .opt-solo .opt-sub{ margin:2px 0 0 28px; }

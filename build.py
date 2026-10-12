@@ -48,8 +48,8 @@ assert s.count('<div class="option-grid" role="radiogroup"') == 1
 s = s.replace('<div class="option-grid" role="radiogroup"', '<div class="option-grid bundle-page" role="radiogroup"')
 _bcss = ('  .bundle-page #optBundle{ order:-1; }\n'
   '  .bundle-page #optSingle, .bundle-page #optCooler{ padding:14px 16px; }\n'
-  '  .bundle-page #optSingle .opt-price, .bundle-page #optSingle .opt-list, .bundle-page #optSingle .opt-hint,\n'
-  '  .bundle-page #optCooler .opt-price, .bundle-page #optCooler .opt-list{ display:none; }\n'
+  '  .bundle-page #optSingle .opt-list, .bundle-page #optSingle .opt-hint, .bundle-page #optCooler .opt-list{ display:none; }\n'
+  '  .bundle-page #optSingle .opt-price, .bundle-page #optCooler .opt-price{ font-size:20px; margin:4px 0 0 28px; line-height:1.2; }\n'
   '  .bundle-page #optSingle .opt-head, .bundle-page #optCooler .opt-head{ margin-bottom:0; }\n'
   '  .bundle-page #optSingle .opt-sub, .bundle-page #optCooler .opt-sub{ margin:2px 0 0 28px; }\n'
   '  /* ===== Review lightbox ===== */')
