@@ -124,12 +124,12 @@
 
       {%- if bundle_p != blank or single_p != blank or is_bundle -%}
       <div class="select-label">Select Option:</div>
-      <div class="option-grid" aria-label="Choose your set">
+      <div class="option-grid{% if is_bundle %} is-bundle-page{% endif %}" aria-label="Choose your set">
 
         {%- comment -%} ===== LEFT: the single product ===== {%- endcomment -%}
         {%- assign left_tag = 'div' -%}
         {%- if is_bundle and single_p != blank -%}{%- assign left_tag = 'a' -%}{%- endif -%}
-        <{{ left_tag }} class="opt-card{% unless is_bundle %} selected{% endunless %}"{% if left_tag == 'a' %} href="{{ single_p.url }}" style="text-decoration:none;color:inherit;"{% endif %}{% unless is_bundle %} aria-current="true"{% endunless %}>
+        <{{ left_tag }} class="opt-card{% if is_bundle %} opt-solo{% else %} selected{% endif %}"{% if left_tag == 'a' %} href="{{ single_p.url }}" style="text-decoration:none;color:inherit;"{% endif %}{% unless is_bundle %} aria-current="true"{% endunless %}>
           <div class="opt-head">
             <span class="opt-radio"></span>
             <span class="opt-title">{{ s.single_title }}</span>
@@ -150,7 +150,7 @@
         {%- comment -%} ===== MIDDLE (bundle page only): link to the cooler on its own ===== {%- endcomment -%}
         {%- if is_bundle and pair_p_final != blank -%}
           {%- assign cooler_p = pair_p_final -%}
-          <a class="opt-card" href="{{ cooler_p.url }}" style="text-decoration:none;color:inherit;">
+          <a class="opt-card opt-solo" href="{{ cooler_p.url }}" style="text-decoration:none;color:inherit;">
             <div class="opt-head">
               <span class="opt-radio"></span>
               <span class="opt-title">{{ s.cooler_title }}</span>
@@ -168,7 +168,7 @@
         {%- if is_bundle or bundle_p != blank -%}
           {%- assign right_tag = 'a' -%}
           {%- if is_bundle -%}{%- assign right_tag = 'div' -%}{%- endif -%}
-          <{{ right_tag }} class="opt-card{% if is_bundle %} selected{% endif %}"{% unless is_bundle %} href="{{ bundle_p.url }}" style="text-decoration:none;color:inherit;"{% endunless %}{% if is_bundle %} aria-current="true"{% endif %}>
+          <{{ right_tag }} class="opt-card opt-bundle{% if is_bundle %} selected{% endif %}"{% unless is_bundle %} href="{{ bundle_p.url }}" style="text-decoration:none;color:inherit;"{% endunless %}{% if is_bundle %} aria-current="true"{% endif %}>
             {%- if s.bundle_ribbon != blank -%}<span class="opt-ribbon">{{ s.bundle_ribbon }}</span>{%- endif -%}
             <div class="opt-head">
               <span class="opt-radio"></span>
