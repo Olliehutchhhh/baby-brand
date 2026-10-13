@@ -244,6 +244,7 @@
       <div class="desc-text" id="pdpDesc">{{ pdp_desc | replace: '[percent]', pct_token }}</div>
 
       <div class="video-title">{{ s.reviews_title }}</div>
+      <div class="review-slider">
       <div class="video-row" id="reviewRow">
         {%- if review_blocks.size > 0 -%}
           {%- for block in review_blocks -%}
@@ -263,6 +264,9 @@
             <div class="video-card ph"><span class="bag">&#128717;</span><span class="play">&#9654;</span></div>
           {%- endfor -%}
         {%- endif -%}
+      </div>
+      <button type="button" class="rs-btn rs-prev" aria-label="Previous reviews"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+<button type="button" class="rs-btn rs-next" aria-label="Next reviews"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
       </div>
 
       {%- if s.discount_code != blank -%}
