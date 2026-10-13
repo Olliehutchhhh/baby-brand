@@ -24,6 +24,9 @@ else:
     src = src.replace("</body>", _blk + "\n</body>", 1)
 (d / "bottle-warmer-pdp.html").write_text(src)
 
+# review slider arrows + script (everything after the row, up to and including its script) from the warmer source
+RS_TAIL = src[src.index('      <button type="button" class="rs-btn rs-prev"'): src.index('</script>', src.index('rs-prev')) + len('</script>')]
+
 # ---------- bundle page ----------
 s = src
 assert s.count("var PAGE = 'single';") == 1
@@ -32,7 +35,7 @@ s = s.replace("<title>Superfast Portable Bottle Warmer for Travel</title>", "<ti
 # bundle: its own review placeholders (not the warmer's photos) + a "Just the cooler" link card
 _ph = ''.join('        <div class="video-card ph"><span class="bag">🛍</span><span class="play">▶</span></div>\n' for _ in range(5))
 _a = s.index('<div class="video-row" id="reviewRow">'); _b = s.index('      <div class="discount-box">', _a)
-s = s[:_a] + '<div class="video-row" id="reviewRow">\n' + _ph + '      </div>\n\n' + s[_b:]
+s = s[:_a - len('<div class="review-slider">\n      ')] + '<div class="review-slider">\n      <div class="video-row" id="reviewRow">\n' + _ph + '      </div>\n' + RS_TAIL + '\n\n' + s[_b:]
 _css = ('  .video-card.ph{ cursor:default; border-radius:0; background:repeating-linear-gradient(45deg, #FFE9F6, #FFE9F6 10px, #FFD6EE 10px, #FFD6EE 20px); border:1px dashed #F6B9DF; display:flex; align-items:center; justify-content:center; }\n'
   '  .video-card.ph .play{ width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center; font-size:14px; }\n'
   '  .video-card.ph .bag{ position:absolute; top:10px; right:10px; width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center; font-size:12px; }\n'
@@ -145,7 +148,7 @@ c = rep(c, "single: { name:'Superfast Portable Bottle Warmer for Travel', old:'�
            "single: { name:'Portable Breast Milk Cooler for Travel', old:'£94.99', now:'£79.99',  off:'16% OFF' },")
 # reviews -> placeholders (fill in later)
 ph = ''.join('        <div class="video-card ph"><span class="bag">🛍</span><span class="play">▶</span></div>\n' for _ in range(5))
-c = region(c, '<div class="video-row" id="reviewRow">', '      <div class="discount-box">', '<div class="video-row" id="reviewRow">\n' + ph + '      </div>\n\n')
+c = region(c, '<div class="review-slider">', '      <div class="discount-box">', '<div class="review-slider">\n      <div class="video-row" id="reviewRow">\n' + ph + '      </div>\n' + RS_TAIL + '\n\n')
 c = rep(c, '  /* ===== Review lightbox ===== */',
   '  .video-card.ph{ cursor:default; border-radius:0; background:repeating-linear-gradient(45deg, #FFE9F6, #FFE9F6 10px, #FFD6EE 10px, #FFD6EE 20px); border:1px dashed #F6B9DF; display:flex; align-items:center; justify-content:center; }\n'
   '  .video-card.ph .play{ width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center; font-size:14px; }\n'

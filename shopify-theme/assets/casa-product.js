@@ -104,3 +104,13 @@
     lb.addEventListener('touchend', function (e) { if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1)); });
   }
 })();
+
+(function(){
+  var row = document.getElementById('reviewRow'); if (!row) return;
+  var wrap = row.parentNode, prev = wrap.querySelector('.rs-prev'), next = wrap.querySelector('.rs-next');
+  if (!prev || !next) return;
+  function step(){ var c = row.querySelector('.video-card'); return c ? c.getBoundingClientRect().width + 14 : 200; }
+  function max(){ return row.scrollWidth - row.clientWidth; }
+  next.addEventListener('click', function(){ row.scrollTo({ left: row.scrollLeft >= max() - 2 ? 0 : row.scrollLeft + step(), behavior:'smooth' }); });
+  prev.addEventListener('click', function(){ row.scrollTo({ left: row.scrollLeft <= 2 ? max() : row.scrollLeft - step(), behavior:'smooth' }); });
+})();
