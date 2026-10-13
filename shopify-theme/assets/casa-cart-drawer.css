@@ -56,3 +56,11 @@
 body.casa-cd-lock{overflow:hidden}
 @media (max-width:520px){.casa-cd__head,.casa-cd__foot,.casa-cd__body,.casa-cd__ship{padding-left:18px;padding-right:18px}.casa-cd__up{flex-basis:92%}}
 @media (prefers-reduced-motion:reduce){.casa-cd__panel,.casa-cd__overlay{transition:none}}
+
+.casa-cd__bd{margin:14px 0 4px;padding:12px 14px;border-radius:12px;background:#eaf3ec;border:1px solid #cfe2d3;color:#2f5a3a;font-size:14px;display:flex;gap:10px;align-items:flex-start}
+.casa-cd__bd b{display:block;font-size:15px}
+.casa-cd__chip{display:inline-block;margin-top:6px;padding:3px 10px;border-radius:99px;background:#eaf3ec;color:#2f5a3a;font-size:12px;font-weight:700}
+.casa-cd__disc{display:flex;justify-content:space-between;font-size:14px;color:var(--green);margin-bottom:8px}
+.casa-cd__tag{display:inline-block;padding:3px 10px;border-radius:99px;background:var(--pink-soft);color:var(--accent);font-size:12px;font-weight:700}
+.casa-cd__qty button{display:flex;align-items:center;justify-content:center;padding:0}
+.casa-cd__qty button svg{width:14px;height:14px;display:block;pointer-events:none}

@@ -38,6 +38,15 @@
   if bundle_p != blank and in_cart_ids contains b_key
     assign has_bundle = true
   endif
+  assign bundle_price = bundle_p.selected_or_first_available_variant.price | default: 0
+  assign pair_pct = 0
+  if sum_price > bundle_price and bundle_price > 0
+    assign pair_pct = sum_price | minus: bundle_price | times: 100.0 | divided_by: sum_price | round
+  endif
+  assign bundle_applied = false
+  if has_warmer and has_cooler and cart.total_discount > 0
+    assign bundle_applied = true
+  endif
   assign remaining = threshold | minus: cart.total_price
   assign ship_pct = 100
   if remaining > 0 and threshold > 0
@@ -72,9 +81,17 @@
       {%- endif -%}
 
       <div class="casa-cd__body">
+        {%- if bundle_applied -%}
+          <div class="casa-cd__bd">
+            <span aria-hidden="true">&#127881;</span>
+            <div><b>Bundle discount applied</b>You have the warmer and the cooler in your cart, so you're saving {{ cart.total_discount | money }}{% if pair_pct > 0 %} ({{ pair_pct }}% off the pair){% endif %}.</div>
+          </div>
+        {%- endif -%}
         <ul class="casa-cd__items">
           {%- for item in cart.items -%}
-            {%- assign compare_total = item.variant.compare_at_price | times: item.quantity -%}
+            {%- assign compare_total = item.original_line_price -%}
+            {%- assign compare_variant = item.variant.compare_at_price | times: item.quantity -%}
+            {%- if compare_variant > compare_total -%}{%- assign compare_total = compare_variant -%}{%- endif -%}
             {%- if bundle_p != blank and item.product_id == bundle_p.id and sum_price > item.variant.price -%}
               {%- assign compare_total = sum_price | times: item.quantity -%}
             {%- endif -%}
@@ -93,9 +110,9 @@
                 {%- unless item.product.has_only_default_variant -%}<p class="casa-cd__var">{{ item.variant.title }}</p>{%- endunless -%}
                 <div class="casa-cd__row">
                   <div class="casa-cd__qty">
-                    <button type="button" data-casa-qty="{{ forloop.index }}" data-to="{{ item.quantity | minus: 1 }}" aria-label="Decrease quantity">&minus;</button>
+                    <button type="button" data-casa-qty="{{ forloop.index }}" data-to="{{ item.quantity | minus: 1 }}" aria-label="Decrease quantity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
                     <span>{{ item.quantity }}</span>
-                    <button type="button" data-casa-qty="{{ forloop.index }}" data-to="{{ item.quantity | plus: 1 }}" aria-label="Increase quantity">+</button>
+                    <button type="button" data-casa-qty="{{ forloop.index }}" data-to="{{ item.quantity | plus: 1 }}" aria-label="Increase quantity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
                   </div>
                   <div class="casa-cd__price">
                     {%- if line_saving > 0 -%}<s>{{ compare_total | money }}</s>{%- endif -%}
@@ -103,6 +120,7 @@
                   </div>
                 </div>
                 {%- if line_saving > 0 -%}<p class="casa-cd__save">&#10003; You save {{ line_saving | money }}</p>{%- endif -%}
+                {%- for allocation in item.line_level_discount_allocations -%}<span class="casa-cd__chip">{{ allocation.discount_application.title }} &minus;{{ allocation.amount | money }}</span>{%- endfor -%}
               </div>
             </li>
           {%- endfor -%}
@@ -137,6 +155,7 @@
                   <div class="casa-cd__upinfo">
                     <a class="casa-cd__uptitle" href="{{ up.url }}">{{ up.title }}</a>
                     <strong>{{ up.selected_or_first_available_variant.price | money }}</strong>
+                    {%- if key != 'b' and pair_pct > 0 and has_bundle == false -%}<span class="casa-cd__tag">Add this to unlock the bundle discount ({{ pair_pct }}% off)</span>{%- endif -%}
                     <button type="button" class="casa-cd__add" data-casa-add="{{ up.selected_or_first_available_variant.id }}">Add</button>
                   </div>
                 </div>
@@ -147,6 +166,9 @@
       </div>
 
       <footer class="casa-cd__foot">
+        {%- if cart.total_discount > 0 -%}
+          <div class="casa-cd__disc"><span>{%- if bundle_applied -%}Bundle discount{%- else -%}Discounts{%- endif -%}</span><strong>&minus;{{ cart.total_discount | money }}</strong></div>
+        {%- endif -%}
         <div class="casa-cd__sub"><span>Subtotal ({{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %})</span><strong>{{ cart.total_price | money }}</strong></div>
         <form action="{{ routes.cart_url }}" method="post">
           <button type="submit" name="checkout" class="casa-cd__btn">Checkout &middot; {{ cart.total_price | money }}</button>
