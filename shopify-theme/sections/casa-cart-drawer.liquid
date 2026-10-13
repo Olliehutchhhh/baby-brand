@@ -1,0 +1,179 @@
+{{ 'casa-cart-drawer.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign s = section.settings
+  assign threshold = s.free_shipping_threshold | times: 100
+  assign warmer_p = blank
+  assign cooler_p = blank
+  assign bundle_p = blank
+  for p in collections['all'].products
+    case p.template_suffix
+      when 'casa-warmer'
+        assign warmer_p = p
+      when 'casa-cooler'
+        assign cooler_p = p
+      when 'casa-bundle'
+        assign bundle_p = p
+    endcase
+  endfor
+  assign w_price = warmer_p.selected_or_first_available_variant.price | default: 0
+  assign c_price = cooler_p.selected_or_first_available_variant.price | default: 0
+  assign sum_price = w_price | plus: c_price
+
+  assign in_cart_ids = ''
+  for item in cart.items
+    assign in_cart_ids = in_cart_ids | append: '|' | append: item.product_id | append: '|'
+  endfor
+  assign w_key = '|' | append: warmer_p.id | append: '|'
+  assign c_key = '|' | append: cooler_p.id | append: '|'
+  assign b_key = '|' | append: bundle_p.id | append: '|'
+  assign has_warmer = false
+  assign has_cooler = false
+  assign has_bundle = false
+  if warmer_p != blank and in_cart_ids contains w_key
+    assign has_warmer = true
+  endif
+  if cooler_p != blank and in_cart_ids contains c_key
+    assign has_cooler = true
+  endif
+  if bundle_p != blank and in_cart_ids contains b_key
+    assign has_bundle = true
+  endif
+  assign remaining = threshold | minus: cart.total_price
+  assign ship_pct = 100
+  if remaining > 0 and threshold > 0
+    assign ship_pct = cart.total_price | times: 100 | divided_by: threshold
+  endif
+-%}
+<div id="casaCartDrawer" class="casa-cd" role="dialog" aria-modal="true" aria-label="Your cart" aria-hidden="true" data-count="{{ cart.item_count }}">
+  <div class="casa-cd__overlay" data-casa-close></div>
+  <aside class="casa-cd__panel" tabindex="-1">
+    <header class="casa-cd__head">
+      <h2>Your cart</h2>
+      <button type="button" class="casa-cd__x" data-casa-close aria-label="Close cart">&times;</button>
+    </header>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="casa-cd__empty">
+        <p>Your cart is empty.</p>
+        <a class="casa-cd__btn" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+      </div>
+    {%- else -%}
+      {%- if threshold > 0 -%}
+        <div class="casa-cd__ship{% if remaining <= 0 %} is-done{% endif %}">
+          <p>
+            {%- if remaining <= 0 -%}
+              {{ s.free_shipping_done }}
+            {%- else -%}
+              You're {{ remaining | money }} away from free shipping
+            {%- endif -%}
+          </p>
+          <div class="casa-cd__bar"><span style="width:{{ ship_pct }}%"></span></div>
+        </div>
+      {%- endif -%}
+
+      <div class="casa-cd__body">
+        <ul class="casa-cd__items">
+          {%- for item in cart.items -%}
+            {%- assign compare_total = item.variant.compare_at_price | times: item.quantity -%}
+            {%- if bundle_p != blank and item.product_id == bundle_p.id and sum_price > item.variant.price -%}
+              {%- assign compare_total = sum_price | times: item.quantity -%}
+            {%- endif -%}
+            {%- assign line_saving = compare_total | minus: item.final_line_price -%}
+            <li class="casa-cd__item" data-line="{{ forloop.index }}">
+              <a class="casa-cd__img" href="{{ item.url }}">
+                {%- if item.image -%}<img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.image.alt | escape }}" width="96" height="96" loading="lazy">{%- endif -%}
+              </a>
+              <div class="casa-cd__info">
+                <div class="casa-cd__top">
+                  <a class="casa-cd__title" href="{{ item.url }}">{{ item.product.title }}</a>
+                  <button type="button" class="casa-cd__rm" data-casa-remove="{{ forloop.index }}" aria-label="Remove {{ item.product.title | escape }}">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg>
+                  </button>
+                </div>
+                {%- unless item.product.has_only_default_variant -%}<p class="casa-cd__var">{{ item.variant.title }}</p>{%- endunless -%}
+                <div class="casa-cd__row">
+                  <div class="casa-cd__qty">
+                    <button type="button" data-casa-qty="{{ forloop.index }}" data-to="{{ item.quantity | minus: 1 }}" aria-label="Decrease quantity">&minus;</button>
+                    <span>{{ item.quantity }}</span>
+                    <button type="button" data-casa-qty="{{ forloop.index }}" data-to="{{ item.quantity | plus: 1 }}" aria-label="Increase quantity">+</button>
+                  </div>
+                  <div class="casa-cd__price">
+                    {%- if line_saving > 0 -%}<s>{{ compare_total | money }}</s>{%- endif -%}
+                    <strong>{{ item.final_line_price | money }}</strong>
+                  </div>
+                </div>
+                {%- if line_saving > 0 -%}<p class="casa-cd__save">&#10003; You save {{ line_saving | money }}</p>{%- endif -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        {%- liquid
+          assign ups = ''
+          if has_bundle == false and has_warmer == false and has_cooler == false and bundle_p != blank and bundle_p.available
+            assign ups = ups | append: 'b,'
+          endif
+          if has_bundle == false and has_warmer == false and warmer_p != blank and warmer_p.available
+            assign ups = ups | append: 'w,'
+          endif
+          if has_bundle == false and has_cooler == false and cooler_p != blank and cooler_p.available
+            assign ups = ups | append: 'c,'
+          endif
+          assign up_list = ups | split: ','
+        -%}
+        {%- if up_list.size > 0 -%}
+          <section class="casa-cd__ups" aria-label="{{ s.upsell_heading | escape }}">
+            <h3>{{ s.upsell_heading }}</h3>
+            <div class="casa-cd__scroll">
+              {%- for key in up_list -%}
+                {%- if key == blank -%}{%- continue -%}{%- endif -%}
+                {%- case key -%}
+                  {%- when 'b' -%}{%- assign up = bundle_p -%}
+                  {%- when 'w' -%}{%- assign up = warmer_p -%}
+                  {%- when 'c' -%}{%- assign up = cooler_p -%}
+                {%- endcase -%}
+                <div class="casa-cd__up">
+                  <a class="casa-cd__upimg" href="{{ up.url }}">{%- if up.featured_image -%}<img src="{{ up.featured_image | image_url: width: 240 }}" alt="{{ up.featured_image.alt | escape }}" width="96" height="96" loading="lazy">{%- endif -%}</a>
+                  <div class="casa-cd__upinfo">
+                    <a class="casa-cd__uptitle" href="{{ up.url }}">{{ up.title }}</a>
+                    <strong>{{ up.selected_or_first_available_variant.price | money }}</strong>
+                    <button type="button" class="casa-cd__add" data-casa-add="{{ up.selected_or_first_available_variant.id }}">Add</button>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </section>
+        {%- endif -%}
+      </div>
+
+      <footer class="casa-cd__foot">
+        <div class="casa-cd__sub"><span>Subtotal ({{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %})</span><strong>{{ cart.total_price | money }}</strong></div>
+        <form action="{{ routes.cart_url }}" method="post">
+          <button type="submit" name="checkout" class="casa-cd__btn">Checkout &middot; {{ cart.total_price | money }}</button>
+        </form>
+        {%- if shop.enabled_payment_types.size > 0 -%}
+          <ul class="casa-cd__pay" aria-label="Accepted payment methods">
+            {%- for type in shop.enabled_payment_types -%}<li>{{ type | payment_type_svg_tag: class: 'casa-cd__payicon' }}</li>{%- endfor -%}
+          </ul>
+        {%- endif -%}
+        <ul class="casa-cd__trust">
+          {%- if s.trust_1 != blank -%}<li>{{ s.trust_1 }}</li>{%- endif -%}
+          {%- if s.trust_2 != blank -%}<li>{{ s.trust_2 }}</li>{%- endif -%}
+        </ul>
+      </footer>
+    {%- endif -%}
+  </aside>
+</div>
+
+{% schema %}
+{
+  "name": "Casa cart drawer",
+  "settings": [
+    { "type": "number", "id": "free_shipping_threshold", "label": "Free shipping from (£) - 0 hides the bar", "default": 100 },
+    { "type": "text", "id": "free_shipping_done", "label": "Message when free shipping is unlocked", "default": "Congrats, you have unlocked free shipping!" },
+    { "type": "text", "id": "upsell_heading", "label": "Suggestions heading", "default": "Customers also bought" },
+    { "type": "text", "id": "trust_1", "label": "Reassurance line 1", "default": "Secure checkout" },
+    { "type": "text", "id": "trust_2", "label": "Reassurance line 2", "default": "30 days guarantee" }
+  ]
+}
+{% endschema %}
