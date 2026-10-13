@@ -9,6 +9,21 @@ root = pathlib.Path(__file__).parent
 d = root / "pages"
 src = (d / "bottle-warmer-pdp.html").read_text()
 
+# ---------- cart drawer block (re-injected into the warmer source on every build) ----------
+_blk = (root / "cart_block.html").read_text()
+_w_main = re.search(r'<img id="mainImageImg" src="(data:image/[a-z]+;base64,[^"]+)"', src).group(1)
+_wi = Image.open(io.BytesIO(base64.b64decode(_w_main.split(",", 1)[1])))
+def _thumb(im, w=220):
+    im = im.convert("RGB").copy(); im.thumbnail((w, w), Image.LANCZOS)
+    b = io.BytesIO(); im.save(b, "JPEG", quality=80, optimize=True)
+    return "data:image/jpeg;base64," + base64.b64encode(b.getvalue()).decode()
+_blk = _blk.replace("__CCD_IMG_W__", _thumb(_wi)).replace("__CCD_IMG_C__", _thumb(Image.open(root / "assets/cooler/main.jpg")))
+if "<!--CASA_CART-->" in src:
+    src = re.sub(r"<!--CASA_CART-->.*?<!--/CASA_CART-->", lambda m: _blk, src, flags=re.S)
+else:
+    src = src.replace("</body>", _blk + "\n</body>", 1)
+(d / "bottle-warmer-pdp.html").write_text(src)
+
 # ---------- bundle page ----------
 s = src
 assert s.count("var PAGE = 'single';") == 1

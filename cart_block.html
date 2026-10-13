@@ -1,0 +1,95 @@
+<!--CASA_CART-->
+<style>
+.ccd{--navy:#1a1f3d;--pink:#FFD6EE;--pink-soft:#FFE9F6;--accent:#c2388a;--line:#e7e3e0;--muted:#767070;--green:#4f7a5a;--ink:#1c1c1c;position:fixed;inset:0;z-index:1000;visibility:hidden;pointer-events:none;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:1.3;color:var(--ink)}
+.ccd *,.ccd *::before,.ccd *::after{box-sizing:border-box}
+.ccd.open{visibility:visible;pointer-events:auto}
+.ccd-ov{position:absolute;inset:0;background:rgba(20,20,30,.5);opacity:0;transition:opacity .25s}
+.ccd.open .ccd-ov{opacity:1}
+.ccd-panel{position:absolute;top:0;right:0;bottom:0;width:min(480px,100vw);background:#fff;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s ease;box-shadow:-8px 0 30px rgba(0,0,0,.12)}
+.ccd.open .ccd-panel{transform:none}
+.ccd-head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--line)}
+.ccd-head h2{margin:0;font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;font-weight:500;font-size:18px;letter-spacing:.12em;text-transform:uppercase;color:#5f7a5f}
+.ccd-x{border:0;background:none;font-size:30px;line-height:1;cursor:pointer;color:var(--ink);padding:0 4px}
+.ccd-ship{background:var(--pink-soft);padding:12px 24px;text-align:center;font-size:14px}
+.ccd-ship p{margin:0 0 8px}.ccd-ship.done p{margin:0}.ccd-ship.done .ccd-bar{display:none}
+.ccd-bar{height:6px;border-radius:99px;background:#fff;overflow:hidden}.ccd-bar span{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .35s}
+.ccd-body{flex:1;overflow-y:auto;padding:8px 24px 16px}
+.ccd-item{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--line)}
+.ccd-img{flex:none;width:96px;height:96px;border-radius:10px;overflow:hidden;background:#f4f1ee}.ccd-img img{width:100%;height:100%;object-fit:cover;display:block}
+.ccd-info{flex:1;min-width:0}.ccd-top{display:flex;gap:10px;justify-content:space-between;align-items:flex-start}
+.ccd-title{font-weight:700;font-size:16px}.ccd-rm{border:0;background:none;color:var(--muted);cursor:pointer;padding:2px}
+.ccd-row{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+.ccd-qty{display:flex;align-items:center;gap:14px}.ccd-qty button{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:16px;cursor:pointer;line-height:1}.ccd-qty span{min-width:14px;text-align:center;font-weight:700}
+.ccd-price{display:flex;align-items:baseline;gap:8px}.ccd-price s{color:var(--muted);font-size:13px}.ccd-price strong{font-size:18px}
+.ccd-save{margin:8px 0 0;font-size:13px;color:var(--green)}
+.ccd-ups{padding-top:22px}.ccd-ups h3{margin:0 0 12px;font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;font-weight:500;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.ccd-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px}
+.ccd-up{flex:0 0 88%;display:flex;gap:14px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.ccd-up .ccd-img{width:84px;height:84px}.ccd-upinfo{display:flex;flex-direction:column;gap:6px;align-items:flex-start}.ccd-upinfo b{font-size:14px}
+.ccd-add{border:0;border-radius:999px;background:var(--navy);color:var(--pink);font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:10px 26px;cursor:pointer}
+.ccd-foot{padding:16px 24px 22px;border-top:1px solid var(--line)}.ccd-sub{display:flex;justify-content:space-between;font-size:16px;margin-bottom:14px}
+.ccd-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:54px;border:0;border-radius:999px;background:var(--navy);color:var(--pink);font-size:16px;font-weight:800;cursor:pointer;font-family:inherit}
+.ccd-trust{list-style:none;margin:14px 0 0;padding:0;display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:13px;color:var(--muted)}.ccd-trust li::before{content:"\2713\00a0";color:var(--green)}
+.ccd-empty{padding:48px 24px;text-align:center}.ccd-empty .ccd-btn{margin-top:16px}
+@media(max-width:520px){.ccd-head,.ccd-foot,.ccd-body,.ccd-ship{padding-left:18px;padding-right:18px}.ccd-up{flex-basis:92%}}
+</style>
+<div class="ccd" id="ccd" role="dialog" aria-modal="true" aria-label="Your cart" aria-hidden="true"><div class="ccd-ov" data-close></div><aside class="ccd-panel"><header class="ccd-head"><h2>Your cart</h2><button class="ccd-x" data-close aria-label="Close cart">&times;</button></header><div id="ccdContent" style="display:flex;flex-direction:column;flex:1;min-height:0"></div></aside></div>
+<script>
+(function(){
+  var CAT = {
+    warmer:{name:'Superfast Portable Bottle Warmer for Travel',now:8999,old:10499,img:'__CCD_IMG_W__',href:'bottle-warmer-pdp.html'},
+    cooler:{name:'Portable Breast Milk Cooler for Travel',now:7999,old:9499,img:'__CCD_IMG_C__',href:'breast-milk-cooler-pdp.html'},
+    bundle:{name:'Portable Warmer & Cooler Set + Free E-Book',now:13499,old:16998,img:'__CCD_IMG_W__',href:'bottle-warmer-bundle-pdp.html'}
+  };
+  var FREE = 10000, lines = [];
+  try { lines = JSON.parse(sessionStorage.getItem('ccdLines') || '[]').filter(function(l){ return CAT[l.k]; }); } catch(e){}
+  var $ = function(id){ return document.getElementById(id); };
+  var gbp = function(p){ return '£' + (p/100).toFixed(2); };
+  function save(){ try { sessionStorage.setItem('ccdLines', JSON.stringify(lines)); } catch(e){} }
+  function count(){ return lines.reduce(function(a,l){ return a + l.q; }, 0); }
+  function has(k){ return lines.some(function(l){ return l.k === k; }); }
+  function add(k, q){ var l = lines.filter(function(x){ return x.k === k; })[0]; if (l) l.q += q; else lines.push({k:k, q:q}); save(); render(); }
+  function render(){
+    var n = count(), nav = document.querySelector('.site-links .ccd-link'); if (nav) nav.textContent = 'Cart (' + n + ')';
+    var h = '';
+    if (!n){ h = '<div class="ccd-empty"><p>Your cart is empty.</p><button class="ccd-btn" data-close>Continue shopping</button></div>'; }
+    else {
+      var total = lines.reduce(function(a,l){ return a + CAT[l.k].now*l.q; }, 0), rem = FREE - total;
+      h += '<div class="ccd-ship' + (rem <= 0 ? ' done' : '') + '"><p>' + (rem <= 0 ? 'Congrats, you have unlocked free shipping!' : 'You\'re ' + gbp(rem) + ' away from free shipping') + '</p><div class="ccd-bar"><span style="width:' + Math.min(100, Math.round(total*100/FREE)) + '%"></span></div></div><div class="ccd-body">';
+      lines.forEach(function(l, i){
+        var c = CAT[l.k], sv = (c.old - c.now) * l.q;
+        h += '<div class="ccd-item"><a class="ccd-img" href="' + c.href + '"><img src="' + c.img + '" alt=""></a><div class="ccd-info"><div class="ccd-top"><a class="ccd-title" href="' + c.href + '" style="color:inherit;text-decoration:none">' + c.name + '</a><button class="ccd-rm" data-rm="' + i + '" aria-label="Remove">🗑</button></div><div class="ccd-row"><div class="ccd-qty"><button data-q="' + i + '" data-d="-1" aria-label="Decrease">&minus;</button><span>' + l.q + '</span><button data-q="' + i + '" data-d="1" aria-label="Increase">+</button></div><div class="ccd-price">' + (sv > 0 ? '<s>' + gbp(c.old*l.q) + '</s>' : '') + '<strong>' + gbp(c.now*l.q) + '</strong></div></div>' + (sv > 0 ? '<p class="ccd-save">&#10003; You save ' + gbp(sv) + '</p>' : '') + '</div></div>';
+      });
+      var ups = [];
+      if (!has('bundle') && !has('warmer') && !has('cooler')) ups.push('bundle');
+      if (!has('bundle') && !has('warmer')) ups.push('warmer');
+      if (!has('bundle') && !has('cooler')) ups.push('cooler');
+      if (ups.length){
+        h += '<section class="ccd-ups"><h3>Customers also bought</h3><div class="ccd-scroll">' + ups.map(function(k){ var c = CAT[k]; return '<div class="ccd-up"><a class="ccd-img" href="' + c.href + '"><img src="' + c.img + '" alt=""></a><div class="ccd-upinfo"><b>' + c.name + '</b><strong>' + gbp(c.now) + '</strong><button class="ccd-add" data-add="' + k + '">Add</button></div></div>'; }).join('') + '</div></section>';
+      }
+      h += '</div><div class="ccd-foot"><div class="ccd-sub"><span>Subtotal (' + n + (n === 1 ? ' item' : ' items') + ')</span><strong>' + gbp(total) + '</strong></div><button class="ccd-btn" data-checkout>Checkout &middot; ' + gbp(total) + '</button><ul class="ccd-trust"><li>Secure checkout</li><li>30 days guarantee</li></ul></div>';
+    }
+    $('ccdContent').innerHTML = h;
+  }
+  function open(){ render(); $('ccd').classList.add('open'); $('ccd').setAttribute('aria-hidden','false'); }
+  function close(){ $('ccd').classList.remove('open'); $('ccd').setAttribute('aria-hidden','true'); }
+  var nav = document.querySelector('.site-links');
+  if (nav){ var a = document.createElement('a'); a.href = '#'; a.className = 'ccd-link'; a.textContent = 'Cart (0)'; nav.appendChild(a); a.addEventListener('click', function(e){ e.preventDefault(); open(); }); }
+  document.addEventListener('click', function(e){
+    var t = e.target.closest ? e.target : e.target.parentNode, el;
+    if (t.closest('[data-close]')) return close();
+    if ((el = t.closest('[data-q]'))){ var l = lines[+el.dataset.q]; l.q += +el.dataset.d; if (l.q < 1) lines.splice(+el.dataset.q, 1); save(); return render(); }
+    if ((el = t.closest('[data-rm]'))){ lines.splice(+el.dataset.rm, 1); save(); return render(); }
+    if ((el = t.closest('[data-add]'))){ return add(el.dataset.add, 1); }
+    if (t.closest('[data-checkout]')){ alert('Preview only – this is where Shopify checkout opens.'); }
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  // main "Add To Cart": which product is on the page comes from the page title / selected price
+  $('mainAddToCart').addEventListener('click', function(){
+    var title = ($('pdpTitle') || {}).textContent || '', k = /Set|Bundle/i.test(title) ? 'bundle' : (/Cooler/i.test(title) ? 'cooler' : 'warmer');
+    add(k, parseInt(($('qtyValue') || {}).textContent, 10) || 1); open();
+  });
+  render();
+})();
+</script>
+<!--/CASA_CART-->
