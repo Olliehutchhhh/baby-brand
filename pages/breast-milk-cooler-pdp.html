@@ -1426,12 +1426,14 @@
       var wq = qtyOf('warmer'), cq = qtyOf('cooler'), pairs = Math.min(wq, cq);
       var bd = pairs * (CAT.warmer.now + CAT.cooler.now - CAT.bundle.now);
       var bdPct = Math.round((CAT.warmer.now + CAT.cooler.now - CAT.bundle.now) * 100 / (CAT.warmer.now + CAT.cooler.now));
+      var bq = qtyOf('bundle'), bsave = bq * (CAT.warmer.now + CAT.cooler.now - CAT.bundle.now);
       var total = lines.reduce(function(a,l){ return a + CAT[l.k].now*l.q; }, 0) - bd, rem = FREE - total;
       h += '<div class="ccd-ship' + (rem <= 0 ? ' done' : '') + '"><p>' + (rem <= 0 ? 'Congrats, you have unlocked free shipping!' : 'You\'re ' + gbp(rem) + ' away from free shipping') + '</p><div class="ccd-bar"><span style="width:' + Math.min(100, Math.round(total*100/FREE)) + '%"></span></div></div><div class="ccd-body">';
+      if (bsave > 0) h += '<div class="ccd-bd"><span aria-hidden="true">🎉</span><div><b>Bundle discount applied</b>You\'re saving ' + gbp(bsave) + ' (' + bdPct + '% off) compared with buying the warmer and cooler separately.</div></div>';
       if (bd > 0) h += '<div class="ccd-bd"><span aria-hidden="true">🎉</span><div><b>Bundle discount applied</b>You have the warmer and the cooler in your cart, so you\'re saving ' + gbp(bd) + ' (' + bdPct + '% off the pair).</div></div>';
       lines.forEach(function(l, i){
         var c = CAT[l.k], sv = (c.old - c.now) * l.q;
-        h += '<div class="ccd-item"><a class="ccd-img" href="' + c.href + '"><img src="' + c.img + '" alt=""></a><div class="ccd-info"><div class="ccd-top"><a class="ccd-title" href="' + c.href + '" style="color:inherit;text-decoration:none">' + c.name + '</a><button class="ccd-rm" data-rm="' + i + '" aria-label="Remove"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></button></div><div class="ccd-row"><div class="ccd-qty"><button data-q="' + i + '" data-d="-1" aria-label="Decrease">' + MINUS + '</button><span>' + l.q + '</span><button data-q="' + i + '" data-d="1" aria-label="Increase">' + PLUS + '</button></div><div class="ccd-price">' + (sv > 0 ? '<s>' + gbp(c.old*l.q) + '</s>' : '') + '<strong>' + gbp(c.now*l.q) + '</strong></div></div>' + (sv > 0 ? '<p class="ccd-save">&#10003; You save ' + gbp(sv) + '</p>' : '') + (bd > 0 && (l.k === 'warmer' || l.k === 'cooler') ? '<span class="ccd-chip">Bundle discount applied</span>' : '') + '</div></div>';
+        h += '<div class="ccd-item"><a class="ccd-img" href="' + c.href + '"><img src="' + c.img + '" alt=""></a><div class="ccd-info"><div class="ccd-top"><a class="ccd-title" href="' + c.href + '" style="color:inherit;text-decoration:none">' + c.name + '</a><button class="ccd-rm" data-rm="' + i + '" aria-label="Remove"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/></svg></button></div><div class="ccd-row"><div class="ccd-qty"><button data-q="' + i + '" data-d="-1" aria-label="Decrease">' + MINUS + '</button><span>' + l.q + '</span><button data-q="' + i + '" data-d="1" aria-label="Increase">' + PLUS + '</button></div><div class="ccd-price">' + (sv > 0 ? '<s>' + gbp(c.old*l.q) + '</s>' : '') + '<strong>' + gbp(c.now*l.q) + '</strong></div></div>' + (sv > 0 ? '<p class="ccd-save">&#10003; You save ' + gbp(sv) + '</p>' : '') + ((bd > 0 && (l.k === 'warmer' || l.k === 'cooler')) || l.k === 'bundle' ? '<span class="ccd-chip">Bundle discount applied</span>' : '') + '</div></div>';
       });
       var ups = [];
       if (!has('bundle') && !has('warmer') && !has('cooler')) ups.push('bundle');
@@ -1440,7 +1442,7 @@
       if (ups.length){
         h += '<section class="ccd-ups"><h3>Customers also bought</h3><div class="ccd-scroll">' + ups.map(function(k){ var c = CAT[k]; return '<div class="ccd-up"><a class="ccd-img" href="' + c.href + '"><img src="' + c.img + '" alt=""></a><div class="ccd-upinfo"><b>' + c.name + '</b><strong>' + gbp(c.now) + '</strong>' + ((k === 'warmer' || k === 'cooler') && (has('warmer') || has('cooler')) ? '<span class="ccd-tag">Add this to unlock the bundle discount</span>' : '') + '<button class="ccd-add" data-add="' + k + '">Add</button></div></div>'; }).join('') + '</div></section>';
       }
-      h += '</div><div class="ccd-foot">' + (bd > 0 ? '<div class="ccd-disc"><span>Bundle discount</span><strong>&minus;' + gbp(bd) + '</strong></div>' : '') + '<div class="ccd-sub"><span>Subtotal (' + n + (n === 1 ? ' item' : ' items') + ')</span><strong>' + gbp(total) + '</strong></div><button class="ccd-btn" data-checkout>Checkout &middot; ' + gbp(total) + '</button><ul class="ccd-trust"><li>Secure checkout</li><li>30 days guarantee</li></ul></div>';
+      h += '</div><div class="ccd-foot">' + (bd > 0 ? '<div class="ccd-disc"><span>Bundle discount</span><strong>&minus;' + gbp(bd) + '</strong></div>' : '') + (bsave > 0 ? '<div class="ccd-disc"><span>Bundle discount applied</span><strong>' + gbp(bsave) + ' saved</strong></div>' : '') + '<div class="ccd-sub"><span>Subtotal (' + n + (n === 1 ? ' item' : ' items') + ')</span><strong>' + gbp(total) + '</strong></div><button class="ccd-btn" data-checkout>Checkout &middot; ' + gbp(total) + '</button><ul class="ccd-trust"><li>Secure checkout</li><li>30 days guarantee</li></ul></div>';
     }
     $('ccdContent').innerHTML = h;
   }
@@ -1466,6 +1468,7 @@
 })();
 </script>
 <!--/CASA_CART-->
+
 
 
 

@@ -47,6 +47,16 @@
   if has_warmer and has_cooler and cart.total_discount > 0
     assign bundle_applied = true
   endif
+  assign bundle_qty = 0
+  for item in cart.items
+    if bundle_p != blank and item.product_id == bundle_p.id
+      assign bundle_qty = bundle_qty | plus: item.quantity
+    endif
+  endfor
+  assign bundle_saving = 0
+  if bundle_qty > 0 and sum_price > bundle_price
+    assign bundle_saving = sum_price | minus: bundle_price | times: bundle_qty
+  endif
   assign remaining = threshold | minus: cart.total_price
   assign ship_pct = 100
   if remaining > 0 and threshold > 0
@@ -81,6 +91,12 @@
       {%- endif -%}
 
       <div class="casa-cd__body">
+        {%- if bundle_saving > 0 -%}
+          <div class="casa-cd__bd">
+            <span aria-hidden="true">&#127881;</span>
+            <div><b>Bundle discount applied</b>You're saving {{ bundle_saving | money }}{% if pair_pct > 0 %} ({{ pair_pct }}% off){% endif %} compared with buying the warmer and cooler separately.</div>
+          </div>
+        {%- endif -%}
         {%- if bundle_applied -%}
           <div class="casa-cd__bd">
             <span aria-hidden="true">&#127881;</span>
@@ -120,6 +136,7 @@
                   </div>
                 </div>
                 {%- if line_saving > 0 -%}<p class="casa-cd__save">&#10003; You save {{ line_saving | money }}</p>{%- endif -%}
+                {%- if bundle_saving > 0 and item.product_id == bundle_p.id -%}<span class="casa-cd__chip">Bundle discount applied</span>{%- endif -%}
                 {%- for allocation in item.line_level_discount_allocations -%}<span class="casa-cd__chip">{{ allocation.discount_application.title }} &minus;{{ allocation.amount | money }}</span>{%- endfor -%}
               </div>
             </li>
@@ -168,6 +185,9 @@
       <footer class="casa-cd__foot">
         {%- if cart.total_discount > 0 -%}
           <div class="casa-cd__disc"><span>{%- if bundle_applied -%}Bundle discount{%- else -%}Discounts{%- endif -%}</span><strong>&minus;{{ cart.total_discount | money }}</strong></div>
+        {%- endif -%}
+        {%- if bundle_saving > 0 -%}
+          <div class="casa-cd__disc"><span>Bundle discount applied</span><strong>{{ bundle_saving | money }} saved</strong></div>
         {%- endif -%}
         <div class="casa-cd__sub"><span>Subtotal ({{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %})</span><strong>{{ cart.total_price | money }}</strong></div>
         <form action="{{ routes.cart_url }}" method="post">
