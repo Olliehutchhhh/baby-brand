@@ -330,6 +330,8 @@
       {%- render 'cart-drawer' -%}
     {%- endif -%}
 
+    {% section 'casa-cart-drawer' %}
+
     {% sections 'header-group' %}
 
     <main
@@ -401,5 +403,6 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+    <script src="{{ 'casa-cart-drawer.js' | asset_url }}" defer="defer"></script>
   </body>
 </html>

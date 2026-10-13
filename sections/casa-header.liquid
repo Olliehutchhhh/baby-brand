@@ -21,7 +21,7 @@
         <a href="{{ routes.all_products_url }}">Shop</a>
         <a href="{{ routes.root_url }}pages/about-us">About Us</a>
       {%- endif -%}
-      <a href="{{ routes.cart_url }}" class="cart-link">Cart ({{ cart.item_count }})</a>
+      <a href="{{ routes.cart_url }}" class="cart-link" data-casa-cart-open>Cart (<span data-casa-cart-count>{{ cart.item_count }}</span>)</a>
     </nav>
   </header>
 </div>
