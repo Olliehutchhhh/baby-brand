@@ -726,7 +726,7 @@
 
 /* ===== Review slider arrows ===== */
 .casa-pdp .review-slider{ position:relative; }
-.casa-pdp .review-slider .video-row{ scrollbar-width:none; -ms-overflow-style:none; scroll-behavior:smooth; }
+.casa-pdp .review-slider .video-row{ scrollbar-width:none; -ms-overflow-style:none; }
 .casa-pdp .review-slider .video-row::-webkit-scrollbar{ display:none; }
 .casa-pdp .rs-btn{ position:absolute; top:calc((100% - 60px) / 2); transform:translateY(-50%); width:44px; height:44px; border-radius:50%; border:0; background:#7a9d82; color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0; box-shadow:0 2px 8px rgba(0,0,0,.2); z-index:2; transition:background .15s, transform .15s; }
 .casa-pdp .rs-btn:hover{ background:#678a6f; transform:translateY(-50%) scale(1.06); }

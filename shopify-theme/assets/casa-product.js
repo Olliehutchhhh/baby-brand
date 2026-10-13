@@ -109,8 +109,27 @@
   var row = document.getElementById('reviewRow'); if (!row) return;
   var wrap = row.parentNode, prev = wrap.querySelector('.rs-prev'), next = wrap.querySelector('.rs-next');
   if (!prev || !next) return;
-  function step(){ var c = row.querySelector('.video-card'); return c ? c.getBoundingClientRect().width + 14 : 200; }
-  function max(){ return row.scrollWidth - row.clientWidth; }
-  next.addEventListener('click', function(){ row.scrollTo({ left: row.scrollLeft >= max() - 2 ? 0 : row.scrollLeft + step(), behavior:'smooth' }); });
-  prev.addEventListener('click', function(){ row.scrollTo({ left: row.scrollLeft <= 2 ? max() : row.scrollLeft - step(), behavior:'smooth' }); });
+  var orig = [].slice.call(row.querySelectorAll('.video-card'));
+  if (orig.length < 2) { prev.style.display = next.style.display = 'none'; return; }
+  // endless loop: a clone of the whole set sits before and after the real cards
+  function clones(){ return orig.map(function(c, i){
+    var k = c.cloneNode(true); k.classList.remove('review-card'); k.classList.add('rs-clone');
+    k.setAttribute('aria-hidden', 'true'); k.tabIndex = -1;
+    k.addEventListener('click', function(){ if (c.click) c.click(); });
+    return k; }); }
+  var first = orig[0];
+  clones().forEach(function(k){ row.insertBefore(k, first); });
+  clones().forEach(function(k){ row.appendChild(k); });
+  function setW(){ return first.offsetLeft - row.querySelector('.rs-clone').offsetLeft; }
+  function step(){ return first.getBoundingClientRect().width + 14; }
+  function jump(x){ row.scrollTo({ left: x, behavior: 'auto' }); }
+  function normalise(){ var W = setW(); if (!W) return;
+    if (row.scrollLeft < W) jump(row.scrollLeft + W); else if (row.scrollLeft >= 2 * W) jump(row.scrollLeft - W); }
+  var t; function settled(){ clearTimeout(t); t = setTimeout(normalise, 140); }
+  row.addEventListener('scroll', settled, { passive: true });
+  function go(dir){ normalise(); row.scrollTo({ left: row.scrollLeft + dir * step(), behavior: 'smooth' }); }
+  next.addEventListener('click', function(){ go(1); });
+  prev.addEventListener('click', function(){ go(-1); });
+  function start(){ var W = setW(); if (W) jump(W); }
+  start(); window.addEventListener('load', start); window.addEventListener('resize', function(){ normalise(); });
 })();
