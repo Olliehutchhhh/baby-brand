@@ -256,7 +256,7 @@
           {%- endfor -%}
         {%- elsif s.use_sample_reviews -%}
           {%- for n in (1..5) -%}
-            {%- assign review_file = 'casa-review-' | append: n | append: '.jpg' -%}
+            {%- assign review_file = s.sample_review_prefix | default: 'casa-review-' | append: n | append: '.jpg' -%}
             <button type="button" class="video-card review-card" aria-label="Open customer review {{ n }}"><img src="{{ review_file | asset_url }}" data-full="{{ review_file | asset_url }}" alt="Customer review {{ n }}" width="360" height="640" loading="lazy"></button>
           {%- endfor -%}
         {%- else -%}
@@ -398,6 +398,7 @@
 
     { "type": "header", "content": "Reviews" },
     { "type": "text", "id": "reviews_title", "label": "Heading", "default": "What Other Parents Are Saying" },
+    { "type": "text", "id": "sample_review_prefix", "label": "Built-in review photo file prefix", "default": "casa-review-", "info": "Files are named prefix1.jpg to prefix5.jpg in the theme assets." },
     { "type": "checkbox", "id": "use_sample_reviews", "label": "Use the five built-in review photos (when no review blocks are added)", "default": false },
 
     { "type": "header", "content": "Discount box" },

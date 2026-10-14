@@ -147,7 +147,14 @@ c = rep(c, '<div class="off-pill" id="priceOff">14% OFF</div>', '<div class="off
 c = rep(c, "single: { name:'Superfast Portable Bottle Warmer for Travel', old:'£104.99', now:'£89.99',  off:'14% OFF' },",
            "single: { name:'Portable Breast Milk Cooler for Travel', old:'£94.99', now:'£79.99',  off:'16% OFF' },")
 # reviews -> placeholders (fill in later)
-ph = ''.join('        <div class="video-card ph"><span class="bag">🛍</span><span class="play">▶</span></div>\n' for _ in range(5))
+import base64, io
+def _rv(n):
+    im = Image.open(root / "assets/cooler" / f"review-{n}.jpg"); buf = io.BytesIO(); im.save(buf, "JPEG", quality=82)
+    return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
+ph = ''
+for _n in range(1, 6):
+    _u = _rv(_n)
+    ph += f'        <button type="button" class="video-card review-card" data-idx="{_n-1}" aria-label="Open customer review {_n}"><img src="{_u}" data-full="{_u}" alt="Customer review {_n}" loading="lazy"></button>\n'
 c = region(c, '<div class="review-slider">', '      <div class="discount-box">', '<div class="review-slider">\n      <div class="video-row" id="reviewRow">\n' + ph + '      </div>\n' + RS_TAIL + '\n\n')
 c = rep(c, '  /* ===== Review lightbox ===== */',
   '  .video-card.ph{ cursor:default; border-radius:0; background:repeating-linear-gradient(45deg, #FFE9F6, #FFE9F6 10px, #FFD6EE 10px, #FFD6EE 20px); border:1px dashed #F6B9DF; display:flex; align-items:center; justify-content:center; }\n'
