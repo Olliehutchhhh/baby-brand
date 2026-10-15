@@ -33,7 +33,7 @@ FEATURES = {
   "cooler": [
     ("Iceless 360° cooling", "Keeps breast milk cold for up to 24 hours without needing any ice, so it’s ready whenever you are."),
     ("650ml capacity, fits two 300ml bottles", "Room for two full 300ml bottles, so you can carry a whole day’s feeds in one bottle."),
-    ("Leak-proof lid, 2 cooling cylinders included", "A leak-proof lid keeps your bag dry, and the two cooling cylinders included can be used together to keep milk cold all day."),
+    ("Leak-proof lid", "A secure leak-proof lid keeps your milk safely inside and your bag dry, so you can pack it with everything else without a second thought."),
   ],
 }
 KPF_CSS = """
@@ -65,7 +65,7 @@ STORY = {
     "steps": [("Fill", "Add your milk or water to the warmer."), ("Warm", "Press the button and let it heat. A quiet beep lets you know your milk or water has reached the temperature you chose."), ("Feed", "Check the temperature and feed your baby, wherever you are.")],
   },
   "cooler": {
-    "banner": ("Fresh milk, wherever life takes you.", "Safely store cold breast milk while you’re out of the house. Perfect for days out, holidays, travelling and the office, with no ice needed."),
+    "banner": ("Made for pumping mums.", "Take your milk to work without the worry. It stays properly cold all day, so there’s no need to trust a shared office fridge, and its discreet design looks just like an everyday water bottle."),
     "steps": [("Pour", "Pour your milk into the bottles."), ("Seal", "Close the leak-proof lid so nothing spills in your bag."), ("Go", "Iceless 360° cooling keeps milk cold for up to 24 hours.")],
   },
   "bundle": {

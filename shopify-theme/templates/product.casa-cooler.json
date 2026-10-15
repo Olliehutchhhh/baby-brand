@@ -85,8 +85,8 @@
         "feature-3": {
           "type": "feature",
           "settings": {
-            "title": "Leak-proof lid, 2 cooling cylinders included",
-            "text": "A leak-proof lid keeps your bag dry, and the two cooling cylinders included can be used together to keep milk cold all day.",
+            "title": "Leak-proof lid",
+            "text": "A secure leak-proof lid keeps your milk safely inside and your bag dry, so you can pack it with everything else without a second thought.",
             "row": "1"
           }
         }
@@ -105,8 +105,8 @@
     "band": {
       "type": "casa-feature-band",
       "settings": {
-        "heading": "Fresh milk, wherever life takes you.",
-        "text": "Safely store cold breast milk while you’re out of the house. Perfect for days out, holidays, travelling and the office, with no ice needed."
+        "heading": "Made for pumping mums.",
+        "text": "Take your milk to work without the worry. It stays properly cold all day, so there’s no need to trust a shared office fridge, and its discreet design looks just like an everyday water bottle."
       }
     },
     "steps": {
