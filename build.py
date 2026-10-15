@@ -364,6 +364,9 @@ print("built breast-milk-cooler-pdp.html")
 
 # ---------- sticky bar: the dropdown picks which product the bar adds (no page change) ----------
 def _sticky_block():
+    _c = (root / 'shopify-theme/assets/casa-product.css').read_text()
+    _css = _c[_c.index('/*SDD-START*/'):_c.index('/*SDD-END*/')]
+    _js = (root / 'shopify-theme/assets/casa-sticky-dd.js').read_text()
     _imgs = {
         "warmer": _thumb(_wi, 160),
         "cooler": _thumb(Image.open(root / "assets/cooler/main.jpg"), 160),
@@ -390,7 +393,7 @@ def _sticky_block():
       '    try { sessionStorage.setItem("pdpScrollY", String(window.scrollY)); } catch(e){}\n'
       '    window.location.href = D[sel.value].url;\n'
       '  });\n'
-      '})();\n</script>\n<!--/STICKY_OPT-->')
+      '})();\n</script>\n<style>' + _css + '</style>\n<script>' + _js + '</script>\n<!--/STICKY_OPT-->')
 for _f in ("bottle-warmer-pdp.html", "bottle-warmer-bundle-pdp.html", "breast-milk-cooler-pdp.html"):
     _t = (d / _f).read_text()
     _blk2 = _sticky_block()
