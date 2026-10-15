@@ -10,7 +10,6 @@
   var qtyInput = $('#casaQtyInput');
   function renderQty() {
     if (qtyInput) qtyInput.value = qty;
-    var sq = document.getElementById('stickyQtyInput'); if (sq) sq.value = qty;
     $$('.js-qty-value').forEach(function (el) { el.textContent = qty; });
   }
   $$('.js-qty-minus').forEach(function (b) { b.addEventListener('click', function () { qty = Math.max(1, qty - 1); renderQty(); }); });
@@ -81,20 +80,19 @@
       entries.forEach(function (e) { bar.classList.toggle('visible', !e.isIntersecting); });
     }, { threshold: 0 }).observe(mainBtn);
   }
-  // ---- Sticky bar dropdown: choose which product the bar adds (no page change) ----
+  // ---- Sticky bar dropdown: switch to the chosen product's page (pre-loaded, so it opens instantly), keeping your scroll position ----
   var stickySelect = $('#stickyOptSelect');
-  if (stickySelect) {
-    var sName = $('#stickyName'), sPrice = $('#stickyPrice'), sThumb = $('#stickyThumb'), sAdd = $('#stickyAdd'), sId = $('#stickyVariantId');
-    var applySticky = function () {
-      var o = stickySelect.options[stickySelect.selectedIndex]; if (!o) return;
-      if (sId) sId.value = o.value;
-      if (sName && o.dataset.name) sName.textContent = o.dataset.name;
-      if (sPrice && o.dataset.price) sPrice.textContent = o.dataset.price;
-      if (sThumb) sThumb.style.backgroundImage = o.dataset.img ? "url('" + o.dataset.img + "')" : '';
-      if (sAdd) { var ok = o.dataset.available !== 'false'; sAdd.disabled = !ok; sAdd.textContent = ok ? 'Add to Cart - ' + (o.dataset.money || '') : 'Sold Out'; }
+  if (stickySelect) stickySelect.addEventListener('change', function () {
+    if (!stickySelect.value) return;
+    try { sessionStorage.setItem('casaScrollY', String(window.scrollY)); } catch (e) {}
+    window.location.href = stickySelect.value;
+  });
+  (function () {
+    var restore = function () {
+      try { var y = sessionStorage.getItem('casaScrollY'); if (y !== null) { sessionStorage.removeItem('casaScrollY'); window.scrollTo(0, parseInt(y, 10) || 0); } } catch (e) {}
     };
-    stickySelect.addEventListener('change', applySticky);
-  }
+    if (document.prerendering) document.addEventListener('prerenderingchange', restore, { once: true }); else restore();
+  })();
 
   // ---- Review lightbox ----
   var cards = $$('#reviewRow .review-card');
