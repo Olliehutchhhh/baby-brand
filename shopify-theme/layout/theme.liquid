@@ -15,12 +15,20 @@
     {%- endif -%}
 
     <style>
-      /* Off-white announcement bar so it stands out from the white header */
+      /* Off-white, full-width announcement bar so it stands out from the white header */
+      .shopify-section-group-header-group.announcement-bar-section,
       .announcement-bar-section .announcement-bar,
-      .announcement-bar-section .announcement-bar .announcement-bar__announcement,
-      .announcement-bar-section { background-color: #edebe6; }
+      .announcement-bar-section .page-width { background: #edebe6 !important; }
+      .announcement-bar-section .announcement-bar { padding-top: 0.6rem; padding-bottom: 0.6rem; }
       .announcement-bar-section .announcement-bar__message,
-      .announcement-bar-section .announcement-bar__link { font-weight: 500; letter-spacing: 0.02em; }
+      .announcement-bar-section .announcement-bar__message p,
+      .announcement-bar-section .announcement-bar__link {
+        font-size: 1.5rem !important; line-height: 1.5; font-weight: 500; letter-spacing: 0.02em;
+      }
+      @media screen and (max-width: 749px) {
+        .announcement-bar-section .announcement-bar__message,
+        .announcement-bar-section .announcement-bar__message p { font-size: 1.3rem !important; }
+      }
     </style>
 
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
