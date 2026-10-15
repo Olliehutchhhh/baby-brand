@@ -170,7 +170,9 @@
           "type": "step",
           "settings": {
             "title": "Warm it",
-            "text": "When your baby is hungry, the warmer heats a bottle wherever you are."
+            "text": "When your baby is hungry, the warmer heats a bottle wherever you are.",
+            "asset_image": "casa-bundle-step-3.jpg",
+            "image_position": "18%"
           }
         }
       },
