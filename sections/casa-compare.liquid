@@ -52,7 +52,11 @@
         <div class="casa-kpf__card casa-set{% if n == 3 %} casa-set--best{% endif %}">
           {%- if n == 3 -%}<span class="casa-set__ribbon">{{ s.best_label | escape }}</span>{%- endif -%}
           <div class="casa-set__img">
-            {%- if p.featured_media != blank -%}{{ p.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 750px) 30vw, 70vw', alt: name }}{%- endif -%}
+            {%- if p.featured_media != blank -%}
+              {{ p.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 750px) 30vw, 70vw', alt: name }}
+            {%- elsif n == 3 -%}
+              <img src="{{ 'casa-bundle-set.jpg' | asset_url }}" alt="{{ name | escape }}" loading="lazy" width="600" height="600">
+            {%- endif -%}
           </div>
           <h3>{{ name | escape }}</h3>
           <ul>
