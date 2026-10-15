@@ -50,9 +50,9 @@ KPF_CSS = """
   @media (max-width:749px){
     .kpf{ margin:44px auto 100px; padding:0 16px; }
     .kpf-title{ font-size:26px; margin-bottom:20px; }
-    .kpf-grid{ display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; margin:0 -16px; padding:0 16px; }
+    .kpf-grid{ display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-left:16px; scrollbar-width:none; margin:0 -16px; padding:0 16px; }
     .kpf-grid::-webkit-scrollbar{ display:none; }
-    .kpf-card{ flex:0 0 80%; scroll-snap-align:start; }
+    .kpf-card{ flex:0 0 min(78%, 320px); scroll-snap-align:start; }
     .kpf-card h3{ font-size:19px; }
   }
 """

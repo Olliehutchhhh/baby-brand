@@ -11,8 +11,8 @@
 @media (max-width:749px){
   .casa-kpf{ margin:44px auto 100px; padding:0 16px; }
   .casa-kpf__title{ font-size:26px; margin-bottom:20px; }
-  .casa-kpf__grid{ display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; margin:0 -16px; padding:0 16px; }
+  .casa-kpf__grid{ display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-left:16px; scrollbar-width:none; margin:0 -16px; padding:0 16px; }
   .casa-kpf__grid::-webkit-scrollbar{ display:none; }
-  .casa-kpf__card{ flex:0 0 80%; scroll-snap-align:start; }
+  .casa-kpf__card{ flex:0 0 min(78%, 320px); scroll-snap-align:start; }
   .casa-kpf__card h3{ font-size:19px; }
 }
