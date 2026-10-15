@@ -243,6 +243,19 @@ assert s.count(_u) == 1
 s = s.replace(_u, "var PAGE_URLS = { single:'bottle-warmer-pdp.html', cooler:'breast-milk-cooler-pdp.html', bundle:'bottle-warmer-bundle-pdp.html' };")
 s = re.sub(r'      <div class="discount-box">.*?</div>\n\n?', '', s, count=1, flags=re.S)
 s = put_story(put_kpf(s, [("Warmer", FEATURES["warmer"], "warmer"), ("Cooler", FEATURES["cooler"], "cooler")]), "bundle")
+def _guri(path, w, q=86):
+    _im = Image.open(path).convert("RGB"); _im.thumbnail((w, w), Image.LANCZOS)
+    _b = io.BytesIO(); _im.save(_b, "JPEG", quality=q, optimize=True, progressive=True)
+    return "data:image/jpeg;base64," + base64.b64encode(_b.getvalue()).decode()
+_GAL = [("Bundle", "Warmer and cooler together"), ("Compare", "Cooler and warmer compared"), ("Out and about", "Warmer and cooler on a picnic"), ("Warmer features", "Portable warmer features"), ("Cooler features", "Portable cooler features")]
+_gt = '<div class="thumb-strip" id="thumbsBundle" style="display:none">\n'
+for _i, (_lab, _alt) in enumerate(_GAL, 1):
+    _p = root / "assets/bundle" / f"gallery-{_i}.jpg"
+    _gt += f'        <div class="thumb{" active" if _i == 1 else " has-img"}" data-label="{_lab}" data-alt="{_alt}" data-full="{_guri(_p, 1100)}" style="background-image:url(\'{_guri(_p, 240, 80)}\');background-size:cover;background-position:center;color:transparent;"></div>\n'
+_gt += '      </div>\n      '
+_a = s.index('<div class="thumb-strip" id="thumbsBundle"'); _b = s.index('<div class="main-image-wrap" id="mainImage">', _a)
+s = s[:_a] + _gt + s[_b:]
+s = re.sub(r'(<div class="sticky-thumb" style="background-image:url\(\')[^\']+(\')', lambda m: m.group(1) + _guri(root / "assets/bundle/gallery-1.jpg", 240, 80) + m.group(2), s, count=1)
 (d / "bottle-warmer-bundle-pdp.html").write_text(s)
 print("built bottle-warmer-bundle-pdp.html")
 
