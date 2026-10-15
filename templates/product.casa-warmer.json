@@ -151,6 +151,64 @@
     "compare": {
       "type": "casa-compare",
       "settings": {}
+    },
+    "faq": {
+      "type": "casa-faq",
+      "blocks": {
+        "q-1": {
+          "type": "qa",
+          "settings": {
+            "question": "How does the warmer work?",
+            "answer": "Add your milk or water to the warmer, press the button and let it heat. A quiet beep lets you know it has reached the temperature you chose, then you check the temperature and feed your baby."
+          }
+        },
+        "q-2": {
+          "type": "qa",
+          "settings": {
+            "question": "Can I use it for milk and for water?",
+            "answer": "Yes. It warms both milk and water, so you can prepare a bottle at the park, in the car or mid-flight without a kettle, hob or microwave."
+          }
+        },
+        "q-3": {
+          "type": "qa",
+          "settings": {
+            "question": "Do I need a plug socket?",
+            "answer": "No. It has a rechargeable battery, so you can charge it at home and take it with you for days out and long journeys."
+          }
+        },
+        "q-4": {
+          "type": "qa",
+          "settings": {
+            "question": "Can I take it on a plane?",
+            "answer": "It is designed for travel and small enough for the nappy bag or carry-on. As with any rechargeable device, check your airline's rules on battery-powered items before you fly."
+          }
+        },
+        "q-5": {
+          "type": "qa",
+          "settings": {
+            "question": "How do I clean it?",
+            "answer": "Switch it off, let it cool fully, then wipe it clean. Don't submerge the base in water unless the instructions in the box say it is safe to."
+          }
+        },
+        "q-6": {
+          "type": "qa",
+          "settings": {
+            "question": "What is your returns policy?",
+            "answer": "If you don't love it, exchanges and returns are available within 30 days."
+          }
+        }
+      },
+      "block_order": [
+        "q-1",
+        "q-2",
+        "q-3",
+        "q-4",
+        "q-5",
+        "q-6"
+      ],
+      "settings": {
+        "heading": "Frequently asked questions"
+      }
     }
   },
   "order": [
@@ -158,6 +216,7 @@
     "features",
     "band",
     "steps",
-    "compare"
+    "compare",
+    "faq"
   ]
 }

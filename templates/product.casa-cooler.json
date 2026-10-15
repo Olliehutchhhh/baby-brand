@@ -155,6 +155,80 @@
     "compare": {
       "type": "casa-compare",
       "settings": {}
+    },
+    "faq": {
+      "type": "casa-faq",
+      "blocks": {
+        "q-1": {
+          "type": "qa",
+          "settings": {
+            "question": "How long does it keep milk cold?",
+            "answer": "Up to 24 hours, without any ice. The two cooling cylinders do the work, so it is ready for days out, holidays and long journeys."
+          }
+        },
+        "q-2": {
+          "type": "qa",
+          "settings": {
+            "question": "How do I get it ready?",
+            "answer": "Put the two cooling cylinders in the freezer for 12 hours. When you are ready to go, slide the frozen cylinders into the cooler, add your bottles and close the leak-proof lid."
+          }
+        },
+        "q-3": {
+          "type": "qa",
+          "settings": {
+            "question": "How much can it hold?",
+            "answer": "It has a 650ml capacity and fits two 300ml bottles, enough for a whole day's feeds in one bag."
+          }
+        },
+        "q-4": {
+          "type": "qa",
+          "settings": {
+            "question": "Is it leak-proof?",
+            "answer": "Yes. The secure leak-proof lid keeps your milk inside and your bag dry, so you can pack it with everything else."
+          }
+        },
+        "q-5": {
+          "type": "qa",
+          "settings": {
+            "question": "Can I take it to work or on a flight?",
+            "answer": "Yes. It looks like an everyday water bottle, so it is discreet at work, and it is small enough for a bag or carry-on. For flights, check your airline and airport rules on carrying breast milk and frozen items."
+          }
+        },
+        "q-6": {
+          "type": "qa",
+          "settings": {
+            "question": "What is included?",
+            "answer": "The cooler and two cooling cylinders. Use them together to keep milk cold all day."
+          }
+        },
+        "q-7": {
+          "type": "qa",
+          "settings": {
+            "question": "How do I clean it?",
+            "answer": "Wipe or rinse the cooler and let it dry fully before storing it. Keep the cooling cylinders out of hot water unless the instructions in the box say they can go in."
+          }
+        },
+        "q-8": {
+          "type": "qa",
+          "settings": {
+            "question": "What is your returns policy?",
+            "answer": "If you don't love it, exchanges and returns are available within 30 days."
+          }
+        }
+      },
+      "block_order": [
+        "q-1",
+        "q-2",
+        "q-3",
+        "q-4",
+        "q-5",
+        "q-6",
+        "q-7",
+        "q-8"
+      ],
+      "settings": {
+        "heading": "Frequently asked questions"
+      }
     }
   },
   "order": [
@@ -162,6 +236,7 @@
     "features",
     "band",
     "steps",
-    "compare"
+    "compare",
+    "faq"
   ]
 }

@@ -1,5 +1,5 @@
 /* Sticky bar product picker: replaces the browser's plain <select> with a branded dropdown. The real <select> stays (hidden) and still drives navigation. */
-(function () {
+function casaStickyDD() {
   var sel = document.getElementById('stickyOptSelect');
   if (!sel || sel.getAttribute('data-dd')) return;
   sel.setAttribute('data-dd', '1');
@@ -27,8 +27,14 @@
     setOpen(false); var i = +li.getAttribute('data-i');
     if (i !== sel.selectedIndex) { sel.selectedIndex = i; paint(); sel.dispatchEvent(new Event('change', { bubbles: true })); }
   });
-  document.addEventListener('click', function () { setOpen(false); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+  if (!window.__sddGlobal) {
+    window.__sddGlobal = true;
+    var closeAll = function () { Array.prototype.forEach.call(document.querySelectorAll('.sdd.is-open'), function (w) { w.classList.remove('is-open'); var b = w.querySelector('.sdd-btn'); if (b) b.setAttribute('aria-expanded', 'false'); }); };
+    document.addEventListener('click', closeAll);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
+  }
   sel.parentNode.insertBefore(wrap, sel); wrap.appendChild(sel); wrap.appendChild(btn); wrap.appendChild(menu);
   paint();
-})();
+}
+window.casaStickyDD = casaStickyDD;
+casaStickyDD();
