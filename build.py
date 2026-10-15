@@ -7,7 +7,7 @@ import pathlib, re, io, base64
 from PIL import Image
 root = pathlib.Path(__file__).parent
 d = root / "pages"
-src = (d / "bottle-warmer-pdp.html").read_text()
+src = (d / "_source" / "bottle-warmer-pdp.src.html").read_text()  # pristine source; pages/bottle-warmer-pdp.html is generated output
 
 # ---------- cart drawer block (re-injected into the warmer source on every build) ----------
 _blk = (root / "cart_block.html").read_text()
