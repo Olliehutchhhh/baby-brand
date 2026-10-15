@@ -270,11 +270,15 @@
 <button type="button" class="rs-btn rs-next" aria-label="Next reviews"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
       </div>
 
-      {%- if s.discount_code != blank -%}
+      {%- if bundle_p != blank and is_bundle == false and bundle_p.available -%}
         <div class="discount-box">
           <span class="save-tag">SAVE</span>
-          <span class="code-text">{{ s.discount_text }} <strong>{{ s.discount_code }}</strong></span>
-          <button type="button" class="code-copy" id="copyCodeBtn" data-code="{{ s.discount_code | escape }}">Copy Code</button>
+          <span class="code-text">{%- if save_pct > 0 -%}{{ s.bundle_box_text | replace: '[percent]', pct_token | escape }}{%- else -%}{{ s.bundle_box_text_no_saving | escape }}{%- endif -%}</span>
+          <form method="post" action="{{ routes.cart_add_url }}" class="bundle-quick">
+            <input type="hidden" name="id" value="{{ bundle_p.selected_or_first_available_variant.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <button type="submit" class="quick-add">{{ s.bundle_box_button | escape }}</button>
+          </form>
         </div>
       {%- endif -%}
 
@@ -403,9 +407,10 @@
     { "type": "range", "id": "sample_review_count", "label": "Number of built-in review photos", "min": 1, "max": 5, "step": 1, "default": 5 },
     { "type": "checkbox", "id": "use_sample_reviews", "label": "Use the five built-in review photos (when no review blocks are added)", "default": false },
 
-    { "type": "header", "content": "Discount box" },
-    { "type": "text", "id": "discount_text", "label": "Text", "default": "20% with Code:" },
-    { "type": "text", "id": "discount_code", "label": "Code (blank hides the box)" },
+    { "type": "header", "content": "Bundle quick-add box" },
+    { "type": "text", "id": "bundle_box_text", "label": "Text", "default": "Save [percent]% on the bundle", "info": "[percent] is replaced with the real bundle saving." },
+    { "type": "text", "id": "bundle_box_text_no_saving", "label": "Text when there is no saving", "default": "Get the complete bundle" },
+    { "type": "text", "id": "bundle_box_button", "label": "Button label", "default": "Add bundle" },
 
     { "type": "header", "content": "Shipping and guarantee" },
     { "type": "text", "id": "shipping_label", "label": "Shipping label", "default": "FREE OVER £100" },

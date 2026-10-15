@@ -63,14 +63,6 @@
     dd.textContent = weekday + ', ' + day + suffix + ' ' + month;
   }
 
-  // ---- Copy discount code ----
-  var copyBtn = $('#copyCodeBtn');
-  if (copyBtn) copyBtn.addEventListener('click', function () {
-    try { navigator.clipboard.writeText(copyBtn.dataset.code || ''); } catch (e) {}
-    var o = copyBtn.textContent; copyBtn.textContent = 'Copied!';
-    setTimeout(function () { copyBtn.textContent = o; }, 1500);
-  });
-
   // ---- Sticky bar: visible whenever the main Add to Cart button is out of view ----
   var mainBtn = $('#casaMainAdd'), bar = $('#stickyBar');
   if (mainBtn && bar && 'IntersectionObserver' in window) {

@@ -321,8 +321,6 @@
     padding:14px 16px;
     margin-bottom:18px;
 }
-.casa-pdp .discount-box input[type=checkbox]{ width:18px; height:18px;
-}
 .casa-pdp .save-tag{
     background:var(--ink);
     color:#fff;
@@ -330,16 +328,13 @@
     font-weight:800;
     padding:4px 8px;
 }
-.casa-pdp .discount-box .code-copy{
-    margin-left:auto;
-    text-decoration:underline;
-    font-size:13px;
-    font-weight:700;
-    background:none;
-    border:none;
-    cursor:pointer;
-    color:var(--ink);
+.casa-pdp .discount-box .bundle-quick{ margin:0 0 0 auto; }
+.casa-pdp .discount-box .quick-add{
+    background:var(--ink); color:#fff; border:none; border-radius:99px; cursor:pointer;
+    font-size:13px; font-weight:700; padding:10px 18px; white-space:nowrap;
 }
+.casa-pdp .discount-box .quick-add:hover{ background:#000; }
+@media (max-width:520px){ .casa-pdp .discount-box .bundle-quick{ margin-left:0; width:100%; } .casa-pdp .discount-box .quick-add{ width:100%; } }
 .casa-pdp .discount-box .code-text{ font-size:13px;
 }
 .casa-pdp .select-label{
