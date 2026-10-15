@@ -738,8 +738,11 @@
   .pair-single .name a:hover{ text-decoration:underline; }
   .pair-note{ font-size:12px; font-weight:700; color:var(--accent); margin-bottom:10px; }
 
-  .share-row{ display:flex; gap:14px; margin-bottom:20px; }
-  .share-row svg{ width:18px; height:18px; }
+  .share-row{ display:flex; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:20px; }
+  .share-btn{ display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; border:1px solid #e7e3e0; background:#fff; color:#1c1c1c; cursor:pointer; padding:0; text-decoration:none; transition:background .15s, color .15s, border-color .15s; }
+  .share-btn:hover{ background:#1c1c1c; color:#fff; border-color:#1c1c1c; }
+  .share-btn svg{ width:17px; height:17px; }
+  .share-note{ font-size:13px; color:#767070; }
 
   .disclaimer{
     font-size:11px;
@@ -1142,12 +1145,13 @@
         </div>
       </div>
 
-      <div class="share-row">
+      <div class="share-row" id="shareRow">
         <span>Share:</span>
-        <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/></svg>
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/></svg>
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.5"/></svg>
-        <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/></svg>
+        <a class="share-btn" data-share="facebook" href="#" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.4 1.5-1.4h1.6V4.5c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.2H8v3h2.5V21h3z"/></svg></a>
+        <a class="share-btn" data-share="whatsapp" href="#" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2a8.8 8.8 0 0 0-7.5 13.4L3.2 20.8l4.3-1.2A8.8 8.8 0 1 0 12 3.2z"/><path d="M9 8.3c0 3.5 2.7 6.2 6.2 6.2l1.1-1.2-2-1-.9.8a4.2 4.2 0 0 1-2-2l.8-.9-1-2z" fill="currentColor" stroke="none"/></svg></a>
+        <a class="share-btn" data-share="x" href="#" target="_blank" rel="noopener noreferrer" aria-label="Share on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <button type="button" class="share-btn" id="shareInsta" aria-label="Share on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg></button>
+        <span class="share-note" id="shareNote" role="status" aria-live="polite"></span>
       </div>
 
     </div>
@@ -1292,6 +1296,21 @@
   document.getElementById('qtyPlus').addEventListener('click', function(){ qty++; renderQty(); });
   document.getElementById('stickyQtyMinus').addEventListener('click', function(){ qty = Math.max(1, qty-1); renderQty(); });
   document.getElementById('stickyQtyPlus').addEventListener('click', function(){ qty++; renderQty(); });
+
+  // ---- Share buttons ----
+  (function(){
+    var url = location.href, title = document.title;
+    var links = { facebook:'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url),
+                  whatsapp:'https://wa.me/?text=' + encodeURIComponent(title + ' ' + url),
+                  x:'https://twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(title) };
+    Array.prototype.forEach.call(document.querySelectorAll('[data-share]'), function(a){ a.href = links[a.getAttribute('data-share')]; });
+    var ig = document.getElementById('shareInsta'), note = document.getElementById('shareNote');
+    function said(t){ note.textContent = t; setTimeout(function(){ note.textContent = ''; }, 3500); }
+    ig.addEventListener('click', function(){
+      if (navigator.share){ navigator.share({ title:title, url:url }).catch(function(){}); return; }
+      try { navigator.clipboard.writeText(url).then(function(){ said('Link copied. Paste it into Instagram.'); }, function(){ said(url); }); } catch(e){ said(url); }
+    });
+  })();
 
   // ---- Accordion ----
   document.querySelectorAll('.accordion-head').forEach(function(head){
@@ -1534,6 +1553,8 @@
 })();
 </script>
 <!--/CASA_CART-->
+
+
 
 
 

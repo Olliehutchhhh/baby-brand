@@ -63,6 +63,16 @@
     dd.textContent = weekday + ', ' + day + suffix + ' ' + month;
   }
 
+  // ---- Share: Instagram has no web share link, so use the phone share sheet, or copy the link ----
+  var igBtn = $('#shareInsta'), shareRow = $('#shareRow');
+  if (igBtn && shareRow) igBtn.addEventListener('click', function () {
+    var url = shareRow.getAttribute('data-share-url') || location.href, title = shareRow.getAttribute('data-share-title') || document.title;
+    var note = $('#shareNote');
+    function said(t) { if (note) { note.textContent = t; setTimeout(function () { note.textContent = ''; }, 3500); } }
+    if (navigator.share) { navigator.share({ title: title, url: url }).catch(function () {}); return; }
+    try { navigator.clipboard.writeText(url).then(function () { said('Link copied. Paste it into Instagram.'); }, function () { said(url); }); } catch (e) { said(url); }
+  });
+
   // ---- Sticky bar: visible whenever the main Add to Cart button is out of view ----
   var mainBtn = $('#casaMainAdd'), bar = $('#stickyBar');
   if (mainBtn && bar && 'IntersectionObserver' in window) {

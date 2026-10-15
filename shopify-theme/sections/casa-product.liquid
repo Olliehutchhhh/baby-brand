@@ -314,6 +314,16 @@
         </div>
       {%- endif -%}
 
+      {%- assign share_url = canonical_url | default: shop.url | append: product.url -%}
+      <div class="share-row" id="shareRow" data-share-title="{{ product.title | escape }}" data-share-url="{{ share_url }}">
+        <span>Share:</span>
+        <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.4 1.5-1.4h1.6V4.5c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.2H8v3h2.5V21h3z"/></svg></a>
+        <a class="share-btn" href="https://wa.me/?text={{ product.title | append: ' ' | append: share_url | url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2a8.8 8.8 0 0 0-7.5 13.4L3.2 20.8l4.3-1.2A8.8 8.8 0 1 0 12 3.2z"/><path d="M9 8.3c0 3.5 2.7 6.2 6.2 6.2l1.1-1.2-2-1-.9.8a4.2 4.2 0 0 1-2-2l.8-.9-1-2z" fill="currentColor" stroke="none"/></svg></a>
+        <a class="share-btn" href="https://twitter.com/intent/tweet?url={{ share_url | url_encode }}&amp;text={{ product.title | url_encode }}" target="_blank" rel="noopener noreferrer" aria-label="Share on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <button type="button" class="share-btn" id="shareInsta" aria-label="Share on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg></button>
+        <span class="share-note" id="shareNote" role="status" aria-live="polite"></span>
+      </div>
+
     </div>
   </main>
 

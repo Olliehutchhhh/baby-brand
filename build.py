@@ -318,7 +318,7 @@ pair = ('<div class="pair-title">Pair well with:</div>\n'
   '            <div class="pair-note">Bundle discount</div>\n'
   '            <button class="quick" id="addCoolerBtn">Add to bundle</button>\n'
   '          </div>\n        </div>\n      </div>\n\n      ')
-c = region(c, '<div class="pair-title">Pair well with:</div>', '<div class="share-row">', pair)
+c = region(c, '<div class="pair-title">Pair well with:</div>', '<div class="share-row" id="shareRow">', pair)
 # sticky bar
 c = rep(c, '<div class="name" id="stickyName">Superfast Portable Bottle Warmer for Travel</div>', '<div class="name" id="stickyName">Portable Breast Milk Cooler for Travel</div>')
 c = rep(c, '<div class="price" id="stickyPrice">£89.99 GBP</div>', '<div class="price" id="stickyPrice">£79.99 GBP</div>')

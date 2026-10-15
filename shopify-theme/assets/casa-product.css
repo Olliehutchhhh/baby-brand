@@ -573,10 +573,11 @@
 }
 .casa-pdp .pair-note{ font-size:12px; font-weight:700; color:var(--accent); margin-bottom:10px;
 }
-.casa-pdp .share-row{ display:flex; gap:14px; margin-bottom:20px;
-}
-.casa-pdp .share-row svg{ width:18px; height:18px;
-}
+.casa-pdp .share-row{ display:flex; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:20px; }
+.casa-pdp .share-btn{ display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; border:1px solid #e7e3e0; background:#fff; color:#1c1c1c; cursor:pointer; padding:0; text-decoration:none; transition:background .15s, color .15s, border-color .15s; }
+.casa-pdp .share-btn:hover{ background:#1c1c1c; color:#fff; border-color:#1c1c1c; }
+.casa-pdp .share-btn svg{ width:17px; height:17px; }
+.casa-pdp .share-note{ font-size:13px; color:#767070; }
 .casa-pdp .video-title{ font-size:18px; font-weight:800; margin-bottom:16px;
 }
 .casa-pdp .video-row{
