@@ -333,7 +333,22 @@
     </div>
   </main>
 
-  <!-- STICKY BOTTOM ADD-TO-CART BAR: the dropdown changes which product this bar adds, without leaving the page -->
+  {%- comment -%} Pre-load the other two product pages in the background: Chrome/Edge prerender them (instant switch), other browsers prefetch. {%- endcomment -%}
+  {%- liquid
+    assign other_urls = ''
+    for op in collections['all'].products
+      if op.id != product.id and op.template_suffix contains 'casa-'
+        assign other_urls = other_urls | append: op.url | append: ','
+      endif
+    endfor
+    assign other_list = other_urls | split: ','
+  -%}
+  {%- if other_list.size > 0 -%}
+    <script type="speculationrules">{"prerender":[{"source":"list","urls":[{% for u in other_list %}{{ u | json }}{% unless forloop.last %},{% endunless %}{% endfor %}],"eagerness":"eager"}]}</script>
+    {%- for u in other_list -%}<link rel="prefetch" href="{{ u }}" as="document">{%- endfor -%}
+  {%- endif -%}
+
+  <!-- STICKY BOTTOM ADD-TO-CART BAR: the dropdown switches to the chosen product's page -->
   {%- liquid
     assign sticky_bundle_label = s.bundle_title
     if save_pct > 0
@@ -363,11 +378,7 @@
       <span class="qty-value js-qty-value">1</span>
       <button type="button" class="qty-btn js-qty-plus" aria-label="Increase quantity">+</button>
     </div>
-    {%- form 'product', product, id: 'casa-sticky-form', class: 'casa-form' -%}
-      <input type="hidden" name="id" id="stickyVariantId" value="{{ variant.id }}">
-      <input type="hidden" name="quantity" id="stickyQtyInput" value="1">
-    {%- endform -%}
-    <button type="submit" form="casa-sticky-form" name="add" class="btn btn-cart" id="stickyAdd"{% unless variant.available %} disabled{% endunless %}>{% if variant.available %}Add to Cart - {{ variant.price | money }}{% else %}Sold Out{% endif %}</button>
+    <button type="submit" form="{{ form_id }}" name="add" class="btn btn-cart" id="stickyAdd"{% unless variant.available %} disabled{% endunless %}>{% if variant.available %}Add to Cart - {{ variant.price | money }}{% else %}Sold Out{% endif %}</button>
   </div>
 
   <div class="lb" id="reviewLb" role="dialog" aria-modal="true" aria-label="Customer review">
