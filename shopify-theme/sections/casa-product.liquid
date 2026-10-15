@@ -52,6 +52,14 @@
     assign off_pct = old_price | minus: variant.price | times: 100.0 | divided_by: old_price | round
   endif
   assign pct_token = save_pct | append: ''
+  assign show_split = false
+  assign w_share = 0
+  assign c_share = 0
+  if save_pct > 0 and w_price > 0 and c_price > 0
+    assign show_split = true
+    assign w_share = w_price | times: bundle_price | times: 1.0 | divided_by: sum_price | round
+    assign c_share = bundle_price | minus: w_share
+  endif
   assign pills = section.blocks | where: 'type', 'pill'
   assign review_blocks = section.blocks | where: 'type', 'review'
   assign pdp_desc = s.description
@@ -68,11 +76,6 @@
     assign gift_2 = s.gift_image_2 | image_url: width: 300
   else
     assign gift_2 = 'casa-gift-cooler.jpg' | asset_url
-  endif
-  if s.gift_image_3 != blank
-    assign gift_3 = s.gift_image_3 | image_url: width: 300
-  else
-    assign gift_3 = 'casa-gift-ebook.jpg' | asset_url
   endif
 -%}
 
@@ -186,11 +189,9 @@
             <div class="gift-strip">
               <div class="gift-title">{{ s.gift_title }}</div>
               <div class="gift-thumbs">
-                <div class="gift-item"><div class="gift-img" role="img" aria-label="{{ s.gift_name_1 | escape }}" style="background:#fff url('{{ gift_1 }}') center/cover no-repeat;"></div><div class="gift-text"><div class="gift-name">{{ s.gift_name_1 }}</div></div></div>
+                <div class="gift-item"><div class="gift-img" role="img" aria-label="{{ s.gift_name_1 | escape }}" style="background:#fff url('{{ gift_1 }}') center/cover no-repeat;"></div><div class="gift-text"><div class="gift-name">{{ s.gift_name_1 }}</div>{%- if show_split -%}<div class="gift-was">{{ w_price | money }}</div><div class="gift-now">{{ w_share | money }}</div>{%- endif -%}</div></div>
                 <span class="gift-plus" aria-hidden="true">+</span>
-                <div class="gift-item"><div class="gift-img" role="img" aria-label="{{ s.gift_name_2 | escape }}" style="background:#fff url('{{ gift_2 }}') center/cover no-repeat;"></div><div class="gift-text"><div class="gift-name">{{ s.gift_name_2 }}</div></div></div>
-                <span class="gift-plus" aria-hidden="true">+</span>
-                <div class="gift-item"><div class="gift-img" role="img" aria-label="{{ s.gift_name_3 | escape }}" style="background:#fff url('{{ gift_3 }}') center/cover no-repeat;"></div><div class="gift-text"><div class="gift-name">{{ s.gift_name_3 }}</div>{%- if s.gift_3_was != blank -%}<div class="gift-was">{{ s.gift_3_was }}</div><div class="gift-free">FREE</div>{%- endif -%}</div></div>
+                <div class="gift-item"><div class="gift-img" role="img" aria-label="{{ s.gift_name_2 | escape }}" style="background:#fff url('{{ gift_2 }}') center/cover no-repeat;"></div><div class="gift-text"><div class="gift-name">{{ s.gift_name_2 }}</div>{%- if show_split -%}<div class="gift-was">{{ c_price | money }}</div><div class="gift-now">{{ c_share | money }}</div>{%- endif -%}</div></div>
               </div>
             </div>
           </{{ right_tag }}>
@@ -407,9 +408,6 @@
     { "type": "image_picker", "id": "gift_image_1", "label": "Item 1 image (optional, default included)" },
     { "type": "text", "id": "gift_name_2", "label": "Item 2 name", "default": "Breast Milk Cooler" },
     { "type": "image_picker", "id": "gift_image_2", "label": "Item 2 image (optional, default included)" },
-    { "type": "text", "id": "gift_name_3", "label": "Item 3 name", "default": "E-Book" },
-    { "type": "image_picker", "id": "gift_image_3", "label": "Item 3 image (optional, default included)" },
-    { "type": "text", "id": "gift_3_was", "label": "Item 3 crossed-out value (shows FREE below it; blank to hide)", "default": "£10" },
 
     { "type": "header", "content": "Reviews" },
     { "type": "text", "id": "reviews_title", "label": "Heading", "default": "What Other Parents Are Saying" },
