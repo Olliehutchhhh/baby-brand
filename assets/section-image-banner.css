@@ -490,3 +490,10 @@
     color: currentColor;
   }
 }
+
+/* Casa de Mamá: separate desktop / mobile banner images */
+.banner__media > img.banner__img-m { display: none !important; }
+@media screen and (max-width: 749px) {
+  .banner__media > img.banner__img-d { display: none !important; }
+  .banner__media > img.banner__img-m { display: block !important; }
+}
