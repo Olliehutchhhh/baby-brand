@@ -736,3 +736,15 @@
 .casa-pdp .gift-now{ font-size:15px; font-weight:800; color:var(--accent); margin-top:2px; }
 .casa-pdp .gift-was{ font-size:12px; }
 .casa-pdp .gift-save{ color:var(--accent); white-space:nowrap; }
+
+/* ---- Sticky bar: brand styling (explicit colours so it never inherits a dark theme) ---- */
+.casa-pdp .sticky-bar{ color-scheme:light; background:var(--pastel-pink-soft); border-top:1px solid var(--pastel-pink); box-shadow:0 -6px 20px rgba(26,31,61,.08); }
+.casa-pdp .sticky-thumb{ width:52px; height:52px; border-radius:12px; border:1px solid var(--pastel-pink); background-size:cover; background-position:center; }
+.casa-pdp .sticky-info .name{ font-family:var(--serif); font-size:15px; font-weight:400; color:var(--accent-dark); }
+.casa-pdp .sticky-info .price{ font-size:14px; color:var(--accent); font-weight:800; }
+.casa-pdp .sticky-select{ background:#fff; color:var(--accent-dark); border:1.5px solid var(--pastel-blue); border-radius:999px; padding:10px 16px; font-size:13px; font-weight:600; cursor:pointer; }
+.casa-pdp .sticky-select:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+.casa-pdp .sticky-qty .qty-btn{ background:#fff; color:var(--accent-dark); border:1.5px solid var(--pastel-blue); border-radius:50%; font-size:16px; line-height:1; cursor:pointer; }
+.casa-pdp .sticky-qty .qty-value{ color:var(--accent-dark); font-weight:700; min-width:18px; text-align:center; }
+.casa-pdp .sticky-bar .btn-cart{ background:var(--accent-dark); color:var(--pastel-pink); border:0; border-radius:999px; font-weight:800; }
+.casa-pdp .sticky-bar .btn-cart:hover{ filter:brightness(1.07); }
