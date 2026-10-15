@@ -403,6 +403,21 @@ def _sticky_block():
       '    window.location.href = D[k].url;\n'
       '  });\n'
       '})();\n</script>\n<style>' + _css + '</style>\n<script>' + _js + '</script>\n<!--/STICKY_OPT-->')
+
+# ---- real Shopify prices (warmer 79.99, cooler 69.99, bundle 119.99 was 149.98 = 20% / save 29.99); single products have no compare-at price ----
+def _reprice(t, fname):
+    for a, z in (("£89.99", "@@W@@"), ("£79.99", "@@C@@"), ("£134.99", "@@B@@"), ("£169.98", "@@S@@")):
+        t = t.replace(a, z)
+    t = t.replace("<s>£104.99</s>", "").replace("<s>£94.99</s>", "")
+    t = t.replace("£104.99", "").replace("£94.99", "").replace("14% OFF", "").replace("16% OFF", "")
+    t = t.replace("21% OFF", "20% OFF").replace("21%", "20%")
+    t = t.replace("£34.99", "£29.99").replace("£71.47", "£64.00").replace("£63.52", "£55.99")
+    t = t.replace("£45.00", "£40.00").replace("£55.00", "£50.00")
+    for a, z in (("@@W@@", "£79.99"), ("@@C@@", "£69.99"), ("@@B@@", "£119.99"), ("@@S@@", "£149.98")):
+        t = t.replace(a, z)
+    if ".price-old:empty" not in t:
+        t = t.replace("</style>", ".price-old:empty,.off-pill:empty{display:none}\n</style>", 1)
+    return t
 import html as _h, sys as _sys
 _sys.path.insert(0, str(root))
 from faq_data import FAQ as _FAQ, FAQ_TITLE as _FT
@@ -424,5 +439,6 @@ for _f in ("bottle-warmer-pdp.html", "bottle-warmer-bundle-pdp.html", "breast-mi
         _t = re.sub(r"<!--STICKY_OPT-->.*?<!--/STICKY_OPT-->", lambda m: _blk2, _t, flags=re.S)
     else:
         _t = _t.replace("</body>", _blk2 + "\n</body>", 1)
+    _t = _reprice(_t, _f)
     (d / _f).write_text(_t)
 print("sticky bar options wired")
