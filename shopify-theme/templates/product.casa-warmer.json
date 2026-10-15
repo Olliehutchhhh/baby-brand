@@ -38,7 +38,7 @@
         "perk_text": "Free Shipping on orders £100+",
         "bundle_title": "Bundle And Save",
         "bundle_ribbon": "BEST VALUE",
-                "bundle_sub": "Warmer & Cooler Set",
+        "bundle_sub": "Warmer & Cooler Set",
         "bundle_list": "Portable Warmer + Portable Cooler\nYour complete solution for warming and cooling milk on the go.\nFree Shipping\n30 Days Guarantee",
         "gift_title": "Your bundle",
         "gift_name_1": "Warmer",
@@ -61,9 +61,49 @@
         "pair_now": "£45.00 GBP",
         "pair_note": "Bundle discount"
       }
+    },
+    "features": {
+      "type": "casa-features",
+      "blocks": {
+        "feature-1": {
+          "type": "feature",
+          "settings": {
+            "title": "Warms milk and water, anywhere",
+            "text": "Heat a bottle of milk or water at the park, in the car or mid-flight. No kettle, hob or microwave needed.",
+            "row": "1"
+          }
+        },
+        "feature-2": {
+          "type": "feature",
+          "settings": {
+            "title": "Heats fast, with a long battery life",
+            "text": "Quick heating means a hungry baby isn’t left waiting, and a long-lasting rechargeable battery keeps it ready for days out and long journeys.",
+            "row": "1"
+          }
+        },
+        "feature-3": {
+          "type": "feature",
+          "settings": {
+            "title": "Large capacity, clear display",
+            "text": "Plenty of room for a feed, and the digital temperature display lets you check it’s just right before you give the bottle.",
+            "row": "1"
+          }
+        }
+      },
+      "block_order": [
+        "feature-1",
+        "feature-2",
+        "feature-3"
+      ],
+      "settings": {
+        "heading": "Key Product Features",
+        "group_1_label": "",
+        "group_2_label": ""
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "features"
   ]
 }

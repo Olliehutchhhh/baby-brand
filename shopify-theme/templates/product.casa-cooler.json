@@ -62,9 +62,49 @@
         "pair_now": "£55.00 GBP",
         "pair_note": "Bundle discount"
       }
+    },
+    "features": {
+      "type": "casa-features",
+      "blocks": {
+        "feature-1": {
+          "type": "feature",
+          "settings": {
+            "title": "Iceless 360° cooling",
+            "text": "Keeps breast milk cold for up to 24 hours without needing any ice, so it’s ready whenever you are.",
+            "row": "1"
+          }
+        },
+        "feature-2": {
+          "type": "feature",
+          "settings": {
+            "title": "650ml capacity, fits two 300ml bottles",
+            "text": "Room for two full 300ml bottles, so you can carry a whole day’s feeds in one bottle.",
+            "row": "1"
+          }
+        },
+        "feature-3": {
+          "type": "feature",
+          "settings": {
+            "title": "Leak-proof lid, 2 cooling cylinders included",
+            "text": "A leak-proof lid keeps your bag dry, and the two cooling cylinders included can be used together to keep milk cold all day.",
+            "row": "1"
+          }
+        }
+      },
+      "block_order": [
+        "feature-1",
+        "feature-2",
+        "feature-3"
+      ],
+      "settings": {
+        "heading": "Key Product Features",
+        "group_1_label": "",
+        "group_2_label": ""
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "features"
   ]
 }

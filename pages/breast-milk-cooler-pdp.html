@@ -788,6 +788,24 @@
   .rs-prev{ left:10px; }
   .rs-next{ right:10px; }
 
+  /* ===== Key Product Features ===== */
+  .kpf{ max-width:1240px; margin:64px auto 110px; padding:0 24px; }
+  .kpf-title{ text-align:center; font-size:32px; font-weight:800; margin:0 0 28px; letter-spacing:-0.01em; }
+  .kpf-group + .kpf-group{ margin-top:44px; }
+  .kpf-label{ font-size:22px; font-weight:800; margin:0 0 16px; padding-bottom:10px; border-bottom:2px solid var(--pastel-pink); }
+  .kpf-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .kpf-img{ aspect-ratio:4/3; border-radius:14px; overflow:hidden; background:linear-gradient(135deg, var(--pastel-pink-soft), var(--pastel-blue-soft)); }
+  .kpf-img img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .kpf-card h3{ font-size:22px; line-height:1.2; font-weight:800; margin:14px 0 8px; }
+  .kpf-card p{ font-size:16px; line-height:1.55; margin:0; color:#2a2a2a; }
+  @media (max-width:749px){
+    .kpf{ margin:44px auto 100px; padding:0 16px; }
+    .kpf-title{ font-size:26px; margin-bottom:20px; }
+    .kpf-grid{ display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; margin:0 -16px; padding:0 16px; }
+    .kpf-grid::-webkit-scrollbar{ display:none; }
+    .kpf-card{ flex:0 0 80%; scroll-snap-align:start; }
+    .kpf-card h3{ font-size:19px; }
+  }
   .video-card.ph{ cursor:default; border-radius:0; background:repeating-linear-gradient(45deg, #FFE9F6, #FFE9F6 10px, #FFD6EE 10px, #FFD6EE 20px); border:1px dashed #F6B9DF; display:flex; align-items:center; justify-content:center; }
   .video-card.ph .play{ width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center; font-size:14px; }
   .video-card.ph .bag{ position:absolute; top:10px; right:10px; width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center; font-size:12px; }
@@ -1102,6 +1120,17 @@
 
     </div>
   </main>
+
+  <!--KPF--><section class="kpf" id="keyFeatures">
+  <h2 class="kpf-title">Key Product Features</h2>
+  <div class="kpf-group">
+    <div class="kpf-grid">
+      <div class="kpf-card"><div class="kpf-img"></div><h3>Iceless 360° cooling</h3><p>Keeps breast milk cold for up to 24 hours without needing any ice, so it’s ready whenever you are.</p></div>
+      <div class="kpf-card"><div class="kpf-img"></div><h3>650ml capacity, fits two 300ml bottles</h3><p>Room for two full 300ml bottles, so you can carry a whole day’s feeds in one bottle.</p></div>
+      <div class="kpf-card"><div class="kpf-img"></div><h3>Leak-proof lid, 2 cooling cylinders included</h3><p>A leak-proof lid keeps your bag dry, and the two cooling cylinders included can be used together to keep milk cold all day.</p></div>
+    </div>
+  </div>
+</section><!--/KPF-->
 
   <!-- STICKY BOTTOM ADD-TO-CART BAR -->
   <div class="sticky-bar" id="stickyBar">
@@ -1468,6 +1497,10 @@
 })();
 </script>
 <!--/CASA_CART-->
+
+
+
+
 
 
 

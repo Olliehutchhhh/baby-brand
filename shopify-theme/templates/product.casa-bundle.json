@@ -38,7 +38,7 @@
         "perk_text": "Free Shipping on orders £100+",
         "bundle_title": "Bundle And Save",
         "bundle_ribbon": "BEST VALUE",
-                "bundle_sub": "Warmer & Cooler Set",
+        "bundle_sub": "Warmer & Cooler Set",
         "bundle_list": "Portable Warmer + Portable Cooler\nYour complete solution for warming and cooling milk on the go.\nFree Shipping\n30 Days Guarantee",
         "gift_title": "Your bundle",
         "gift_name_1": "Warmer",
@@ -63,9 +63,76 @@
         "sample_review_prefix": "casa-bundle-review-",
         "sample_review_count": 3
       }
+    },
+    "features": {
+      "type": "casa-features",
+      "blocks": {
+        "feature-1": {
+          "type": "feature",
+          "settings": {
+            "title": "Warms milk and water, anywhere",
+            "text": "Heat a bottle of milk or water at the park, in the car or mid-flight. No kettle, hob or microwave needed.",
+            "row": "1"
+          }
+        },
+        "feature-2": {
+          "type": "feature",
+          "settings": {
+            "title": "Heats fast, with a long battery life",
+            "text": "Quick heating means a hungry baby isn’t left waiting, and a long-lasting rechargeable battery keeps it ready for days out and long journeys.",
+            "row": "1"
+          }
+        },
+        "feature-3": {
+          "type": "feature",
+          "settings": {
+            "title": "Large capacity, clear display",
+            "text": "Plenty of room for a feed, and the digital temperature display lets you check it’s just right before you give the bottle.",
+            "row": "1"
+          }
+        },
+        "feature-4": {
+          "type": "feature",
+          "settings": {
+            "title": "Iceless 360° cooling",
+            "text": "Keeps breast milk cold for up to 24 hours without needing any ice, so it’s ready whenever you are.",
+            "row": "2"
+          }
+        },
+        "feature-5": {
+          "type": "feature",
+          "settings": {
+            "title": "650ml capacity, fits two 300ml bottles",
+            "text": "Room for two full 300ml bottles, so you can carry a whole day’s feeds in one bottle.",
+            "row": "2"
+          }
+        },
+        "feature-6": {
+          "type": "feature",
+          "settings": {
+            "title": "Leak-proof lid, 2 cooling cylinders included",
+            "text": "A leak-proof lid keeps your bag dry, and the two cooling cylinders included can be used together to keep milk cold all day.",
+            "row": "2"
+          }
+        }
+      },
+      "block_order": [
+        "feature-1",
+        "feature-2",
+        "feature-3",
+        "feature-4",
+        "feature-5",
+        "feature-6"
+      ],
+      "settings": {
+        "heading": "Key Product Features",
+        "group_1_label": "Warmer",
+        "group_2_label": "Cooler"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "features"
   ]
 }

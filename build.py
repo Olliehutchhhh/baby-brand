@@ -22,6 +22,60 @@ if "<!--CASA_CART-->" in src:
     src = re.sub(r"<!--CASA_CART-->.*?<!--/CASA_CART-->", lambda m: _blk, src, flags=re.S)
 else:
     src = src.replace("</body>", _blk + "\n</body>", 1)
+
+# ---------- "Key Product Features" section (generated for every page) ----------
+FEATURES = {
+  "warmer": [
+    ("Warms milk and water, anywhere", "Heat a bottle of milk or water at the park, in the car or mid-flight. No kettle, hob or microwave needed."),
+    ("Heats fast, with a long battery life", "Quick heating means a hungry baby isn’t left waiting, and a long-lasting rechargeable battery keeps it ready for days out and long journeys."),
+    ("Large capacity, clear display", "Plenty of room for a feed, and the digital temperature display lets you check it’s just right before you give the bottle."),
+  ],
+  "cooler": [
+    ("Iceless 360° cooling", "Keeps breast milk cold for up to 24 hours without needing any ice, so it’s ready whenever you are."),
+    ("650ml capacity, fits two 300ml bottles", "Room for two full 300ml bottles, so you can carry a whole day’s feeds in one bottle."),
+    ("Leak-proof lid, 2 cooling cylinders included", "A leak-proof lid keeps your bag dry, and the two cooling cylinders included can be used together to keep milk cold all day."),
+  ],
+}
+KPF_CSS = """
+  /* ===== Key Product Features ===== */
+  .kpf{ max-width:1240px; margin:64px auto 110px; padding:0 24px; }
+  .kpf-title{ text-align:center; font-size:32px; font-weight:800; margin:0 0 28px; letter-spacing:-0.01em; }
+  .kpf-group + .kpf-group{ margin-top:44px; }
+  .kpf-label{ font-size:22px; font-weight:800; margin:0 0 16px; padding-bottom:10px; border-bottom:2px solid var(--pastel-pink); }
+  .kpf-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .kpf-img{ aspect-ratio:4/3; border-radius:14px; overflow:hidden; background:linear-gradient(135deg, var(--pastel-pink-soft), var(--pastel-blue-soft)); }
+  .kpf-img img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .kpf-card h3{ font-size:22px; line-height:1.2; font-weight:800; margin:14px 0 8px; }
+  .kpf-card p{ font-size:16px; line-height:1.55; margin:0; color:#2a2a2a; }
+  @media (max-width:749px){
+    .kpf{ margin:44px auto 100px; padding:0 16px; }
+    .kpf-title{ font-size:26px; margin-bottom:20px; }
+    .kpf-grid{ display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; margin:0 -16px; padding:0 16px; }
+    .kpf-grid::-webkit-scrollbar{ display:none; }
+    .kpf-card{ flex:0 0 80%; scroll-snap-align:start; }
+    .kpf-card h3{ font-size:19px; }
+  }
+"""
+def kpf_html(groups):
+    out = '<!--KPF--><section class="kpf" id="keyFeatures">\n  <h2 class="kpf-title">Key Product Features</h2>\n'
+    for label, items in groups:
+        out += '  <div class="kpf-group">\n'
+        if label: out += f'    <h3 class="kpf-label">{label}</h3>\n'
+        out += '    <div class="kpf-grid">\n'
+        for t, x in items:
+            out += f'      <div class="kpf-card"><div class="kpf-img"></div><h3>{t}</h3><p>{x}</p></div>\n'
+        out += '    </div>\n  </div>\n'
+    return out + '</section><!--/KPF-->'
+def put_kpf(html, groups):
+    new = kpf_html(groups)
+    if '<!--KPF-->' in html:
+        return re.sub(r'<!--KPF-->.*?<!--/KPF-->', lambda m: new, html, flags=re.S)
+    return html.replace('  </main>\n', '  </main>\n\n  ' + new + '\n', 1)
+def put_kpf_css(html):
+    if '/* ===== Key Product Features ===== */' in html:
+        return re.sub(r'\n  /\* ===== Key Product Features ===== \*/.*?(?=\n  /\* =====|\n</style>)', lambda m: KPF_CSS.rstrip('\n'), html, count=1, flags=re.S)
+    return html.replace('  /* ===== Review lightbox ===== */', KPF_CSS.lstrip('\n') + '\n  /* ===== Review lightbox ===== */', 1)
+src = put_kpf_css(put_kpf(src, [(None, FEATURES["warmer"])]))
 (d / "bottle-warmer-pdp.html").write_text(src)
 
 # review slider arrows + script (everything after the row, up to and including its script) from the warmer source
@@ -83,6 +137,7 @@ s = s.replace('  /* ===== Review lightbox ===== */', _bcss)
 _u = "var PAGE_URLS = { single:'bottle-warmer-pdp.html', bundle:'bottle-warmer-bundle-pdp.html' };"
 assert s.count(_u) == 1
 s = s.replace(_u, "var PAGE_URLS = { single:'bottle-warmer-pdp.html', cooler:'breast-milk-cooler-pdp.html', bundle:'bottle-warmer-bundle-pdp.html' };")
+s = put_kpf(s, [("Warmer", FEATURES["warmer"]), ("Cooler", FEATURES["cooler"])])
 (d / "bottle-warmer-bundle-pdp.html").write_text(s)
 print("built bottle-warmer-bundle-pdp.html")
 
@@ -185,5 +240,6 @@ c = rep(c, '<div class="price" id="stickyPrice">£89.99 GBP</div>', '<div class=
 c = rep(c, '<option value="single">Portable Warmer · £89.99</option>', '<option value="single">Portable Cooler · £79.99</option>')
 c = rep(c, '<button class="btn btn-cart" id="stickyAddToCart">Add to Cart - £89.99</button>', '<button class="btn btn-cart" id="stickyAddToCart">Add to Cart - £79.99</button>')
 c = re.sub(r'(<div class="sticky-thumb" style="background-image:url\(\')[^\']+(\')', lambda m: m.group(1) + m_thumb + m.group(2), c, count=1)
+c = put_kpf(c, [(None, FEATURES["cooler"])])
 (d / "breast-milk-cooler-pdp.html").write_text(c)
 print("built breast-milk-cooler-pdp.html")
