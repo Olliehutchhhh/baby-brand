@@ -71,7 +71,9 @@
           "settings": {
             "title": "Iceless 360° cooling",
             "text": "Keeps breast milk cold for up to 24 hours without needing any ice, so it’s ready whenever you are.",
-            "row": "1"
+            "row": "1",
+            "asset_image": "casa-cooler-feature-1.jpg",
+            "image_position": "6%"
           }
         },
         "feature-2": {
@@ -79,7 +81,8 @@
           "settings": {
             "title": "650ml capacity, fits two 300ml bottles",
             "text": "Room for two full 300ml bottles, so you can carry a whole day’s feeds in one bottle.",
-            "row": "1"
+            "row": "1",
+            "asset_image": "casa-cooler-feature-2.jpg"
           }
         },
         "feature-3": {
@@ -87,7 +90,8 @@
           "settings": {
             "title": "Leak-proof lid",
             "text": "A secure leak-proof lid keeps your milk safely inside and your bag dry, so you can pack it with everything else without a second thought.",
-            "row": "1"
+            "row": "1",
+            "asset_image": "casa-cooler-feature-3.jpg"
           }
         }
       },
@@ -106,7 +110,8 @@
       "type": "casa-feature-band",
       "settings": {
         "heading": "Made for pumping mums.",
-        "text": "Take your milk to work without the worry. It stays properly cold all day, so there’s no need to trust a shared office fridge, and its discreet design looks just like an everyday water bottle."
+        "text": "Take your milk to work without the worry. It stays properly cold all day, so there’s no need to trust a shared office fridge, and its discreet design looks just like an everyday water bottle.",
+        "asset_image": "casa-cooler-banner.jpg"
       }
     },
     "steps": {
