@@ -119,21 +119,24 @@
           "type": "step",
           "settings": {
             "title": "Fill",
-            "text": "Add your milk or water to the warmer."
+            "text": "Add your milk or water to the warmer.",
+            "asset_image": "casa-warmer-step-1.jpg"
           }
         },
         "step-2": {
           "type": "step",
           "settings": {
             "title": "Warm",
-            "text": "Press the button and let it heat. A quiet beep lets you know your milk or water has reached the temperature you chose."
+            "text": "Press the button and let it heat. A quiet beep lets you know your milk or water has reached the temperature you chose.",
+            "asset_image": "casa-warmer-step-2.jpg"
           }
         },
         "step-3": {
           "type": "step",
           "settings": {
             "title": "Feed",
-            "text": "Check the temperature and feed your baby, wherever you are."
+            "text": "Check the temperature and feed your baby, wherever you are.",
+            "asset_image": "casa-warmer-step-3.jpg"
           }
         }
       },
