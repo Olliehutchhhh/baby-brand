@@ -121,7 +121,7 @@ def story_html(page):
     h += '  <section class="kpf-steps"><h2 class="kpf-title">How it works</h2><div class="kpf-grid">\n'
     for i, (t, x) in enumerate(st["steps"], 1):
         _sp = ' style="object-position:center 10%"' if (i == 1 or page == "cooler") else ''
-        _si = f'<img src="{_img_uri(STEP_IMGS[page][i-1])}" alt="{t}" loading="lazy"{_sp}>' if page in STEP_IMGS else ''
+        _si = f'<img src="{_img_uri(STEP_IMGS[page][i-1])}" alt="{t}" loading="lazy"{_sp}>' if (page in STEP_IMGS and STEP_IMGS[page][i-1]) else ''
         h += f'    <div class="kpf-card"><div class="kpf-img">{_si}</div><h3><span class="kpf-num">{i}</span>{t}</h3><p>{x}</p></div>\n'
     h += '  </div></section>\n'
     h += '  <section class="kpf-sets"><h2 class="kpf-title">Choose your set</h2><div class="kpf-grid">\n'
@@ -145,7 +145,8 @@ def _img_uri(path):
 FEAT_IMGS = {"warmer": [root / "assets/warmer" / f"feature-{i}.jpg" for i in (1, 2, 3)],
              "cooler": [root / "assets/cooler" / f"feature-{i}.jpg" for i in (1, 2, 3)]}
 STEP_IMGS = {"warmer": [root / "assets/warmer" / f"step-{i}.jpg" for i in (1, 2, 3)],
-             "cooler": [root / "assets/cooler" / f"step-{i}.jpg" for i in (1, 2, 3)]}
+             "cooler": [root / "assets/cooler" / f"step-{i}.jpg" for i in (1, 2, 3)],
+             "bundle": [root / "assets/bundle/step-1.jpg", None, None]}
 BANNER_IMGS = {"warmer": root / "assets/warmer/banner.jpg", "cooler": root / "assets/cooler/banner.jpg"}
 def kpf_html(groups):
     out = '<!--KPF--><section class="kpf" id="keyFeatures">\n  <h2 class="kpf-title">Key Product Features</h2>\n'

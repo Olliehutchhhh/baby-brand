@@ -151,7 +151,9 @@
           "type": "step",
           "settings": {
             "title": "Cool it",
-            "text": "Freeze the cooling cylinders for 12 hours, pop them in the cooler, and your milk stays cold for up to 24 hours."
+            "text": "Freeze the cooling cylinders for 12 hours, pop them in the cooler, and your milk stays cold for up to 24 hours.",
+            "asset_image": "casa-bundle-step-1.jpg",
+            "image_position": "10%"
           }
         },
         "step-2": {
