@@ -1,7 +1,7 @@
 {
   "sections": {
     "main": {
-      "type": "casa-product",
+      "type": "casa-pdp",
       "blocks": {
         "pill-1": {
           "type": "pill",
