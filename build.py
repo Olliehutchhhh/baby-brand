@@ -142,9 +142,10 @@ KPF_CSS = KPF_CSS.rstrip("\n") + "\n" + STORY_CSS
 def _img_uri(path):
     import base64 as _b64
     return "data:image/jpeg;base64," + _b64.b64encode(open(path, "rb").read()).decode()
-FEAT_IMGS = {"warmer": [root / "assets/warmer" / f"feature-{i}.jpg" for i in (1, 2, 3)]}
+FEAT_IMGS = {"warmer": [root / "assets/warmer" / f"feature-{i}.jpg" for i in (1, 2, 3)],
+             "cooler": [root / "assets/cooler" / f"feature-{i}.jpg" for i in (1, 2, 3)]}
 STEP_IMGS = {"warmer": [root / "assets/warmer" / f"step-{i}.jpg" for i in (1, 2, 3)]}
-BANNER_IMGS = {"warmer": root / "assets/warmer/banner.jpg"}
+BANNER_IMGS = {"warmer": root / "assets/warmer/banner.jpg", "cooler": root / "assets/cooler/banner.jpg"}
 def kpf_html(groups):
     out = '<!--KPF--><section class="kpf" id="keyFeatures">\n  <h2 class="kpf-title">Key Product Features</h2>\n'
     for grp in groups:
@@ -156,7 +157,8 @@ def kpf_html(groups):
         for n, (t, x) in enumerate(items):
             im = ''
             if imgkey in FEAT_IMGS and n < len(FEAT_IMGS[imgkey]):
-                im = f'<img src="{_img_uri(FEAT_IMGS[imgkey][n])}" alt="{t}" loading="lazy">'
+                _fp = ' style="object-position:center 6%"' if (imgkey == "cooler" and n == 0) else ''
+                im = f'<img src="{_img_uri(FEAT_IMGS[imgkey][n])}" alt="{t}" loading="lazy"{_fp}>'
             out += f'      <div class="kpf-card"><div class="kpf-img">{im}</div><h3>{t}</h3><p>{x}</p></div>\n'
         out += '    </div>\n  </div>\n'
     return out + '</section><!--/KPF-->'
@@ -237,7 +239,7 @@ _u = "var PAGE_URLS = { single:'bottle-warmer-pdp.html', bundle:'bottle-warmer-b
 assert s.count(_u) == 1
 s = s.replace(_u, "var PAGE_URLS = { single:'bottle-warmer-pdp.html', cooler:'breast-milk-cooler-pdp.html', bundle:'bottle-warmer-bundle-pdp.html' };")
 s = re.sub(r'      <div class="discount-box">.*?</div>\n\n?', '', s, count=1, flags=re.S)
-s = put_story(put_kpf(s, [("Warmer", FEATURES["warmer"], "warmer"), ("Cooler", FEATURES["cooler"])]), "bundle")
+s = put_story(put_kpf(s, [("Warmer", FEATURES["warmer"], "warmer"), ("Cooler", FEATURES["cooler"], "cooler")]), "bundle")
 (d / "bottle-warmer-bundle-pdp.html").write_text(s)
 print("built bottle-warmer-bundle-pdp.html")
 
@@ -340,6 +342,6 @@ c = rep(c, '<div class="price" id="stickyPrice">£89.99 GBP</div>', '<div class=
 c = rep(c, '<option value="single">Portable Warmer · £89.99</option>', '<option value="single">Portable Cooler · £79.99</option>')
 c = rep(c, '<button class="btn btn-cart" id="stickyAddToCart">Add to Cart - £89.99</button>', '<button class="btn btn-cart" id="stickyAddToCart">Add to Cart - £79.99</button>')
 c = re.sub(r'(<div class="sticky-thumb" style="background-image:url\(\')[^\']+(\')', lambda m: m.group(1) + m_thumb + m.group(2), c, count=1)
-c = put_story(put_kpf(c, [(None, FEATURES["cooler"])]), "cooler")
+c = put_story(put_kpf(c, [(None, FEATURES["cooler"], "cooler")]), "cooler")
 (d / "breast-milk-cooler-pdp.html").write_text(c)
 print("built breast-milk-cooler-pdp.html")
