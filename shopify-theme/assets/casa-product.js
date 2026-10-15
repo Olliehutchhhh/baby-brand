@@ -10,6 +10,7 @@
   var qtyInput = $('#casaQtyInput');
   function renderQty() {
     if (qtyInput) qtyInput.value = qty;
+    var sq = document.getElementById('stickyQtyInput'); if (sq) sq.value = qty;
     $$('.js-qty-value').forEach(function (el) { el.textContent = qty; });
   }
   $$('.js-qty-minus').forEach(function (b) { b.addEventListener('click', function () { qty = Math.max(1, qty - 1); renderQty(); }); });
@@ -80,8 +81,20 @@
       entries.forEach(function (e) { bar.classList.toggle('visible', !e.isIntersecting); });
     }, { threshold: 0 }).observe(mainBtn);
   }
+  // ---- Sticky bar dropdown: choose which product the bar adds (no page change) ----
   var stickySelect = $('#stickyOptSelect');
-  if (stickySelect) stickySelect.addEventListener('change', function () { if (stickySelect.value) window.location.href = stickySelect.value; });
+  if (stickySelect) {
+    var sName = $('#stickyName'), sPrice = $('#stickyPrice'), sThumb = $('#stickyThumb'), sAdd = $('#stickyAdd'), sId = $('#stickyVariantId');
+    var applySticky = function () {
+      var o = stickySelect.options[stickySelect.selectedIndex]; if (!o) return;
+      if (sId) sId.value = o.value;
+      if (sName && o.dataset.name) sName.textContent = o.dataset.name;
+      if (sPrice && o.dataset.price) sPrice.textContent = o.dataset.price;
+      if (sThumb) sThumb.style.backgroundImage = o.dataset.img ? "url('" + o.dataset.img + "')" : '';
+      if (sAdd) { var ok = o.dataset.available !== 'false'; sAdd.disabled = !ok; sAdd.textContent = ok ? 'Add to Cart - ' + (o.dataset.money || '') : 'Sold Out'; }
+    };
+    stickySelect.addEventListener('change', applySticky);
+  }
 
   // ---- Review lightbox ----
   var cards = $$('#reviewRow .review-card');

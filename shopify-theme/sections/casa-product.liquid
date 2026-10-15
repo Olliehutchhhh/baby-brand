@@ -333,32 +333,41 @@
     </div>
   </main>
 
-  <!-- STICKY BOTTOM ADD-TO-CART BAR -->
+  <!-- STICKY BOTTOM ADD-TO-CART BAR: the dropdown changes which product this bar adds, without leaving the page -->
+  {%- liquid
+    assign sticky_bundle_label = s.bundle_title
+    if save_pct > 0
+      assign sticky_bundle_label = s.bundle_title | append: ' (Save ' | append: save_pct | append: '%)'
+    endif
+    assign sticky_warmer_label = s.sticky_warmer_label | default: 'Portable Warmer'
+    assign sticky_cooler_label = s.sticky_cooler_label | default: 'Portable Cooler'
+    assign cur_is_known = false
+    if product.id == warmer_found.id or product.id == cooler_found.id or product.id == bundle_found.id
+      assign cur_is_known = true
+    endif
+  -%}
   <div class="sticky-bar" id="stickyBar">
-    {%- if product.featured_image != blank -%}
-      <div class="sticky-thumb" style="background-image:url('{{ product.featured_image | image_url: width: 120 }}');background-size:cover;background-position:center;"></div>
-    {%- endif -%}
+    <div class="sticky-thumb" id="stickyThumb"{% if product.featured_image != blank %} style="background-image:url('{{ product.featured_image | image_url: width: 120 }}');background-size:cover;background-position:center;"{% endif %}></div>
     <div class="sticky-info">
-      <div class="name">{{ product.title }}</div>
-      <div class="price">{{ variant.price | money_with_currency }}</div>
+      <div class="name" id="stickyName">{{ product.title }}</div>
+      <div class="price" id="stickyPrice">{{ variant.price | money_with_currency }}</div>
     </div>
-    {%- if bundle_p != blank or single_p != blank -%}
-      <select class="sticky-select" id="stickyOptSelect" aria-label="Choose your set">
-        {%- if is_bundle -%}
-          {%- if single_p != blank -%}<option value="{{ single_p.url }}">{{ s.single_title }} &middot; {{ single_p.selected_or_first_available_variant.price | money }}</option>{%- endif -%}
-          <option value="{{ product.url }}" selected>{{ s.bundle_title }} &middot; {{ variant.price | money }}</option>
-        {%- else -%}
-          <option value="{{ product.url }}" selected>{{ s.single_title }} &middot; {{ variant.price | money }}</option>
-          {%- if bundle_p != blank -%}<option value="{{ bundle_p.url }}">{{ s.bundle_title }} &middot; {{ bundle_p.selected_or_first_available_variant.price | money }}</option>{%- endif -%}
-        {%- endif -%}
-      </select>
-    {%- endif -%}
+    <select class="sticky-select" id="stickyOptSelect" aria-label="Choose a product to add">
+      {%- unless cur_is_known -%}{%- render 'casa-sticky-option', p: product, label: product.title, cur_id: product.id, cur_variant: variant -%}{%- endunless -%}
+      {%- render 'casa-sticky-option', p: warmer_found, label: sticky_warmer_label, cur_id: product.id, cur_variant: variant -%}
+      {%- render 'casa-sticky-option', p: cooler_found, label: sticky_cooler_label, cur_id: product.id, cur_variant: variant -%}
+      {%- render 'casa-sticky-option', p: bundle_found, label: sticky_bundle_label, cur_id: product.id, cur_variant: variant -%}
+    </select>
     <div class="sticky-qty">
       <button type="button" class="qty-btn js-qty-minus" aria-label="Decrease quantity">&minus;</button>
       <span class="qty-value js-qty-value">1</span>
       <button type="button" class="qty-btn js-qty-plus" aria-label="Increase quantity">+</button>
     </div>
-    <button type="submit" form="{{ form_id }}" name="add" class="btn btn-cart"{% unless variant.available %} disabled{% endunless %}>{% if variant.available %}Add to Cart - {{ variant.price | money }}{% else %}Sold Out{% endif %}</button>
+    {%- form 'product', product, id: 'casa-sticky-form', class: 'casa-form' -%}
+      <input type="hidden" name="id" id="stickyVariantId" value="{{ variant.id }}">
+      <input type="hidden" name="quantity" id="stickyQtyInput" value="1">
+    {%- endform -%}
+    <button type="submit" form="casa-sticky-form" name="add" class="btn btn-cart" id="stickyAdd"{% unless variant.available %} disabled{% endunless %}>{% if variant.available %}Add to Cart - {{ variant.price | money }}{% else %}Sold Out{% endif %}</button>
   </div>
 
   <div class="lb" id="reviewLb" role="dialog" aria-modal="true" aria-label="Customer review">
@@ -404,6 +413,9 @@
     { "type": "textarea", "id": "cooler_list", "label": "Tick list (one per line)" },
 
     { "type": "header", "content": "Bundle And Save card" },
+    { "type": "header", "content": "Sticky add-to-cart bar" },
+    { "type": "text", "id": "sticky_warmer_label", "label": "Warmer option label", "default": "Portable Warmer" },
+    { "type": "text", "id": "sticky_cooler_label", "label": "Cooler option label", "default": "Portable Cooler" },
     { "type": "text", "id": "bundle_title", "label": "Title", "default": "Bundle And Save" },
     { "type": "text", "id": "bundle_ribbon", "label": "Ribbon", "default": "BEST VALUE" },
     { "type": "text", "id": "bundle_badge", "label": "Save badge (leave EMPTY for automatic saving %)" },

@@ -361,3 +361,46 @@ c = re.sub(r'(<div class="sticky-thumb" style="background-image:url\(\')[^\']+(\
 c = put_story(put_kpf(c, [(None, FEATURES["cooler"], "cooler")]), "cooler")
 (d / "breast-milk-cooler-pdp.html").write_text(c)
 print("built breast-milk-cooler-pdp.html")
+
+# ---------- sticky bar: the dropdown picks which product the bar adds (no page change) ----------
+def _sticky_block():
+    _imgs = {
+        "warmer": _thumb(_wi, 160),
+        "cooler": _thumb(Image.open(root / "assets/cooler/main.jpg"), 160),
+        "bundle": _thumb(Image.open(root / "assets/bundle/gallery-1.jpg"), 160),
+    }
+    return ('<!--STICKY_OPT-->\n<script>\n(function(){\n'
+      '  var D = {\n'
+      f'    warmer:{{ name:"Superfast Portable Bottle Warmer for Travel", price:"£89.99", label:"Portable Warmer", img:"{_imgs["warmer"]}" }},\n'
+      f'    cooler:{{ name:"Portable Breast Milk Cooler for Travel", price:"£79.99", label:"Portable Cooler", img:"{_imgs["cooler"]}" }},\n'
+      f'    bundle:{{ name:"Portable Warmer & Cooler Set", price:"£134.99", label:"Bundle And Save (Save 21%)", img:"{_imgs["bundle"]}" }}\n'
+      '  };\n'
+      '  var old = document.getElementById("stickyOptSelect"), btnOld = document.getElementById("stickyAddToCart");\n'
+      '  if (!old || !btnOld) return;\n'
+      '  // fresh copies drop the old handlers that sent you to another page\n'
+      '  var sel = old.cloneNode(false); sel.innerHTML = ["warmer","cooler","bundle"].map(function(k){ return \'<option value="\'+k+\'">\'+D[k].label+" · "+D[k].price+"</option>"; }).join("");\n'
+      '  old.parentNode.replaceChild(sel, old);\n'
+      '  var btn = btnOld.cloneNode(true); btnOld.parentNode.replaceChild(btn, btnOld);\n'
+      '  var thumb = document.querySelector(".sticky-bar .sticky-thumb"), nameEl = document.getElementById("stickyName"), priceEl = document.getElementById("stickyPrice");\n'
+      '  function show(k){\n'
+      '    var o = D[k]; sel.value = k;\n'
+      '    nameEl.textContent = o.name; priceEl.textContent = o.price + " GBP"; btn.textContent = "Add to Cart - " + o.price;\n'
+      '    thumb.style.backgroundImage = "url(\'" + o.img + "\')";\n'
+      '  }\n'
+      '  sel.addEventListener("change", function(){ show(sel.value); });\n'
+      '  btn.addEventListener("click", function(){\n'
+      '    var n = parseInt((document.getElementById("stickyQtyValue") || {}).textContent, 10) || 1;\n'
+      '    for (var i = 0; i < n; i++){ var el = document.createElement("span"); el.setAttribute("data-quick-add", sel.value); document.body.appendChild(el); el.click(); el.remove(); }\n'
+      '  });\n'
+      '  var t = (document.getElementById("pdpTitle") || {}).textContent || "";\n'
+      '  show(/Set|Bundle/i.test(t) ? "bundle" : (/Cooler/i.test(t) ? "cooler" : "warmer"));\n'
+      '})();\n</script>\n<!--/STICKY_OPT-->')
+for _f in ("bottle-warmer-pdp.html", "bottle-warmer-bundle-pdp.html", "breast-milk-cooler-pdp.html"):
+    _t = (d / _f).read_text()
+    _blk2 = _sticky_block()
+    if "<!--STICKY_OPT-->" in _t:
+        _t = re.sub(r"<!--STICKY_OPT-->.*?<!--/STICKY_OPT-->", lambda m: _blk2, _t, flags=re.S)
+    else:
+        _t = _t.replace("</body>", _blk2 + "\n</body>", 1)
+    (d / _f).write_text(_t)
+print("sticky bar options wired")

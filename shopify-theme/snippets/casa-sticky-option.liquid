@@ -1,0 +1,6 @@
+{%- comment -%} One option in the sticky bar's product dropdown. The value is the variant id, so choosing it changes what the bar adds to the cart. {%- endcomment -%}
+{%- if p != blank -%}
+  {%- assign v = p.selected_or_first_available_variant -%}
+  {%- if p.id == cur_id -%}{%- assign v = cur_variant -%}{%- endif -%}
+  <option value="{{ v.id }}" data-name="{{ p.title | escape }}" data-price="{{ v.price | money_with_currency }}" data-money="{{ v.price | money }}" data-img="{% if p.featured_image != blank %}{{ p.featured_image | image_url: width: 120 }}{% endif %}" data-available="{{ v.available }}"{% if p.id == cur_id %} selected{% endif %}>{{ label | escape }} &middot; {{ v.price | money }}</option>
+{%- endif -%}

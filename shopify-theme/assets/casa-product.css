@@ -748,3 +748,9 @@
 .casa-pdp .sticky-qty .qty-value{ color:var(--accent-dark); font-weight:700; min-width:18px; text-align:center; }
 .casa-pdp .sticky-bar .btn-cart{ background:var(--accent-dark); color:var(--pastel-pink); border:0; border-radius:999px; font-weight:800; }
 .casa-pdp .sticky-bar .btn-cart:hover{ filter:brightness(1.07); }
+
+@media (max-width:700px){
+  .casa-pdp .sticky-bar{ flex-wrap:wrap; gap:8px 10px; padding:10px 14px 12px; }
+  .casa-pdp .sticky-select{ display:block; order:-1; flex:1 0 100%; width:100%; padding:9px 14px; }
+  .casa-pdp .sticky-thumb{ width:44px; height:44px; }
+}
