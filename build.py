@@ -76,7 +76,7 @@ STORY = {
 SETS = [
   ("warmer", "Portable Warmer", ["Warms milk and water", "Heats fast", "Long battery life"], "bottle-warmer-pdp.html", "£89.99", "£104.99"),
   ("cooler", "Portable Cooler", ["Iceless 360° cooling", "Cold for up to 24 hours", "650ml, fits two 300ml bottles"], "breast-milk-cooler-pdp.html", "£79.99", "£94.99"),
-  ("bundle", "Warmer & Cooler Set", ["Portable warmer + portable cooler", "Save 21% vs buying separately", "Free E-Book worth £10"], "bottle-warmer-bundle-pdp.html", "£134.99", "£169.98"),
+  ("bundle", "Warmer & Cooler Set", ["Portable warmer + portable cooler", "Save 21% vs buying separately", "Free shipping"], "bottle-warmer-bundle-pdp.html", "£134.99", "£169.98"),
 ]
 STORY_CSS = """
   .kpf-band{ max-width:1240px; margin:0 auto 64px; padding:0 24px; }
