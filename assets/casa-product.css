@@ -574,9 +574,13 @@
 .casa-pdp .pair-note{ font-size:12px; font-weight:700; color:var(--accent); margin-bottom:10px;
 }
 .casa-pdp .share-row{ display:flex; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:20px; }
-.casa-pdp .share-btn{ display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; border:1px solid #e7e3e0; background:#fff; color:#1c1c1c; cursor:pointer; padding:0; text-decoration:none; transition:background .15s, color .15s, border-color .15s; }
-.casa-pdp .share-btn:hover{ background:#1c1c1c; color:#fff; border-color:#1c1c1c; }
-.casa-pdp .share-btn svg{ width:17px; height:17px; }
+.casa-pdp .share-btn{ display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; border:none; color:#fff; cursor:pointer; padding:0; text-decoration:none; transition:transform .15s, filter .15s, box-shadow .15s; box-shadow:0 2px 6px rgba(0,0,0,.12); }
+.casa-pdp .share-btn:hover{ transform:translateY(-2px); filter:brightness(1.08); box-shadow:0 5px 12px rgba(0,0,0,.18); }
+.casa-pdp .share-btn[aria-label*="Facebook"]{ background:#1877F2; }
+.casa-pdp .share-btn[aria-label*="WhatsApp"]{ background:#25D366; }
+.casa-pdp .share-btn[aria-label*="on X"]{ background:#111; }
+.casa-pdp .share-btn[aria-label*="Instagram"]{ background:linear-gradient(45deg,#F9A825,#E1306C 55%,#7B3FD6); }
+.casa-pdp .share-btn svg{ width:18px; height:18px; }
 .casa-pdp .share-note{ font-size:13px; color:#767070; }
 .casa-pdp .video-title{ font-size:18px; font-weight:800; margin-bottom:16px;
 }
