@@ -28,7 +28,7 @@ FEATURES = {
   "warmer": [
     ("Warms milk and water, anywhere", "Heat a bottle of milk or water at the park, in the car or mid-flight. No kettle, hob or microwave needed."),
     ("Heats fast, with a long battery life", "Quick heating means a hungry baby isn’t left waiting, and a long-lasting rechargeable battery keeps it ready for days out and long journeys."),
-    ("Large capacity, clear display", "Plenty of room for a feed, and the digital temperature display lets you check it’s just right before you give the bottle."),
+    ("Easy for everyone to use", "Simple buttons and a clear temperature display make it effortless for anyone, from new parents to grandparents on babysitting duty."),
   ],
   "cooler": [
     ("Iceless 360° cooling", "Keeps breast milk cold for up to 24 hours without needing any ice, so it’s ready whenever you are."),
@@ -62,7 +62,7 @@ SET_IMGS = {"warmer": _thumb(_wi, 520), "cooler": _thumb(Image.open(root / "asse
 STORY = {
   "warmer": {
     "banner": ("Feeding on the go, made easy.", "Whether you’re at the local park, on a long car journey or 30,000 feet up in the middle of a flight, it makes preparing a bottle just as effortless as it is in your own kitchen."),
-    "steps": [("Fill", "Add your milk or water to the warmer."), ("Warm", "Press the button and let it heat. The display shows the temperature as it goes."), ("Feed", "Check the temperature and feed your baby, wherever you are.")],
+    "steps": [("Fill", "Add your milk or water to the warmer."), ("Warm", "Press the button and let it heat. A quiet beep lets you know your milk or water has reached the temperature you chose."), ("Feed", "Check the temperature and feed your baby, wherever you are.")],
   },
   "cooler": {
     "banner": ("Fresh milk, wherever life takes you.", "Safely store cold breast milk while you’re out of the house. Perfect for days out, holidays, travelling and the office, with no ice needed."),
