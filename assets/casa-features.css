@@ -1,4 +1,4 @@
-.casa-kpf{ max-width:1240px; margin:64px auto 110px; padding:0 24px; font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; color:#1c1c1c; }
+.casa-kpf{ max-width:1240px; margin:64px auto 64px; padding:0 24px; font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; color:#1c1c1c; }
 .casa-kpf *, .casa-kpf *::before, .casa-kpf *::after{ box-sizing:border-box; }
 .casa-kpf__title{ text-align:center; font-size:32px; font-weight:800; margin:0 0 28px; letter-spacing:-0.01em; line-height:1.2; }
 .casa-kpf__group + .casa-kpf__group{ margin-top:44px; }
@@ -16,3 +16,44 @@
   .casa-kpf__card{ flex:0 0 min(78%, 320px); scroll-snap-align:start; }
   .casa-kpf__card h3{ font-size:19px; }
 }
+
+/* ===== Feature band ===== */
+.casa-band{ max-width:1240px; margin:0 auto 64px; padding:0 24px; font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; color:#1c1c1c; }
+.casa-band *, .casa-band *::before, .casa-band *::after{ box-sizing:border-box; }
+.casa-band__in{ display:grid; grid-template-columns:1fr 1fr; align-items:center; background:#FFE9F6; border-radius:20px; overflow:hidden; }
+.casa-band__in--flip .casa-band__img{ order:2; }
+.casa-band__img{ aspect-ratio:4/3; background:linear-gradient(135deg, #FFD6EE, #CED1F8); }
+.casa-band__img img{ width:100%; height:100%; object-fit:cover; display:block; }
+.casa-band__txt{ padding:40px 48px; }
+.casa-band__txt h2{ font-size:36px; line-height:1.1; font-weight:800; margin:0 0 14px; letter-spacing:-0.01em; }
+.casa-band__txt p{ font-size:17px; line-height:1.6; margin:0; color:#2a2a2a; letter-spacing:normal; }
+@media (max-width:749px){
+  .casa-band{ margin-bottom:44px; padding:0 16px; }
+  .casa-band__in{ grid-template-columns:1fr; }
+  .casa-band__in--flip .casa-band__img{ order:0; }
+  .casa-band__txt{ padding:26px 22px 30px; }
+  .casa-band__txt h2{ font-size:26px; }
+}
+
+/* ===== How it works ===== */
+.casa-steps{ margin-bottom:64px; }
+.casa-kpf__num{ display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:#1c1c1c; color:#fff; font-size:14px; font-weight:700; margin-right:10px; vertical-align:2px; }
+@media (max-width:749px){ .casa-steps{ margin-bottom:44px; } }
+
+/* ===== Choose your set ===== */
+.casa-sets{ margin-bottom:110px; }
+.casa-set{ position:relative; border:1px solid #e7e3e0; border-radius:18px; padding:18px; display:flex; flex-direction:column; background:#fff; }
+.casa-set--best{ border:2px solid #1c1c1c; }
+.casa-set__ribbon{ position:absolute; top:-12px; left:18px; background:#1c1c1c; color:#fff; font-size:12px; font-weight:800; letter-spacing:.04em; padding:5px 12px; border-radius:99px; }
+.casa-set__img{ aspect-ratio:1/1; border-radius:12px; background:linear-gradient(135deg, #FFE9F6, #E4E6FB); overflow:hidden; }
+.casa-set__img img{ width:100%; height:100%; object-fit:cover; display:block; }
+.casa-set h3{ font-size:21px; font-weight:800; margin:16px 0 10px; line-height:1.2; letter-spacing:normal; }
+.casa-set ul{ margin:0 0 16px; padding:0; list-style:none; flex:1; }
+.casa-set li{ font-size:15px; line-height:1.4; padding:5px 0 5px 24px; position:relative; }
+.casa-set li::before{ content:"\2713"; position:absolute; left:0; color:#c2388a; font-weight:800; }
+.casa-set__price{ font-size:20px; font-weight:800; margin-bottom:12px; }
+.casa-set__price s{ font-weight:500; font-size:15px; color:#767070; margin-right:6px; }
+.casa-set__btn{ display:block; text-align:center; text-decoration:none; font-weight:700; font-size:15px; padding:13px 16px; border-radius:99px; border:2px solid #1c1c1c; color:#1c1c1c; background:#fff; }
+.casa-set--best .casa-set__btn{ background:#1c1c1c; color:#fff; }
+.casa-set__here{ text-align:center; font-weight:700; font-size:15px; padding:15px 16px; border-radius:99px; background:#f3f1ef; color:#555; }
+@media (max-width:749px){ .casa-sets{ margin-bottom:100px; } .casa-sets .casa-kpf__grid{ padding-top:14px; } }
