@@ -14,6 +14,15 @@
       <link rel="apple-touch-icon" href="{{ 'casa-apple-touch-icon.png' | asset_url }}">
     {%- endif -%}
 
+    <style>
+      /* Off-white announcement bar so it stands out from the white header */
+      .announcement-bar-section .announcement-bar,
+      .announcement-bar-section .announcement-bar .announcement-bar__announcement,
+      .announcement-bar-section { background-color: #edebe6; }
+      .announcement-bar-section .announcement-bar__message,
+      .announcement-bar-section .announcement-bar__link { font-weight: 500; letter-spacing: 0.02em; }
+    </style>
+
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
