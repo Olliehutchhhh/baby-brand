@@ -56,6 +56,85 @@ KPF_CSS = """
     .kpf-card h3{ font-size:19px; }
   }
 """
+
+SET_IMGS = {"warmer": _thumb(_wi, 520), "cooler": _thumb(Image.open(root / "assets/cooler/main.jpg"), 520)}
+# ---------- Story sections: feature banner, how it works, choose your set ----------
+STORY = {
+  "warmer": {
+    "banner": ("Feeding on the go, made easy.", "Whether you’re at the local park, on a long car journey or 30,000 feet up in the middle of a flight, it makes preparing a bottle just as effortless as it is in your own kitchen."),
+    "steps": [("Fill", "Add your milk or water to the warmer."), ("Warm", "Press the button and let it heat. The display shows the temperature as it goes."), ("Feed", "Check the temperature and feed your baby, wherever you are.")],
+  },
+  "cooler": {
+    "banner": ("Fresh milk, wherever life takes you.", "Safely store cold breast milk while you’re out of the house. Perfect for days out, holidays, travelling and the office, with no ice needed."),
+    "steps": [("Pour", "Pour your milk into the bottles."), ("Seal", "Close the leak-proof lid so nothing spills in your bag."), ("Go", "Iceless 360° cooling keeps milk cold for up to 24 hours.")],
+  },
+  "bundle": {
+    "banner": ("Everything you need for feeding on the move.", "Warm milk or water with the portable warmer, then keep bottles fresh and cool with the matching portable cooler. Both are small enough for the nappy bag, car cup holder or carry-on."),
+    "steps": [("Cool it", "The cooler keeps milk cold for up to 24 hours, with no ice."), ("Carry it", "Both are small enough for the nappy bag, car cup holder or carry-on."), ("Warm it", "When your baby is hungry, the warmer heats a bottle wherever you are.")],
+  },
+}
+SETS = [
+  ("warmer", "Portable Warmer", ["Warms milk and water", "Heats fast", "Long battery life"], "bottle-warmer-pdp.html", "£89.99", "£104.99"),
+  ("cooler", "Portable Cooler", ["Iceless 360° cooling", "Cold for up to 24 hours", "650ml, fits two 300ml bottles"], "breast-milk-cooler-pdp.html", "£79.99", "£94.99"),
+  ("bundle", "Warmer & Cooler Set", ["Portable warmer + portable cooler", "Save 21% vs buying separately", "Free E-Book worth £10"], "bottle-warmer-bundle-pdp.html", "£134.99", "£169.98"),
+]
+STORY_CSS = """
+  .kpf-band{ max-width:1240px; margin:0 auto 64px; padding:0 24px; }
+  .kpf-band-in{ display:grid; grid-template-columns:1fr 1fr; align-items:center; background:var(--pastel-pink-soft); border-radius:20px; overflow:hidden; }
+  .kpf-band-img{ aspect-ratio:4/3; background:linear-gradient(135deg, var(--pastel-pink), var(--pastel-blue)); }
+  .kpf-band-img img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .kpf-band-txt{ padding:40px 48px; }
+  .kpf-band-txt h2{ font-size:36px; line-height:1.1; font-weight:800; margin:0 0 14px; letter-spacing:-0.01em; }
+  .kpf-band-txt p{ font-size:17px; line-height:1.6; margin:0; color:#2a2a2a; }
+  .kpf-steps{ max-width:1240px; margin:0 auto 64px; padding:0 24px; }
+  .kpf-num{ display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:#1c1c1c; color:#fff; font-size:14px; font-weight:700; margin-right:10px; vertical-align:2px; }
+  .kpf-sets{ max-width:1240px; margin:0 auto 110px; padding:0 24px; }
+  .kpf-set{ position:relative; border:1px solid var(--line); border-radius:18px; padding:18px; display:flex; flex-direction:column; background:#fff; }
+  .kpf-set.best{ border:2px solid #1c1c1c; }
+  .kpf-ribbon{ position:absolute; top:-12px; left:18px; background:#1c1c1c; color:#fff; font-size:12px; font-weight:800; letter-spacing:.04em; padding:5px 12px; border-radius:99px; }
+  .kpf-set-img{ aspect-ratio:1/1; border-radius:12px; background:linear-gradient(135deg, var(--pastel-pink-soft), var(--pastel-blue-soft)); overflow:hidden; }
+  .kpf-set-img img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .kpf-set h3{ font-size:21px; font-weight:800; margin:16px 0 10px; line-height:1.2; }
+  .kpf-set ul{ margin:0 0 16px; padding:0; list-style:none; flex:1; }
+  .kpf-set li{ font-size:15px; line-height:1.4; padding:5px 0 5px 24px; position:relative; }
+  .kpf-set li::before{ content:"\\2713"; position:absolute; left:0; color:var(--accent); font-weight:800; }
+  .kpf-set .kpf-price{ font-size:20px; font-weight:800; margin-bottom:12px; }
+  .kpf-set .kpf-price s{ font-weight:500; font-size:15px; color:var(--muted); margin-right:6px; }
+  .kpf-btn{ display:block; text-align:center; text-decoration:none; font-weight:700; font-size:15px; padding:13px 16px; border-radius:99px; border:2px solid #1c1c1c; color:#1c1c1c; background:#fff; }
+  .kpf-set.best .kpf-btn{ background:#1c1c1c; color:#fff; }
+  .kpf-here{ text-align:center; font-weight:700; font-size:15px; padding:15px 16px; border-radius:99px; background:#f3f1ef; color:#555; }
+  @media (max-width:749px){
+    .kpf-band{ margin-bottom:44px; padding:0 16px; }
+    .kpf-band-in{ grid-template-columns:1fr; }
+    .kpf-band-txt{ padding:26px 22px 30px; }
+    .kpf-band-txt h2{ font-size:26px; }
+    .kpf-steps{ margin-bottom:44px; padding:0 16px; }
+    .kpf-sets{ padding:0 16px; margin-bottom:100px; }
+    .kpf-sets .kpf-grid{ padding-top:14px; }
+  }
+"""
+def story_html(page):
+    st = STORY[page]
+    h = '<!--STORY-->\n'
+    h += f'  <section class="kpf-band"><div class="kpf-band-in"><div class="kpf-band-img"></div><div class="kpf-band-txt"><h2>{st["banner"][0]}</h2><p>{st["banner"][1]}</p></div></div></section>\n'
+    h += '  <section class="kpf-steps"><h2 class="kpf-title">How it works</h2><div class="kpf-grid">\n'
+    for i, (t, x) in enumerate(st["steps"], 1):
+        h += f'    <div class="kpf-card"><div class="kpf-img"></div><h3><span class="kpf-num">{i}</span>{t}</h3><p>{x}</p></div>\n'
+    h += '  </div></section>\n'
+    h += '  <section class="kpf-sets"><h2 class="kpf-title">Choose your set</h2><div class="kpf-grid">\n'
+    for key, name, bl, href, now, was in SETS:
+        best = ' best' if key == 'bundle' else ''
+        h += f'    <div class="kpf-set kpf-card{best}">' + ('<span class="kpf-ribbon">BEST VALUE</span>' if key == 'bundle' else '')
+        img = SET_IMGS.get(key)
+        h += '<div class="kpf-set-img">' + (f'<img src="{img}" alt="{name}">' if img else '') + '</div>'
+        h += f'<h3>{name}</h3><ul>' + ''.join(f'<li>{x}</li>' for x in bl) + '</ul>'
+        h += f'<div class="kpf-price"><s>{was}</s>{now}</div>'
+        h += ('<div class="kpf-here">You’re viewing this</div>' if key == page else f'<a class="kpf-btn" href="{href}">View {name.lower()}</a>')
+        h += '</div>\n'
+    h += '  </div></section>\n<!--/STORY-->'
+    return h
+
+KPF_CSS = KPF_CSS.rstrip("\n") + "\n" + STORY_CSS
 def kpf_html(groups):
     out = '<!--KPF--><section class="kpf" id="keyFeatures">\n  <h2 class="kpf-title">Key Product Features</h2>\n'
     for label, items in groups:
@@ -71,11 +150,16 @@ def put_kpf(html, groups):
     if '<!--KPF-->' in html:
         return re.sub(r'<!--KPF-->.*?<!--/KPF-->', lambda m: new, html, flags=re.S)
     return html.replace('  </main>\n', '  </main>\n\n  ' + new + '\n', 1)
+def put_story(html, page):
+    new = story_html(page)
+    if '<!--STORY-->' in html:
+        return re.sub(r'<!--STORY-->.*?<!--/STORY-->', lambda m: new, html, flags=re.S)
+    return html.replace('<!--/KPF-->', '<!--/KPF-->\n  ' + new, 1)
 def put_kpf_css(html):
     if '/* ===== Key Product Features ===== */' in html:
         return re.sub(r'\n  /\* ===== Key Product Features ===== \*/.*?(?=\n  /\* =====|\n</style>)', lambda m: KPF_CSS.rstrip('\n'), html, count=1, flags=re.S)
     return html.replace('  /* ===== Review lightbox ===== */', KPF_CSS.lstrip('\n') + '\n  /* ===== Review lightbox ===== */', 1)
-src = put_kpf_css(put_kpf(src, [(None, FEATURES["warmer"])]))
+src = put_kpf_css(put_story(put_kpf(src, [(None, FEATURES["warmer"])]), "warmer"))
 (d / "bottle-warmer-pdp.html").write_text(src)
 
 # review slider arrows + script (everything after the row, up to and including its script) from the warmer source
@@ -137,7 +221,7 @@ s = s.replace('  /* ===== Review lightbox ===== */', _bcss)
 _u = "var PAGE_URLS = { single:'bottle-warmer-pdp.html', bundle:'bottle-warmer-bundle-pdp.html' };"
 assert s.count(_u) == 1
 s = s.replace(_u, "var PAGE_URLS = { single:'bottle-warmer-pdp.html', cooler:'breast-milk-cooler-pdp.html', bundle:'bottle-warmer-bundle-pdp.html' };")
-s = put_kpf(s, [("Warmer", FEATURES["warmer"]), ("Cooler", FEATURES["cooler"])])
+s = put_story(put_kpf(s, [("Warmer", FEATURES["warmer"]), ("Cooler", FEATURES["cooler"])]), "bundle")
 (d / "bottle-warmer-bundle-pdp.html").write_text(s)
 print("built bottle-warmer-bundle-pdp.html")
 
@@ -240,6 +324,6 @@ c = rep(c, '<div class="price" id="stickyPrice">£89.99 GBP</div>', '<div class=
 c = rep(c, '<option value="single">Portable Warmer · £89.99</option>', '<option value="single">Portable Cooler · £79.99</option>')
 c = rep(c, '<button class="btn btn-cart" id="stickyAddToCart">Add to Cart - £89.99</button>', '<button class="btn btn-cart" id="stickyAddToCart">Add to Cart - £79.99</button>')
 c = re.sub(r'(<div class="sticky-thumb" style="background-image:url\(\')[^\']+(\')', lambda m: m.group(1) + m_thumb + m.group(2), c, count=1)
-c = put_kpf(c, [(None, FEATURES["cooler"])])
+c = put_story(put_kpf(c, [(None, FEATURES["cooler"])]), "cooler")
 (d / "breast-milk-cooler-pdp.html").write_text(c)
 print("built breast-milk-cooler-pdp.html")
