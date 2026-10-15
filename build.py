@@ -66,11 +66,11 @@ STORY = {
   },
   "cooler": {
     "banner": ("Made for pumping mums.", "Take your milk to work without the worry. It stays properly cold all day, so there’s no need to trust a shared office fridge, and its discreet design looks just like an everyday water bottle."),
-    "steps": [("Pour", "Pour your milk into the bottles."), ("Seal", "Close the leak-proof lid so nothing spills in your bag."), ("Go", "Iceless 360° cooling keeps milk cold for up to 24 hours.")],
+    "steps": [("Freeze", "Pop the two cooling cylinders in the freezer for 12 hours, so they’re ready whenever you need them."), ("Load", "Slide the frozen cylinders into the cooler, ready to keep everything inside cold."), ("Chill", "Add your bottles and close the leak-proof lid. Your milk stays cold for up to 24 hours, wherever the day takes you.")],
   },
   "bundle": {
     "banner": ("Everything you need for feeding on the move.", "Warm milk or water with the portable warmer, then keep bottles fresh and cool with the matching portable cooler. Both are small enough for the nappy bag, car cup holder or carry-on."),
-    "steps": [("Cool it", "The cooler keeps milk cold for up to 24 hours, with no ice."), ("Carry it", "Both are small enough for the nappy bag, car cup holder or carry-on."), ("Warm it", "When your baby is hungry, the warmer heats a bottle wherever you are.")],
+    "steps": [("Cool it", "Freeze the cooling cylinders for 12 hours, pop them in the cooler, and your milk stays cold for up to 24 hours."), ("Carry it", "Both are small enough for the nappy bag, car cup holder or carry-on."), ("Warm it", "When your baby is hungry, the warmer heats a bottle wherever you are.")],
   },
 }
 SETS = [
