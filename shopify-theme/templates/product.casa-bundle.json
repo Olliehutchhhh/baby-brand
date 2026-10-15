@@ -141,7 +141,9 @@
       "type": "casa-feature-band",
       "settings": {
         "heading": "Everything you need for feeding on the move.",
-        "text": "Warm milk or water with the portable warmer, then keep bottles fresh and cool with the matching portable cooler. Both are small enough for the nappy bag, car cup holder or carry-on."
+        "text": "Warm milk or water with the portable warmer, then keep bottles fresh and cool with the matching portable cooler. Both are small enough for the nappy bag, car cup holder or carry-on.",
+        "asset_image": "casa-bundle-banner.jpg",
+        "image_position": "68%"
       }
     },
     "steps": {
@@ -160,7 +162,8 @@
           "type": "step",
           "settings": {
             "title": "Carry it",
-            "text": "Both are small enough for the nappy bag, car cup holder or carry-on."
+            "text": "Both are small enough for the nappy bag, car cup holder or carry-on.",
+            "asset_image": "casa-bundle-step-2.jpg"
           }
         },
         "step-3": {
