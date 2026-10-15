@@ -735,3 +735,4 @@
 .casa-pdp .gift-img{ max-width:130px; }
 .casa-pdp .gift-now{ font-size:15px; font-weight:800; color:var(--accent); margin-top:2px; }
 .casa-pdp .gift-was{ font-size:12px; }
+.casa-pdp .gift-save{ color:var(--accent); white-space:nowrap; }
