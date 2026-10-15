@@ -204,6 +204,11 @@
           <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
           <span class="review-count">({{ s.rating_count }})</span>
         </div>
+      {%- elsif s.social_proof != blank -%}
+        <div class="rating">
+          <span class="stars">&#9829;</span>
+          <span class="review-count" style="font-weight:600;">{{ s.social_proof | escape }}</span>
+        </div>
       {%- endif -%}
 
       <div class="price-row">
@@ -382,6 +387,7 @@
 
     { "type": "header", "content": "Top of page" },
     { "type": "text", "id": "subtitle", "label": "Subtitle" },
+    { "type": "text", "id": "social_proof", "label": "Social proof line (shown under the title when there is no review count)", "default": "Loved by busy parents" },
     { "type": "text", "id": "rating_count", "label": "Review count (shown as stars + number; leave blank to hide)" },
     { "type": "text", "id": "perk_text", "label": "Perk line under Add To Cart", "default": "Free Shipping on orders £100+" },
     { "type": "textarea", "id": "description", "label": "Description (leave blank to use the product's own description)" },
