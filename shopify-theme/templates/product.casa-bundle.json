@@ -72,7 +72,8 @@
           "settings": {
             "title": "Warms milk and water, anywhere",
             "text": "Heat a bottle of milk or water at the park, in the car or mid-flight. No kettle, hob or microwave needed.",
-            "row": "1"
+            "row": "1",
+            "asset_image": "casa-warmer-feature-1.jpg"
           }
         },
         "feature-2": {
@@ -80,7 +81,8 @@
           "settings": {
             "title": "Heats fast, with a long battery life",
             "text": "Quick heating means a hungry baby isn’t left waiting, and a long-lasting rechargeable battery keeps it ready for days out and long journeys.",
-            "row": "1"
+            "row": "1",
+            "asset_image": "casa-warmer-feature-2.jpg"
           }
         },
         "feature-3": {
@@ -88,7 +90,8 @@
           "settings": {
             "title": "Easy for everyone to use",
             "text": "Simple buttons and a clear temperature display make it effortless for anyone, from new parents to grandparents on babysitting duty.",
-            "row": "1"
+            "row": "1",
+            "asset_image": "casa-warmer-feature-3.jpg"
           }
         },
         "feature-4": {

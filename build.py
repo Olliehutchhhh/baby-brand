@@ -44,7 +44,7 @@ KPF_CSS = """
   .kpf-label{ font-size:22px; font-weight:800; margin:0 0 16px; padding-bottom:10px; border-bottom:2px solid var(--pastel-pink); }
   .kpf-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
   .kpf-img{ aspect-ratio:4/3; border-radius:14px; overflow:hidden; background:linear-gradient(135deg, var(--pastel-pink-soft), var(--pastel-blue-soft)); }
-  .kpf-img img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .kpf-img img{ width:100%; height:100%; object-fit:cover; object-position:center 38%; display:block; }
   .kpf-card h3{ font-size:22px; line-height:1.2; font-weight:800; margin:14px 0 8px; }
   .kpf-card p{ font-size:16px; line-height:1.55; margin:0; color:#2a2a2a; }
   @media (max-width:749px){
@@ -116,7 +116,8 @@ STORY_CSS = """
 def story_html(page):
     st = STORY[page]
     h = '<!--STORY-->\n'
-    h += f'  <section class="kpf-band"><div class="kpf-band-in"><div class="kpf-band-img"></div><div class="kpf-band-txt"><h2>{st["banner"][0]}</h2><p>{st["banner"][1]}</p></div></div></section>\n'
+    _bi = f'<img src="{_img_uri(BANNER_IMGS[page])}" alt="{st["banner"][0]}" loading="lazy">' if page in BANNER_IMGS else ''
+    h += f'  <section class="kpf-band"><div class="kpf-band-in"><div class="kpf-band-img">{_bi}</div><div class="kpf-band-txt"><h2>{st["banner"][0]}</h2><p>{st["banner"][1]}</p></div></div></section>\n'
     h += '  <section class="kpf-steps"><h2 class="kpf-title">How it works</h2><div class="kpf-grid">\n'
     for i, (t, x) in enumerate(st["steps"], 1):
         h += f'    <div class="kpf-card"><div class="kpf-img"></div><h3><span class="kpf-num">{i}</span>{t}</h3><p>{x}</p></div>\n'
@@ -135,14 +136,25 @@ def story_html(page):
     return h
 
 KPF_CSS = KPF_CSS.rstrip("\n") + "\n" + STORY_CSS
+
+def _img_uri(path):
+    import base64 as _b64
+    return "data:image/jpeg;base64," + _b64.b64encode(open(path, "rb").read()).decode()
+FEAT_IMGS = {"warmer": [root / "assets/warmer" / f"feature-{i}.jpg" for i in (1, 2, 3)]}
+BANNER_IMGS = {"warmer": root / "assets/warmer/banner.jpg"}
 def kpf_html(groups):
     out = '<!--KPF--><section class="kpf" id="keyFeatures">\n  <h2 class="kpf-title">Key Product Features</h2>\n'
-    for label, items in groups:
+    for grp in groups:
+        label, items = grp[0], grp[1]
+        imgkey = grp[2] if len(grp) > 2 else None
         out += '  <div class="kpf-group">\n'
         if label: out += f'    <h3 class="kpf-label">{label}</h3>\n'
         out += '    <div class="kpf-grid">\n'
-        for t, x in items:
-            out += f'      <div class="kpf-card"><div class="kpf-img"></div><h3>{t}</h3><p>{x}</p></div>\n'
+        for n, (t, x) in enumerate(items):
+            im = ''
+            if imgkey in FEAT_IMGS and n < len(FEAT_IMGS[imgkey]):
+                im = f'<img src="{_img_uri(FEAT_IMGS[imgkey][n])}" alt="{t}" loading="lazy">'
+            out += f'      <div class="kpf-card"><div class="kpf-img">{im}</div><h3>{t}</h3><p>{x}</p></div>\n'
         out += '    </div>\n  </div>\n'
     return out + '</section><!--/KPF-->'
 def put_kpf(html, groups):
@@ -159,7 +171,7 @@ def put_kpf_css(html):
     if '/* ===== Key Product Features ===== */' in html:
         return re.sub(r'\n  /\* ===== Key Product Features ===== \*/.*?(?=\n  /\* =====|\n</style>)', lambda m: KPF_CSS.rstrip('\n'), html, count=1, flags=re.S)
     return html.replace('  /* ===== Review lightbox ===== */', KPF_CSS.lstrip('\n') + '\n  /* ===== Review lightbox ===== */', 1)
-src = put_kpf_css(put_story(put_kpf(src, [(None, FEATURES["warmer"])]), "warmer"))
+src = put_kpf_css(put_story(put_kpf(src, [(None, FEATURES["warmer"], "warmer")]), "warmer"))
 (d / "bottle-warmer-pdp.html").write_text(src)
 
 # review slider arrows + script (everything after the row, up to and including its script) from the warmer source
@@ -222,7 +234,7 @@ _u = "var PAGE_URLS = { single:'bottle-warmer-pdp.html', bundle:'bottle-warmer-b
 assert s.count(_u) == 1
 s = s.replace(_u, "var PAGE_URLS = { single:'bottle-warmer-pdp.html', cooler:'breast-milk-cooler-pdp.html', bundle:'bottle-warmer-bundle-pdp.html' };")
 s = re.sub(r'      <div class="discount-box">.*?</div>\n\n?', '', s, count=1, flags=re.S)
-s = put_story(put_kpf(s, [("Warmer", FEATURES["warmer"]), ("Cooler", FEATURES["cooler"])]), "bundle")
+s = put_story(put_kpf(s, [("Warmer", FEATURES["warmer"], "warmer"), ("Cooler", FEATURES["cooler"])]), "bundle")
 (d / "bottle-warmer-bundle-pdp.html").write_text(s)
 print("built bottle-warmer-bundle-pdp.html")
 
