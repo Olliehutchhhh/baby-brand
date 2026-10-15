@@ -57,7 +57,7 @@ KPF_CSS = """
   }
 """
 
-SET_IMGS = {"warmer": _thumb(_wi, 520), "cooler": _thumb(Image.open(root / "assets/cooler/main.jpg"), 520)}
+SET_IMGS = {"warmer": _thumb(_wi, 520), "cooler": _thumb(Image.open(root / "assets/cooler/main.jpg"), 520), "bundle": _thumb(Image.open(root / "assets/bundle/set-card.jpg"), 520)}
 # ---------- Story sections: feature banner, how it works, choose your set ----------
 STORY = {
   "warmer": {
