@@ -8,7 +8,7 @@
           {%- if block.settings.image != blank -%}
             {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400, 600, 800', sizes: '(min-width: 750px) 33vw, 80vw', alt: block.settings.title }}
           {%- elsif block.settings.asset_image != blank -%}
-            <img src="{{ block.settings.asset_image | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="800" height="800">
+            <img src="{{ block.settings.asset_image | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="800" height="800"{% if block.settings.image_position != blank %} style="object-position:center {{ block.settings.image_position | escape }}"{% endif %}>
           {%- endif -%}
         </div>
         <h3><span class="casa-kpf__num">{{ forloop.index }}</span>{{ block.settings.title | escape }}</h3>
@@ -32,6 +32,7 @@
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Image (leave empty for a placeholder)" },
         { "type": "text", "id": "asset_image", "label": "Theme file name (used when no image is picked)", "info": "e.g. casa-warmer-step-1.jpg" },
+        { "type": "text", "id": "image_position", "label": "Image focus (optional)", "info": "Vertical crop position, e.g. 10% to show more of the top. Default 38%." },
         { "type": "text", "id": "title", "label": "Title", "default": "Step" },
         { "type": "textarea", "id": "text", "label": "Text", "default": "Describe this step." }
       ]

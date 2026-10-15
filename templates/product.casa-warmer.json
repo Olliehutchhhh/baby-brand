@@ -120,7 +120,8 @@
           "settings": {
             "title": "Fill",
             "text": "Add your milk or water to the warmer.",
-            "asset_image": "casa-warmer-step-1.jpg"
+            "asset_image": "casa-warmer-step-1.jpg",
+            "image_position": "10%"
           }
         },
         "step-2": {

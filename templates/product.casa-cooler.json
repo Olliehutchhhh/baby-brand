@@ -121,21 +121,27 @@
           "type": "step",
           "settings": {
             "title": "Freeze",
-            "text": "Pop the two cooling cylinders in the freezer for 12 hours, so they’re ready whenever you need them."
+            "text": "Pop the two cooling cylinders in the freezer for 12 hours, so they’re ready whenever you need them.",
+            "asset_image": "casa-cooler-step-1.jpg",
+            "image_position": "10%"
           }
         },
         "step-2": {
           "type": "step",
           "settings": {
             "title": "Load",
-            "text": "Slide the frozen cylinders into the cooler, ready to keep everything inside cold."
+            "text": "Slide the frozen cylinders into the cooler, ready to keep everything inside cold.",
+            "asset_image": "casa-cooler-step-2.jpg",
+            "image_position": "10%"
           }
         },
         "step-3": {
           "type": "step",
           "settings": {
             "title": "Chill",
-            "text": "Add your bottles and close the leak-proof lid. Your milk stays cold for up to 24 hours, wherever the day takes you."
+            "text": "Add your bottles and close the leak-proof lid. Your milk stays cold for up to 24 hours, wherever the day takes you.",
+            "asset_image": "casa-cooler-step-3.jpg",
+            "image_position": "10%"
           }
         }
       },
