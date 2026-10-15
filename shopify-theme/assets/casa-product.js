@@ -1,5 +1,9 @@
 /* Casa de Mamá product page behaviour (gallery, quantity, accordion, sticky bar, review lightbox) */
-(function () {
+function casaProductInit() {
+  // undo anything the previous init attached to document/window (this runs again after an in-place product swap)
+  (window.__casaCleanup || []).forEach(function (fn) { try { fn(); } catch (e) {} });
+  window.__casaCleanup = [];
+  var onCleanup = function (fn) { window.__casaCleanup.push(fn); };
   var root = document.querySelector('.casa-pdp');
   if (!root) return;
   var $ = function (sel, ctx) { return (ctx || root).querySelector(sel); };
@@ -76,16 +80,17 @@
   // ---- Sticky bar: visible whenever the main Add to Cart button is out of view ----
   var mainBtn = $('#casaMainAdd'), bar = $('#stickyBar');
   if (mainBtn && bar && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
+    var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { bar.classList.toggle('visible', !e.isIntersecting); });
-    }, { threshold: 0 }).observe(mainBtn);
+    }, { threshold: 0 });
+    io.observe(mainBtn);
+    onCleanup(function () { io.disconnect(); });
   }
-  // ---- Sticky bar dropdown: switch to the chosen product's page (pre-loaded, so it opens instantly), keeping your scroll position ----
+  // ---- Sticky bar dropdown: swap to the chosen product in place (no page load); falls back to opening the page ----
   var stickySelect = $('#stickyOptSelect');
   if (stickySelect) stickySelect.addEventListener('change', function () {
     if (!stickySelect.value) return;
-    try { sessionStorage.setItem('casaScrollY', String(window.scrollY)); } catch (e) {}
-    window.location.href = stickySelect.value;
+    if (window.casaSwap) window.casaSwap(stickySelect.value); else window.location.href = stickySelect.value;
   });
   (function () {
     var restore = function () {
@@ -106,19 +111,24 @@
     $('#lbPrev').addEventListener('click', function (e) { e.stopPropagation(); show(cur - 1); });
     $('#lbNext').addEventListener('click', function (e) { e.stopPropagation(); show(cur + 1); });
     lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
-    document.addEventListener('keydown', function (e) {
+    var lbKeys = function (e) {
       if (!lb.classList.contains('open')) return;
       if (e.key === 'Escape') closeLb();
       else if (e.key === 'ArrowLeft') show(cur - 1);
       else if (e.key === 'ArrowRight') show(cur + 1);
-    });
+    };
+    document.addEventListener('keydown', lbKeys);
+    onCleanup(function () { document.removeEventListener('keydown', lbKeys); });
     var sx = null;
     lb.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
     lb.addEventListener('touchend', function (e) { if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1)); });
   }
-})();
+  casaReviewInit(onCleanup);
+}
+casaProductInit();
+window.casaProductInit = casaProductInit;
 
-(function(){
+function casaReviewInit(onCleanup){
   var row = document.getElementById('reviewRow'); if (!row) return;
   var wrap = row.parentNode, prev = wrap.querySelector('.rs-prev'), next = wrap.querySelector('.rs-next');
   if (!prev || !next) return;
@@ -144,5 +154,7 @@
   next.addEventListener('click', function(){ go(1); });
   prev.addEventListener('click', function(){ go(-1); });
   function start(){ var W = setW(); if (W) jump(W); }
-  start(); window.addEventListener('load', start); window.addEventListener('resize', function(){ normalise(); });
-})();
+  var onResize = function(){ normalise(); };
+  start(); window.addEventListener('load', start); window.addEventListener('resize', onResize);
+  onCleanup(function(){ window.removeEventListener('load', start); window.removeEventListener('resize', onResize); });
+}

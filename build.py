@@ -384,18 +384,41 @@ def _sticky_block():
       '  var sel = old.cloneNode(false);\n'
       '  sel.innerHTML = ["warmer","cooler","bundle"].map(function(k){ return \'<option value="\'+k+\'">\'+D[k].label+" · "+D[k].price+"</option>"; }).join("");\n'
       '  old.parentNode.replaceChild(sel, old); sel.value = cur;\n'
-      '  var head = document.head;\n'
-      '  ["warmer","cooler","bundle"].forEach(function(k){ if (k===cur) return; var l = document.createElement("link"); l.rel="prefetch"; l.href=D[k].url; head.appendChild(l); });\n'
-      '  var sr = document.createElement("script"); sr.type="speculationrules";\n'
-      '  sr.textContent = JSON.stringify({prerender:[{source:"list", urls:["warmer","cooler","bundle"].filter(function(k){return k!==cur}).map(function(k){return D[k].url}), eagerness:"eager"}]});\n'
-      '  head.appendChild(sr);\n'
+      '  var embed = /[?&]embed=1/.test(location.search), frames = {};\n'
+      '  if (!embed) window.addEventListener("load", function(){ setTimeout(function(){\n'
+      '    ["warmer","cooler","bundle"].forEach(function(k){ if (k===cur) return;\n'
+      '      var f = document.createElement("iframe"); f.src = D[k].url + "?embed=1"; f.setAttribute("aria-hidden","true"); f.tabIndex = -1; f.dataset.k = k;\n'
+      '      f.style.cssText = "position:fixed;inset:0;width:100%;height:100%;border:0;background:#fff;z-index:9999;visibility:hidden;pointer-events:none";\n'
+      '      document.body.appendChild(f); frames[k] = f; });\n'
+      '  }, 300); });\n'
+      '  window.__pdpShow = function(k, y){\n'
+      '    var de = document.documentElement;\n'
+      '    Object.keys(frames).forEach(function(n){ var on = n === k; frames[n].style.visibility = on ? "visible" : "hidden"; frames[n].style.pointerEvents = on ? "auto" : "none"; frames[n].tabIndex = on ? 0 : -1; });\n'
+      '    if (k === cur) { de.style.overflow = ""; window.scrollTo(0, y); }\n'
+      '    else { de.style.overflow = "hidden"; frames[k].contentWindow.scrollTo(0, y); }\n'
+      '  };\n'
       '  sel.addEventListener("change", function(){\n'
-      '    try { sessionStorage.setItem("pdpScrollY", String(window.scrollY)); } catch(e){}\n'
-      '    window.location.href = D[sel.value].url;\n'
+      '    var k = sel.value, y = window.scrollY;\n'
+      '    try { if (embed) { parent.__pdpShow(k, y); sel.value = cur; return; } if (frames[k] && frames[k].contentWindow) { window.__pdpShow(k, y); sel.value = cur; return; } } catch(e){}\n'
+      '    window.location.href = D[k].url;\n'
       '  });\n'
       '})();\n</script>\n<style>' + _css + '</style>\n<script>' + _js + '</script>\n<!--/STICKY_OPT-->')
+import html as _h, sys as _sys
+_sys.path.insert(0, str(root))
+from faq_data import FAQ as _FAQ, FAQ_TITLE as _FT
+_FKEY = {"bottle-warmer-pdp.html": "warmer", "bottle-warmer-bundle-pdp.html": "bundle", "breast-milk-cooler-pdp.html": "cooler"}
+def _faq_block(key):
+    _c = (root / 'shopify-theme/assets/casa-product.css').read_text()
+    _css = _c[_c.index('/*FAQ-START*/'):_c.index('/*FAQ-END*/')]
+    _items = "".join('<details class="casa-faq__item"><summary>' + _h.escape(q) + '</summary><div class="casa-faq__a">' + _h.escape(a) + '</div></details>' for q, a in _FAQ[key])
+    return '<!--FAQ--><style>' + _css + '</style><section class="casa-faq" id="faq"><div class="casa-faq__inner"><h2 class="casa-faq__title">' + _h.escape(_FT) + '</h2><div class="casa-faq__list">' + _items + '</div></div></section><!--/FAQ-->'
 for _f in ("bottle-warmer-pdp.html", "bottle-warmer-bundle-pdp.html", "breast-milk-cooler-pdp.html"):
     _t = (d / _f).read_text()
+    _fb = _faq_block(_FKEY[_f])
+    if "<!--FAQ-->" in _t:
+        _t = re.sub(r"<!--FAQ-->.*?<!--/FAQ-->", lambda m: _fb, _t, flags=re.S)
+    else:
+        _t = _t.replace("<!--/STORY-->", "<!--/STORY-->\n" + _fb, 1)
     _blk2 = _sticky_block()
     if "<!--STICKY_OPT-->" in _t:
         _t = re.sub(r"<!--STICKY_OPT-->.*?<!--/STICKY_OPT-->", lambda m: _blk2, _t, flags=re.S)

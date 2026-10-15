@@ -79,7 +79,7 @@
   endif
 -%}
 
-<div class="casa-pdp" id="casa-pdp-{{ section.id }}">
+<div class="casa-pdp" id="casa-pdp-{{ section.id }}" data-product-id="{{ product.id }}" data-product-title="{{ product.title | escape }}" data-price="{{ variant.price | divided_by: 100.0 }}" data-currency="{{ cart.currency.iso_code }}">
 
   <div class="breadcrumb">
     <a href="{{ routes.root_url }}">Home</a> &gt;
@@ -333,20 +333,6 @@
     </div>
   </main>
 
-  {%- comment -%} Pre-load the other two product pages in the background: Chrome/Edge prerender them (instant switch), other browsers prefetch. {%- endcomment -%}
-  {%- liquid
-    assign other_urls = ''
-    for op in collections['all'].products
-      if op.id != product.id and op.template_suffix contains 'casa-'
-        assign other_urls = other_urls | append: op.url | append: ','
-      endif
-    endfor
-    assign other_list = other_urls | split: ','
-  -%}
-  {%- if other_list.size > 0 -%}
-    <script type="speculationrules">{"prerender":[{"source":"list","urls":[{% for u in other_list %}{{ u | json }}{% unless forloop.last %},{% endunless %}{% endfor %}],"eagerness":"eager"}]}</script>
-    {%- for u in other_list -%}<link rel="prefetch" href="{{ u }}" as="document">{%- endfor -%}
-  {%- endif -%}
 
   <!-- STICKY BOTTOM ADD-TO-CART BAR: the dropdown switches to the chosen product's page -->
   {%- liquid
@@ -393,6 +379,7 @@
 
 <script src="{{ 'casa-product.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'casa-sticky-dd.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'casa-product-swap.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {
