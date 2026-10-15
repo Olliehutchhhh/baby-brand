@@ -58,4 +58,3 @@
 .casa-set__here{ text-align:center; font-weight:700; font-size:15px; padding:15px 16px; border-radius:99px; background:#f3f1ef; color:#555; }
 @media (max-width:749px){ .casa-sets{ margin-bottom:100px; } .casa-sets .casa-kpf__grid{ padding-top:14px; } }
 
-.casa-steps .casa-kpf__card:first-child .casa-kpf__img img{ object-position:center 10%; }
