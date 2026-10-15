@@ -221,6 +221,7 @@ s = s.replace('  /* ===== Review lightbox ===== */', _bcss)
 _u = "var PAGE_URLS = { single:'bottle-warmer-pdp.html', bundle:'bottle-warmer-bundle-pdp.html' };"
 assert s.count(_u) == 1
 s = s.replace(_u, "var PAGE_URLS = { single:'bottle-warmer-pdp.html', cooler:'breast-milk-cooler-pdp.html', bundle:'bottle-warmer-bundle-pdp.html' };")
+s = re.sub(r'      <div class="discount-box">.*?</div>\n\n?', '', s, count=1, flags=re.S)
 s = put_story(put_kpf(s, [("Warmer", FEATURES["warmer"]), ("Cooler", FEATURES["cooler"])]), "bundle")
 (d / "bottle-warmer-bundle-pdp.html").write_text(s)
 print("built bottle-warmer-bundle-pdp.html")

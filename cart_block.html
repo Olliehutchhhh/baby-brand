@@ -97,6 +97,7 @@
     if ((el = t.closest('[data-q]'))){ var l = lines[+el.dataset.q]; l.q += +el.dataset.d; if (l.q < 1) lines.splice(+el.dataset.q, 1); save(); return render(); }
     if ((el = t.closest('[data-rm]'))){ lines.splice(+el.dataset.rm, 1); save(); return render(); }
     if ((el = t.closest('[data-add]'))){ return add(el.dataset.add, 1); }
+    if ((el = t.closest('[data-quick-add]'))){ add(el.dataset.quickAdd, 1); return open(); }
     if (t.closest('[data-checkout]')){ alert('Preview only – this is where Shopify checkout opens.'); }
   });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });

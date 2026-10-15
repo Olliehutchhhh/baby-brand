@@ -418,7 +418,6 @@
     padding:14px 16px;
     margin-bottom:18px;
   }
-  .discount-box input[type=checkbox]{ width:18px; height:18px; }
   .save-tag{
     background:var(--ink);
     color:#fff;
@@ -426,16 +425,13 @@
     font-weight:800;
     padding:4px 8px;
   }
-  .discount-box .code-copy{
+  .discount-box .quick-add{
     margin-left:auto;
-    text-decoration:underline;
-    font-size:13px;
-    font-weight:700;
-    background:none;
-    border:none;
-    cursor:pointer;
-    color:var(--ink);
+    background:var(--ink); color:#fff; border:none; border-radius:99px; cursor:pointer;
+    font-size:13px; font-weight:700; padding:10px 18px; white-space:nowrap;
   }
+  .discount-box .quick-add:hover{ background:#000; }
+  @media (max-width:520px){ .discount-box .quick-add{ margin-left:0; width:100%; } }
   .discount-box .code-text{ font-size:13px; }
 
   .meta-row{
@@ -1108,10 +1104,9 @@
 })();</script>
 
       <div class="discount-box">
-        <input type="checkbox" id="discountCheck">
         <span class="save-tag">SAVE</span>
-        <span class="code-text">20% with Code: <strong>BDAS20</strong></span>
-        <button class="code-copy" id="copyCodeBtn">Copy Code</button>
+        <span class="code-text">Save 21% on the bundle</span>
+        <button type="button" class="quick-add" data-quick-add="bundle">Add bundle</button>
       </div>
 
       <div class="utility-row">
@@ -1294,15 +1289,6 @@
   document.getElementById('qtyPlus').addEventListener('click', function(){ qty++; renderQty(); });
   document.getElementById('stickyQtyMinus').addEventListener('click', function(){ qty = Math.max(1, qty-1); renderQty(); });
   document.getElementById('stickyQtyPlus').addEventListener('click', function(){ qty++; renderQty(); });
-
-  // ---- Copy discount code ----
-  document.getElementById('copyCodeBtn').addEventListener('click', function(){
-    navigator.clipboard.writeText('BDAS20').catch(function(){});
-    var btn = document.getElementById('copyCodeBtn');
-    var original = btn.textContent;
-    btn.textContent = 'Copied!';
-    setTimeout(function(){ btn.textContent = original; }, 1500);
-  });
 
   // ---- Accordion ----
   document.querySelectorAll('.accordion-head').forEach(function(head){
@@ -1532,6 +1518,7 @@
     if ((el = t.closest('[data-q]'))){ var l = lines[+el.dataset.q]; l.q += +el.dataset.d; if (l.q < 1) lines.splice(+el.dataset.q, 1); save(); return render(); }
     if ((el = t.closest('[data-rm]'))){ lines.splice(+el.dataset.rm, 1); save(); return render(); }
     if ((el = t.closest('[data-add]'))){ return add(el.dataset.add, 1); }
+    if ((el = t.closest('[data-quick-add]'))){ add(el.dataset.quickAdd, 1); return open(); }
     if (t.closest('[data-checkout]')){ alert('Preview only – this is where Shopify checkout opens.'); }
   });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
@@ -1544,6 +1531,8 @@
 })();
 </script>
 <!--/CASA_CART-->
+
+
 
 
 
