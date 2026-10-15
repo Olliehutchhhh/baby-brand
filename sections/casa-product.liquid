@@ -312,7 +312,8 @@
             <a class="pair-img" href="{{ pair_p.url }}" aria-label="View {{ pair_p.title | escape }}" style="display:block;background:#fff url('{{ pair_img }}') center/cover no-repeat;"></a>
             <div class="pair-info">
               <div class="name"><a href="{{ pair_p.url }}">{{ pair_p.title }}</a></div>
-              <div class="p"><span class="was">{{ pair_p.selected_or_first_available_variant.price | money }}</span> {{ s.pair_now }}</div>
+              {%- assign pair_now_text = s.pair_now -%}{%- if bundle_price > variant.price -%}{%- assign pair_deal = bundle_price | minus: variant.price -%}{%- assign pair_now_text = pair_deal | money_with_currency -%}{%- endif -%}
+              <div class="p"><span class="was">{{ pair_p.selected_or_first_available_variant.price | money }}</span> {{ pair_now_text }}</div>
               {%- if s.pair_note != blank -%}<div class="pair-note">{{ s.pair_note }}</div>{%- endif -%}
               {%- if bundle_p != blank -%}<a class="quick" href="{{ bundle_p.url }}">Add to bundle</a>{%- endif -%}
             </div>
