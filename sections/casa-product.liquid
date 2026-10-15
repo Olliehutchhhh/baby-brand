@@ -312,7 +312,7 @@
             <a class="pair-img" href="{{ pair_p.url }}" aria-label="View {{ pair_p.title | escape }}" style="display:block;background:#fff url('{{ pair_img }}') center/cover no-repeat;"></a>
             <div class="pair-info">
               <div class="name"><a href="{{ pair_p.url }}">{{ pair_p.title }}</a></div>
-              {%- assign pair_now_text = s.pair_now -%}{%- if bundle_price > variant.price -%}{%- assign pair_deal = bundle_price | minus: variant.price -%}{%- assign pair_now_text = pair_deal | money_with_currency -%}{%- endif -%}
+              {%- assign pair_now_text = '' -%}{%- if bundle_price > variant.price -%}{%- assign pair_deal = bundle_price | minus: variant.price -%}{%- assign pair_now_text = pair_deal | money_with_currency -%}{%- endif -%}
               <div class="p"><span class="was">{{ pair_p.selected_or_first_available_variant.price | money }}</span> {{ pair_now_text }}</div>
               {%- if s.pair_note != blank -%}<div class="pair-note">{{ s.pair_note }}</div>{%- endif -%}
               {%- if bundle_p != blank -%}<a class="quick" href="{{ bundle_p.url }}">Add to bundle</a>{%- endif -%}
@@ -341,8 +341,8 @@
     if save_pct > 0
       assign sticky_bundle_label = s.bundle_title | append: ' (Save ' | append: save_pct | append: '%)'
     endif
-    assign sticky_warmer_label = s.sticky_warmer_label | default: 'Portable Warmer'
-    assign sticky_cooler_label = s.sticky_cooler_label | default: 'Portable Cooler'
+    assign sticky_warmer_label = 'Portable Warmer'
+    assign sticky_cooler_label = 'Portable Cooler'
     assign cur_is_known = false
     if product.id == warmer_found.id or product.id == cooler_found.id or product.id == bundle_found.id
       assign cur_is_known = true
@@ -413,9 +413,6 @@
     { "type": "textarea", "id": "cooler_list", "label": "Tick list (one per line)" },
 
     { "type": "header", "content": "Bundle And Save card" },
-    { "type": "header", "content": "Sticky add-to-cart bar" },
-    { "type": "text", "id": "sticky_warmer_label", "label": "Warmer option label", "default": "Portable Warmer" },
-    { "type": "text", "id": "sticky_cooler_label", "label": "Cooler option label", "default": "Portable Cooler" },
     { "type": "text", "id": "bundle_title", "label": "Title", "default": "Bundle And Save" },
     { "type": "text", "id": "bundle_ribbon", "label": "Ribbon", "default": "BEST VALUE" },
     { "type": "text", "id": "bundle_badge", "label": "Save badge (leave EMPTY for automatic saving %)" },
@@ -447,7 +444,6 @@
     { "type": "header", "content": "Pair well with" },
     { "type": "product", "id": "pair_product", "label": "Override: product to pair (leave empty — found automatically)" },
     { "type": "image_picker", "id": "pair_image", "label": "Image (optional, defaults to the product's first image)" },
-    { "type": "text", "id": "pair_now", "label": "Bundle price text", "default": "£45.00 GBP" },
     { "type": "text", "id": "pair_note", "label": "Note", "default": "Bundle discount" }
   ],
   "blocks": [
