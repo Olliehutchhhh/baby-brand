@@ -187,7 +187,7 @@
               {%- for line in lines -%}{%- assign t = line | strip -%}{%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}{%- endfor -%}
             </ul>
             <div class="gift-strip">
-              <div class="gift-title">{{ s.gift_title }}</div>
+              <div class="gift-title">{{ s.gift_title }}{%- if show_split %} <span class="gift-save">&ndash; You save {{ sum_price | minus: bundle_price | money }}</span>{%- endif -%}</div>
               <div class="gift-thumbs">
                 <div class="gift-item"><div class="gift-img" role="img" aria-label="{{ s.gift_name_1 | escape }}" style="background:#fff url('{{ gift_1 }}') center/cover no-repeat;"></div><div class="gift-text"><div class="gift-name">{{ s.gift_name_1 }}</div>{%- if show_split -%}<div class="gift-was">{{ w_price | money }}</div><div class="gift-now">{{ w_share | money }}</div>{%- endif -%}</div></div>
                 <span class="gift-plus" aria-hidden="true">+</span>
