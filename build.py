@@ -33,7 +33,14 @@ assert s.count("var PAGE = 'single';") == 1
 s = s.replace("var PAGE = 'single';", "var PAGE = 'bundle';")
 s = s.replace("<title>Superfast Portable Bottle Warmer for Travel</title>", "<title>Portable Bottle Warmer &amp; Cooler Set</title>")
 # bundle: its own review placeholders (not the warmer's photos) + a "Just the cooler" link card
-_ph = ''.join('        <div class="video-card ph"><span class="bag">🛍</span><span class="play">▶</span></div>\n' for _ in range(5))
+import base64, io
+def _rvb(n):
+    im = Image.open(root / "assets/bundle" / f"review-{n}.jpg"); buf = io.BytesIO(); im.save(buf, "JPEG", quality=82)
+    return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
+_ph = ''
+for _n in range(1, 4):
+    _u = _rvb(_n)
+    _ph += f'        <button type="button" class="video-card review-card" data-idx="{_n-1}" aria-label="Open customer review {_n}"><img src="{_u}" data-full="{_u}" alt="Customer review {_n}" loading="lazy"></button>\n'
 _a = s.index('<div class="video-row" id="reviewRow">'); _b = s.index('      <div class="discount-box">', _a)
 s = s[:_a - len('<div class="review-slider">\n      ')] + '<div class="review-slider">\n      <div class="video-row" id="reviewRow">\n' + _ph + '      </div>\n' + RS_TAIL + '\n\n' + s[_b:]
 _css = ('  .video-card.ph{ cursor:default; border-radius:0; background:repeating-linear-gradient(45deg, #FFE9F6, #FFE9F6 10px, #FFD6EE 10px, #FFD6EE 20px); border:1px dashed #F6B9DF; display:flex; align-items:center; justify-content:center; }\n'

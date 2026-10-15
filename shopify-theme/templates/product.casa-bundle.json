@@ -59,7 +59,9 @@
         "cooler_list": "Portable Breast Milk Cooler (650ml)\n2 Cooling Cylinders Included\n30 Days Guarantee",
         "single_sub": "Just the warmer",
         "single_list": "Portable Milk & Water Warmer\n30 Days Guarantee",
-        "use_sample_reviews": false
+        "use_sample_reviews": true,
+        "sample_review_prefix": "casa-bundle-review-",
+        "sample_review_count": 3
       }
     }
   },
